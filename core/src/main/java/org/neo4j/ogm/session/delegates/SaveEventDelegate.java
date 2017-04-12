@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.session.delegates;
@@ -35,7 +35,7 @@ final class SaveEventDelegate {
     private static final Logger logger = LoggerFactory.getLogger(SaveEventDelegate.class);
 
     private Neo4jSession session;
-    private Set<Long> visited;
+    private Set<Object> visited;
     private Set<Object> preSaved;
     private Set<MappedRelationship> registeredRelationships = new HashSet<>();
     private Set<MappedRelationship> addedRelationships = new HashSet<>();

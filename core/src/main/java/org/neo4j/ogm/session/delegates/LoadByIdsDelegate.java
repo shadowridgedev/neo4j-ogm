@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 package org.neo4j.ogm.session.delegates;
 
@@ -28,6 +28,7 @@ import org.neo4j.ogm.request.GraphModelRequest;
 import org.neo4j.ogm.response.Response;
 import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.request.strategy.QueryStatements;
+import org.neo4j.ogm.utils.EntityUtils;
 
 /**
  * @author Vince Bickers
@@ -102,7 +103,7 @@ public class LoadByIdsDelegate {
                 return true;
             }
         }
-        Object id = classInfo.identityField().readProperty(mapped);
+        Object id = EntityUtils.getEntityId(session.metaData(), mapped);
         return ids.contains(id);
     }
 }

@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.metadata;
@@ -69,6 +69,7 @@ public class ClassInfo {
     private volatile Map<String, FieldInfo> propertyFields;
     private volatile Map<String, FieldInfo> indexFields;
     private volatile FieldInfo identityField = null;
+    private volatile Optional<FieldInfo> xidentityField = null;
     private volatile FieldInfo primaryIndexField = null;
     private volatile FieldInfo labelField = null;
     private volatile boolean labelFieldMapped = false;
@@ -283,6 +284,23 @@ public class ClassInfo {
         } catch (MappingException me) {
             return null;
         }
+    }
+
+    public Optional<FieldInfo> extendedIdentityField() {
+        if (xidentityField != null) {
+            return xidentityField;
+        }
+        if (xidentityField == null) {
+            for (FieldInfo fieldInfo : fieldsInfo().fields()) {
+                AnnotationInfo annotationInfo = fieldInfo.getAnnotations().get(Id.class);
+                if (annotationInfo != null) {
+                    xidentityField = Optional.of(fieldInfo);
+                    return xidentityField;
+                }
+            }
+        }
+        xidentityField = Optional.empty();
+        return xidentityField;
     }
 
     /**

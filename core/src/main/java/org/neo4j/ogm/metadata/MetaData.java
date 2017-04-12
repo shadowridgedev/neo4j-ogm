@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.metadata;
@@ -18,6 +18,7 @@ import java.util.*;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.context.EntityWrapper;
 import org.neo4j.ogm.exception.AmbiguousBaseClassException;
 import org.neo4j.ogm.typeconversion.ConversionCallback;
 import org.slf4j.Logger;
@@ -82,7 +83,14 @@ public class MetaData {
      * @return A ClassInfo matching the supplied object's class, or null if it doesn't exist
      */
     public ClassInfo classInfo(Object object) {
-        return classInfo(object.getClass().getName());
+        String className;
+        if (object instanceof EntityWrapper) {
+            className = object.getClass().getSuperclass().getName();
+        } else {
+             className = object.getClass().getName();
+        }
+
+        return classInfo(className);
     }
 
     private ClassInfo _classInfo(String name, String nodeEntityAnnotation, String annotationPropertyName) {

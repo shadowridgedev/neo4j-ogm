@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.session.delegates;
@@ -17,6 +17,7 @@ package org.neo4j.ogm.session.delegates;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.session.Neo4jSession;
+import org.neo4j.ogm.utils.EntityUtils;
 
 /**
  * @author Luanne Misquitta
@@ -34,7 +35,7 @@ public class GraphIdDelegate {
             ClassInfo classInfo = session.metaData().classInfo(possibleEntity);
             try {
                 if (classInfo != null) {
-                    Object id = classInfo.identityField().readProperty(possibleEntity);
+                    Object id = EntityUtils.getEntityId(session.metaData(), possibleEntity);
                     if (id != null) {
                         return (long) id;
                     }

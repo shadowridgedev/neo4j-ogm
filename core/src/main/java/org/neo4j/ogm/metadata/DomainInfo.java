@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.metadata;
@@ -52,7 +52,38 @@ public class DomainInfo {
     public static DomainInfo create(String... packages) {
 
         final Set<Class<?>> allClasses = new HashSet<>();
+//        final Set<String> allClassesNames = new HashSet<>();
+//        new FastClasspathScanner(packages).matchFilenameExtension("class" , (FileMatchProcessor) (relativePath, inputStream, lengthBytes) -> {
+//            String className = relativePath.replaceAll("/", ".").replaceAll(".class$", "");
+//            allClassesNames.add(className);
+//        }).strictWhitelist().scan();
+//        allClassesNames.forEach(System.out::println);
+//
+//        ClassPool cp = ClassPool.getDefault();
+//        cp.appendClassPath(new LoaderClassPath(Thread.currentThread().getContextClassLoader()));
+//
+//        allClassesNames.forEach( (className) -> {
+//            try {
+//                CtClass entityClass = cp.get(className);
+//                boolean found = false;
+//                for (CtField field : entityClass.getFields()) {
+//                    found |= field.getAnnotation(GraphId.class) != null;
+//                    found |= field.getName().equals("id") && field.getType().getName().equals("java.lang.Long");
+//                }
+//                if (!found) {
+//                    LOGGER.debug("adding id field to class {}", className);
+//                    CtField idField = new CtField(cp.get("java.lang.Long"), "id", entityClass);
+//                    entityClass.addField(idField);
+//
+//                    Class c = entityClass.toClass();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        });
+
         new FastClasspathScanner(packages).matchAllClasses(allClasses::add).strictWhitelist().scan();
+
         DomainInfo domainInfo = new DomainInfo();
 
         for (Class<?> cls : allClasses) {
