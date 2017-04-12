@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.context;
@@ -39,7 +39,7 @@ public class IdentityMapTest {
         Teacher mrsJones = new Teacher();
 
         mrsJones.setId(115L); // the id field must not be part of the memoised property list
-        mappingContext.addNodeEntity(mrsJones, mrsJones.getId());
+        mappingContext.addNodeEntity(mrsJones);
         assertFalse(mappingContext.isDirty(mrsJones));
     }
 
@@ -48,7 +48,7 @@ public class IdentityMapTest {
         Teacher teacher = new Teacher("Miss White");
 
         teacher.setId(115L); // the id field must not be part of the memoised property list
-        mappingContext.addNodeEntity(teacher, teacher.getId());
+        mappingContext.addNodeEntity(teacher);
 
         teacher.setName("Mrs Jones"); // the teacher's name property has changed.
         assertTrue(mappingContext.isDirty(teacher));
@@ -59,7 +59,7 @@ public class IdentityMapTest {
         Teacher teacher = new Teacher("Miss White");
 
         teacher.setId(115L); // the id field must not be part of the memoised property list
-        mappingContext.addNodeEntity(teacher, teacher.getId());
+        mappingContext.addNodeEntity(teacher);
 
         teacher.setSchool(new School("Roedean")); // a related object does not affect the property list.
 

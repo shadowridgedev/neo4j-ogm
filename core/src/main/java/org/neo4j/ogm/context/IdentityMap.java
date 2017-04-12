@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.context;
@@ -22,6 +22,8 @@ import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
 
 /**
+ * Maintains entity footprints for dirty checking.
+ *
  * @author Vince Bickers
  * @author Mark Angrish
  */
@@ -34,11 +36,14 @@ class IdentityMap {
 
     private final Map<Long, Long> relEntityHash;
 
+    private final Map<Long, LabelHistory> labelHistoryRegister;
+
     private final MetaData metaData;
 
     IdentityMap(MetaData metaData) {
         this.nodeHash = new HashMap<>();
         this.relEntityHash = new HashMap<>();
+        labelHistoryRegister = new HashMap<>();
         this.metaData = metaData;
     }
 
@@ -46,16 +51,17 @@ class IdentityMap {
      * constructs a 64-bit hash of this object's node properties
      * and maps the object to that hash. The object must not be null
      *
-     * @param entityId the id of the entity
      * @param object the object whose persistable properties we want to hash
-     * @param classInfo metadata about the object
      */
-    void remember(Long entityId, Object object, ClassInfo classInfo) {
+    void remember(Object object) {
+        ClassInfo classInfo = metaData.classInfo(object);
+        Long entityId = (Long) classInfo.identityField().read(object);
         if (metaData.isRelationshipEntity(classInfo.name())) {
             relEntityHash.put(entityId, hash(object, classInfo));
         } else {
             nodeHash.put(entityId, hash(object, classInfo));
         }
+        collectLabelHistory(object, classInfo);
     }
 
     /**
@@ -64,12 +70,12 @@ class IdentityMap {
      * is regarded as memorised if its hash value in the memo hash
      * is identical to a recalculation of its hash value.
      *
-     * @param entityId the id of the entity
      * @param object the object whose persistable properties we want to check
-     * @param classInfo metadata about the object
      * @return true if the object hasn't changed since it was remembered, false otherwise
      */
-    boolean remembered(Long entityId, Object object, ClassInfo classInfo) {
+    boolean remembered(Object object) {
+        ClassInfo classInfo = metaData.classInfo(object);
+        Long entityId = (Long) classInfo.identityField().read(object);
         boolean isRelEntity = false;
 
         if (entityId != null) {
@@ -90,13 +96,27 @@ class IdentityMap {
         return false;
     }
 
+    private void collectLabelHistory(Object entity, ClassInfo classInfo) {
+        FieldInfo fieldInfo = classInfo.labelFieldOrNull();
+        if (fieldInfo != null) {
+            Collection<String> labels = (Collection<String>) fieldInfo.read(entity);
+            labelHistory(entity).push(labels);
+        }
+    }
+
+    LabelHistory labelHistory(Object entity) {
+        ClassInfo classInfo = metaData.classInfo(entity);
+        Long identity = (Long) classInfo.identityField().readProperty(entity);
+        return labelHistoryRegister.computeIfAbsent(identity, k -> new LabelHistory());
+    }
+
     void clear() {
         nodeHash.clear();
         relEntityHash.clear();
     }
 
 
-    private static long hash(Object object, ClassInfo classInfo) {
+    private long hash(Object object, ClassInfo classInfo) {
         long hash = SEED;
 
         List<FieldInfo> hashFields = new ArrayList<>(classInfo.propertyFields());
@@ -120,7 +140,7 @@ class IdentityMap {
         return hash;
     }
 
-    private static long hash(String string) {
+    private long hash(String string) {
         long h = 1125899906842597L; // prime
         int len = string.length();
 
@@ -136,7 +156,7 @@ class IdentityMap {
      * @param array array of unknown type
      * @return array of objects
      */
-    private static Object[] convertToObjectArray(Object array) {
+    private Object[] convertToObjectArray(Object array) {
         int len = Array.getLength(array);
         Object[] out = new Object[len];
         for (int i = 0; i < len; i++) {

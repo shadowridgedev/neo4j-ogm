@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.session.request;
@@ -346,7 +346,7 @@ public class RequestExecutor {
      * @param persisted entity created as part of the request
      * @param session the {@link Session}
      */
-    private static void initialiseNewEntity(Long identity, Object persisted, Neo4jSession session) {
+    private void initialiseNewEntity(Long identity, Object persisted, Neo4jSession session) {
         MappingContext mappingContext = session.context();
         Transaction tx = session.getTransaction();
         if (persisted != null) {  // it will be null if the variable represents a simple relationship.
@@ -363,10 +363,10 @@ public class RequestExecutor {
         }
     }
 
-    private static void registerEntity(MappingContext mappingContext, ClassInfo classInfo, Long identity, Object entity) {
+    private void registerEntity(MappingContext mappingContext, ClassInfo classInfo, Long identity, Object entity) {
         // ensure the newly created domain object is added into the mapping context
         if (classInfo.annotationsInfo().get(RelationshipEntity.class) == null) {
-            mappingContext.replaceNodeEntity(entity, identity);      // force the node entity object to be overwritten
+            mappingContext.replaceNodeEntity(entity);      // force the node entity object to be overwritten
         } else {
             mappingContext.replaceRelationshipEntity(entity, identity); // force the relationship entity to be overwritten
         }

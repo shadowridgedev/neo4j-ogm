@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 package org.neo4j.ogm.persistence.model;
 
@@ -128,7 +128,7 @@ public class EntityGraphMapperTest extends MultiDriverTestClass {
         Student sheila = new Student();
         sheila.setId(existingNodeId);
         sheila.setName("Sheila Smythe");
-        mappingContext.addNodeEntity(sheila, sheila.getId());
+        mappingContext.addNodeEntity(sheila);
 
         Compiler compiler = this.mapper.map(sheila).getCompiler();
         compiler.useStatementFactory(new RowStatementFactory());

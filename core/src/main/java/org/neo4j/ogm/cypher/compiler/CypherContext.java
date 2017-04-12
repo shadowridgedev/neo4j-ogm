@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.cypher.compiler;
@@ -103,8 +103,8 @@ public class CypherContext implements CompileContext {
      */
     public boolean deregisterOutgoingRelationships(Long src, String relationshipType, Class endNodeType) {
         Iterator<Mappable> iterator = registeredRelationships.iterator();
-        boolean nothingToDelete = true;
         List<Mappable> cleared = new ArrayList<>();
+        boolean nothingToDelete = true;
         while (iterator.hasNext()) {
             Mappable mappedRelationship = iterator.next();
             if (mappedRelationship.getStartNodeId() == src && mappedRelationship.getRelationshipType().equals(relationshipType) && endNodeType.equals(mappedRelationship.getEndNodeType())) {
@@ -159,7 +159,6 @@ public class CypherContext implements CompileContext {
                 nothingToDelete = false;
             }
         }
-
         if (nothingToDelete) {
             return true; //relationships not in the graph, okay, we can return
         }

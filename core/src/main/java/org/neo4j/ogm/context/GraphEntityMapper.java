@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.context;
@@ -180,7 +180,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
                         setIdentity(entity, node.getId());
                         setProperties(node, entity);
                         setLabels(node, entity);
-                        mappingContext.addNodeEntity(entity, node.getId());
+                        mappingContext.addNodeEntity(entity);
                     }
                     nodeIds.add(node.getId());
                 } catch (BaseClassNotFoundException e) {
@@ -203,6 +203,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
         }
     }
 
+    // TODO : identity
     private void setIdentity(Object instance, Long id) {
         ClassInfo classInfo = metadata.classInfo(instance);
         FieldInfo fieldInfo = classInfo.identityField();

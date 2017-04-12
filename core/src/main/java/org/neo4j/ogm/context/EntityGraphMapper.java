@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.context;
@@ -176,13 +176,13 @@ public class EntityGraphMapper implements EntityMapper {
                 Object dirty = mappingContext.getNodeEntity(mappedRelationship.getEndNodeId());
                 if (dirty != null) {
                     LOGGER.debug("flushing end node of: (${})-[:{}]->(${})", mappedRelationship.getStartNodeId(), mappedRelationship.getRelationshipType(), mappedRelationship.getEndNodeId());
-                    mappingContext.removeNodeEntity(dirty, mappedRelationship.getEndNodeId());
+                    mappingContext.removeNodeEntity(dirty);
                 }
 
                 dirty = mappingContext.getNodeEntity(mappedRelationship.getStartNodeId());
                 if (dirty != null) {
                     LOGGER.debug("flushing start node of: (${})-[:{}]->(${})", mappedRelationship.getStartNodeId(), mappedRelationship.getRelationshipType(), mappedRelationship.getEndNodeId());
-                    mappingContext.removeNodeEntity(dirty, mappedRelationship.getStartNodeId());
+                    mappingContext.removeNodeEntity(dirty);
                 }
             }
         }
@@ -285,7 +285,7 @@ public class EntityGraphMapper implements EntityMapper {
         } else {
             nodeBuilder = compiler.existingNode(Long.valueOf(id.toString()));
             nodeBuilder.addLabels(labels).setPrimaryIndex(primaryIndex);
-            removePreviousLabelsIfRequired((Long) id, classInfo, nodeBuilder);
+            removePreviousLabelsIfRequired(entity, classInfo, nodeBuilder);
         }
         Long identity = EntityUtils.identity(entity, metaData);
         context.visit(identity, nodeBuilder);
@@ -293,10 +293,10 @@ public class EntityGraphMapper implements EntityMapper {
         return nodeBuilder;
     }
 
-    private void removePreviousLabelsIfRequired(Long id, ClassInfo classInfo, NodeBuilder nodeBuilder) {
+    private void removePreviousLabelsIfRequired(Object entity, ClassInfo classInfo, NodeBuilder nodeBuilder) {
         FieldInfo labelFieldInfo = classInfo.labelFieldOrNull();
         if (labelFieldInfo != null) {
-            Collection<String> labelDeltas = mappingContext.labelHistory(id).getPreviousValues();
+            Collection<String> labelDeltas = mappingContext.labelHistory(entity).getPreviousValues();
             if (labelDeltas != null && labelDeltas.size() > 0) {
                 nodeBuilder.removeLabels(labelDeltas);
             }

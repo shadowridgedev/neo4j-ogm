@@ -8,13 +8,14 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.context;
 
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
@@ -31,20 +32,15 @@ import org.neo4j.ogm.metadata.MetaData;
  */
 public class MappingContext {
 
-    /**
-     * register of all mapped entities of a specific type (including supertypes)
-     */
-    private final TypeRegister typeRegister;
-
+    // map Neo4j id -> entity
     private final Map<Long, Object> nodeEntityRegister;
 
+    // map primary index value -> entity
     private final Map<Object, Object> primaryIndexNodeRegister;
 
     private final Map<Long, Object> relationshipEntityRegister;
 
     private final Set<MappedRelationship> relationshipRegister;
-
-    private final Map<Long, LabelHistory> labelHistoryRegister;
 
     private final IdentityMap identityMap;
 
@@ -54,12 +50,10 @@ public class MappingContext {
     public MappingContext(MetaData metaData) {
         this.metaData = metaData;
         this.identityMap = new IdentityMap(metaData);
-        this.typeRegister = new TypeRegister();
         this.nodeEntityRegister = new HashMap<>();
         this.primaryIndexNodeRegister = new HashMap<>();
         this.relationshipEntityRegister = new HashMap<>();
         this.relationshipRegister = new HashSet<>();
-        this.labelHistoryRegister = new HashMap<>();
     }
 
     public Object getNodeEntity(Object id) {
@@ -77,15 +71,15 @@ public class MappingContext {
         return result;
     }
 
-    public Object addNodeEntity(Object entity, Long id) {
+    public Object addNodeEntity(Object entity) {
+
+        ClassInfo classInfo = metaData.classInfo(entity);
+        Long id = (Long) classInfo.identityField().readProperty(entity);
 
         if (nodeEntityRegister.putIfAbsent(id, entity) == null) {
             entity = nodeEntityRegister.get(id);
-            addType(entity.getClass(), entity, id);
             remember(entity);
-            collectLabelHistory(entity);
-            final ClassInfo primaryIndexClassInfo = metaData.classInfo(entity);
-            final FieldInfo primaryIndexField = primaryIndexClassInfo.primaryIndexField(); // also need to add the class to key to prevent collisions.
+            final FieldInfo primaryIndexField = classInfo.primaryIndexField(); // also need to add the class to key to prevent collisions.
             if (primaryIndexField != null) {
                 final Object primaryIndexValue = primaryIndexField.read(entity);
                 primaryIndexNodeRegister.putIfAbsent(primaryIndexValue, entity);
@@ -106,10 +100,12 @@ public class MappingContext {
      * - removes any relationship entities from relationshipEntityRegister if they have this object either as start or end node
      *
      * @param entity the object to deregister
-     * @param id the id of the object in Neo4j
      */
-    void removeNodeEntity(Object entity, Long id) {
-        removeType(entity.getClass(), id);
+    void removeNodeEntity(Object entity) {
+
+        ClassInfo classInfo = metaData.classInfo(entity);
+        Long id = (Long) classInfo.identityField().readProperty(entity);
+
         nodeEntityRegister.remove(id);
         final ClassInfo primaryIndexClassInfo = metaData.classInfo(entity);
         final FieldInfo primaryIndexField = primaryIndexClassInfo.primaryIndexField(); // also need to add the class to key to prevent collisions.
@@ -121,7 +117,11 @@ public class MappingContext {
         deregisterDependentRelationshipEntity(entity);
     }
 
-    public void replaceNodeEntity(Object entity, Long id) {
+    public void replaceNodeEntity(Object entity) {
+
+        ClassInfo classInfo = metaData.classInfo(entity);
+        Long id = (Long) classInfo.identityField().readProperty(entity);
+
         nodeEntityRegister.remove(id);
         final ClassInfo primaryIndexClassInfo = metaData.classInfo(entity);
         final FieldInfo primaryIndexField = primaryIndexClassInfo.primaryIndexField(); // also need to add the class to key to prevent collisions.
@@ -129,7 +129,7 @@ public class MappingContext {
             final Object primaryIndexValue = primaryIndexField.read(entity);
             primaryIndexNodeRegister.remove(primaryIndexValue);
         }
-        addNodeEntity(entity, id);
+        addNodeEntity(entity);
     }
 
     public void replaceRelationshipEntity(Object entity, Long id) {
@@ -138,17 +138,25 @@ public class MappingContext {
     }
 
     Collection<Object> getEntities(Class<?> type) {
-        return typeRegister.get(type).values();
+        Collection<Object> result;
+        if (metaData.isRelationshipEntity(type.getName())) {
+            result = relationshipEntityRegister.values().stream()
+                    .filter((c) -> c.getClass().isAssignableFrom(type))
+                    .collect(Collectors.toList());
+        } else {
+            result = nodeEntityRegister.values().stream()
+                    .filter((c) -> c.getClass().isAssignableFrom(type))
+                    .collect(Collectors.toList());
+        }
+        return result;
     }
 
-    LabelHistory labelHistory(Long identity) {
-        return labelHistoryRegister.computeIfAbsent(identity, k -> new LabelHistory());
+    LabelHistory labelHistory(Object entity) {
+        return identityMap.labelHistory(entity);
     }
 
     public boolean isDirty(Object entity) {
-        ClassInfo classInfo = metaData.classInfo(entity);
-        Object id = classInfo.identityField().readProperty(entity);
-        return !identityMap.remembered((Long) id, entity, classInfo);
+        return !identityMap.remembered(entity);
     }
 
     public boolean containsRelationship(MappedRelationship relationship) {
@@ -171,9 +179,7 @@ public class MappingContext {
         relationshipRegister.clear();
         nodeEntityRegister.clear();
         primaryIndexNodeRegister.clear();
-        typeRegister.clear();
         relationshipEntityRegister.clear();
-        labelHistoryRegister.clear();
     }
 
     public Object getRelationshipEntity(Long relationshipId) {
@@ -183,7 +189,6 @@ public class MappingContext {
     public Object addRelationshipEntity(Object relationshipEntity, Long id) {
         if (relationshipEntityRegister.putIfAbsent(id, relationshipEntity) == null) {
             relationshipEntity = relationshipEntityRegister.get(id);
-            addType(relationshipEntity.getClass(), relationshipEntity, id);
             remember(relationshipEntity);
         }
         return relationshipEntity;
@@ -249,13 +254,8 @@ public class MappingContext {
         Class<?> type = entity.getClass();
         ClassInfo classInfo = metaData.classInfo(type.getName());
         FieldInfo identityReader = classInfo.identityField();
-        Long id = (Long) identityReader.readProperty(entity);
 
         purge(entity, identityReader, type);
-
-        if (id != null) {
-            typeRegister.remove(metaData, type, id);
-        }
     }
 
     /**
@@ -334,7 +334,6 @@ public class MappingContext {
         for (Object entity : getEntities(type)) {
             purge(entity, identityReader, type);
         }
-        typeRegister.delete(type);
     }
 
 
@@ -386,27 +385,8 @@ public class MappingContext {
         }
     }
 
-    private void addType(Class type, Object entity, Object id) {
-        typeRegister.add(metaData, type, entity, id);
-    }
-
-    private void removeType(Class type, Object id) {
-        typeRegister.remove(metaData, type, id);
-    }
-
     private void remember(Object entity) {
-        ClassInfo classInfo = metaData.classInfo(entity);
-        Long id = (Long) classInfo.identityField().readProperty(entity);
-        identityMap.remember(id, entity, classInfo);
+        identityMap.remember(entity);
     }
 
-    private void collectLabelHistory(Object entity) {
-        ClassInfo classInfo = metaData.classInfo(entity);
-        FieldInfo fieldInfo = classInfo.labelFieldOrNull();
-        if (fieldInfo != null) {
-            Collection<String> labels = (Collection<String>) fieldInfo.read(entity);
-            Long id = (Long) classInfo.identityField().readProperty(entity);
-            labelHistory(id).push(labels);
-        }
-    }
 }
