@@ -8,10 +8,11 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 package org.neo4j.ogm.utils;
 
+import java.lang.reflect.Field;
 import java.util.Collection;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -46,4 +47,15 @@ public class EntityUtils {
         }
         return staticLabels;
     }
+
+    public static Long getEntityId(MetaData metaData, Object entity) {
+        return (Long) metaData.classInfo(entity).identityField().readProperty(entity);
+    }
+
+    public static void setIdentityId(MetaData metaData, Object entity, Long identity) {
+		ClassInfo classInfo = metaData.classInfo(entity);
+		Field identityField = classInfo.getField(classInfo.identityField());
+		FieldInfo.write(identityField, entity, identity);
+    }
+
 }

@@ -20,6 +20,7 @@ import java.util.*;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
+import org.neo4j.ogm.utils.EntityUtils;
 
 /**
  * Maintains entity footprints for dirty checking.
@@ -55,7 +56,7 @@ class IdentityMap {
      */
     void remember(Object object) {
         ClassInfo classInfo = metaData.classInfo(object);
-        Long entityId = (Long) classInfo.identityField().read(object);
+        Long entityId = EntityUtils.getEntityId(metaData, object);
         if (metaData.isRelationshipEntity(classInfo.name())) {
             relEntityHash.put(entityId, hash(object, classInfo));
         } else {
@@ -75,7 +76,7 @@ class IdentityMap {
      */
     boolean remembered(Object object) {
         ClassInfo classInfo = metaData.classInfo(object);
-        Long entityId = (Long) classInfo.identityField().read(object);
+        Long entityId = EntityUtils.getEntityId(metaData, object);
         boolean isRelEntity = false;
 
         if (entityId != null) {
@@ -105,8 +106,7 @@ class IdentityMap {
     }
 
     LabelHistory labelHistory(Object entity) {
-        ClassInfo classInfo = metaData.classInfo(entity);
-        Long identity = (Long) classInfo.identityField().readProperty(entity);
+        Long identity = EntityUtils.getEntityId(metaData, entity);
         return labelHistoryRegister.computeIfAbsent(identity, k -> new LabelHistory());
     }
 
@@ -128,6 +128,8 @@ class IdentityMap {
             Field field = classInfo.getField(fieldInfo);
             Object value = FieldInfo.read(field, object);
             if (value != null) {
+                // TODO is it correct ? seems not to be based on java hashcode and not only on sub objects
+                // persistent fields ?
                 if (value.getClass().isArray()) {
                     hash = hash * 31L + Arrays.hashCode(convertToObjectArray(value));
                 } else if (value instanceof Iterable) {

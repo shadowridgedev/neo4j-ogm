@@ -205,9 +205,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
 
     // TODO : identity
     private void setIdentity(Object instance, Long id) {
-        ClassInfo classInfo = metadata.classInfo(instance);
-        FieldInfo fieldInfo = classInfo.identityField();
-        FieldInfo.write(classInfo.getField(fieldInfo), instance, id);
+        EntityUtils.setIdentityId(metadata, instance, id);
     }
 
     private void setProperties(Node nodeModel, Object instance) {
