@@ -9,7 +9,7 @@
   ~ This product may include a number of subcomponents with
   ~ separate copyright notices and license terms. Your use of the source
   ~ code for these subcomponents is subject to the terms and
-  ~  conditions of the subcomponent's license, as noted in the LICENSE file.
+  ~ conditions of the subcomponent's license, as noted in the LICENSE file.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -90,6 +90,11 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
         </dependency>
 
         <dependency>

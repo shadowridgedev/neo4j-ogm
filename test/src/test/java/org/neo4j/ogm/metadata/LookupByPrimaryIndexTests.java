@@ -21,6 +21,7 @@ import java.util.Collection;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.neo4j.ogm.domain.annotations.ids.ValidAnnotations;
 import org.neo4j.ogm.domain.autoindex.valid.Invoice;
 import org.neo4j.ogm.domain.cineasts.annotated.ExtendedUser;
 import org.neo4j.ogm.domain.cineasts.annotated.User;
@@ -41,12 +42,26 @@ public class LookupByPrimaryIndexTests extends MultiDriverTestClass {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        sessionFactory = new SessionFactory(getBaseConfiguration().build(), "org.neo4j.ogm.domain.cineasts.annotated");
+        sessionFactory = new SessionFactory(getBaseConfiguration().build(), "org.neo4j.ogm.domain.cineasts.annotated", "org.neo4j.ogm.domain.annotations.ids");
     }
 
     @Before
     public void setUp() {
         session = sessionFactory.openSession();
+    }
+
+    @Test
+    public void loadUsesIdWhenPresent() {
+
+        ValidAnnotations.Basic entity = new ValidAnnotations.Basic();
+        entity.identifier = "id1";
+        session.save(entity);
+
+        final Session session2 = sessionFactory.openSession();
+
+        final ValidAnnotations.Basic retrievedEntity = session2.load(ValidAnnotations.Basic.class, "id1");
+        assertNotNull(retrievedEntity);
+        assertEquals(entity.identifier, retrievedEntity.identifier);
     }
 
     @Test

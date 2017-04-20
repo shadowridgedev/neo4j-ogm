@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.metadata;
@@ -18,10 +18,11 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 import org.neo4j.ogm.annotation.*;
 import org.neo4j.ogm.exception.MappingException;
-import org.neo4j.ogm.session.Neo4jException;
 import org.neo4j.ogm.utils.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -786,19 +787,17 @@ public class ClassInfo {
 
     public FieldInfo primaryIndexField() {
         if (!primaryIndexFieldChecked && primaryIndexField == null) {
-            final String indexAnnotation = Index.class.getName();
 
-            for (FieldInfo fieldInfo : fieldsInfo().fields()) {
-                AnnotationInfo annotationInfo = fieldInfo.getAnnotations().get(indexAnnotation);
-                if (annotationInfo != null && annotationInfo.get("primary") != null && annotationInfo.get("primary").equals("true")) {
-
-                    if (primaryIndexField == null) {
-                        primaryIndexField = fieldInfo;
-                    } else {
-                        throw new Neo4jException("Each class may only define one primary index.");
-                    }
-                }
+            Supplier<Stream<FieldInfo>> idAnnotations = () -> Stream.of(fieldsInfo().fields().toArray(new FieldInfo[]{}))
+                    .filter(info -> {
+                        AnnotationInfo indexAnnoration = info.getAnnotations().get(Index.class);
+                        return info.getAnnotations().get(Id.class) != null
+                                || (indexAnnoration != null && indexAnnoration.get("primary") != null && indexAnnoration.get("primary").equals("true"));
+                    });
+            if (idAnnotations.get().count() > 1) {
+                throw new IllegalArgumentException("Only one @Id / @Index(primary=true, unique=true) annotation is allowed in a class hierarchy. Please check annotations in the class " + name() + " or its parents");
             }
+            primaryIndexField = idAnnotations.get().findFirst().orElse(null);
             primaryIndexFieldChecked = true;
         }
 

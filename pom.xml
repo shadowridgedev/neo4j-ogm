@@ -10,7 +10,7 @@
   ~ This product may include a number of subcomponents with
   ~ separate copyright notices and license terms. Your use of the source
   ~ code for these subcomponents is subject to the terms and
-  ~  conditions of the subcomponent's license, as noted in the LICENSE file.
+  ~ conditions of the subcomponent's license, as noted in the LICENSE file.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -43,6 +43,7 @@
         <jackson>2.7.1</jackson>
         <httpclient>4.5.2</httpclient>
         <junit>4.12</junit>
+        <assertj.version></assertj.version>
         <slf4j>1.7.21</slf4j>
         <logback>1.1.7</logback>
         <mockito>2.2.29</mockito>
@@ -113,6 +114,12 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>org.assertj</groupId>
+                <artifactId>assertj-core</artifactId>
+                <version>3.6.2</version>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.neo4j.test</groupId>
