@@ -17,29 +17,17 @@ import static net.bytebuddy.matcher.ElementMatchers.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.Callable;
 
 import net.bytebuddy.ByteBuddy;
-import net.bytebuddy.NamingStrategy;
 import net.bytebuddy.TypeCache;
-import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.dynamic.scaffold.TypeValidation;
-import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
 import net.bytebuddy.implementation.FieldAccessor;
 import net.bytebuddy.implementation.InvocationHandlerAdapter;
-import net.bytebuddy.implementation.MethodDelegation;
-import net.bytebuddy.implementation.SuperMethodCall;
-import net.bytebuddy.implementation.bytecode.assign.Assigner;
-import net.bytebuddy.matcher.ElementMatchers;
 import org.apache.commons.collections4.CollectionUtils;
-import org.neo4j.ogm.context.EntityWrapper;
-import org.neo4j.ogm.context.ProxyConfiguration;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
@@ -53,10 +41,10 @@ public class EntityUtils {
 
     public static Long identity(Object entity, MetaData metaData) {
 
-        if (entity instanceof EntityWrapper) {
-            EntityWrapper e1 = (EntityWrapper) entity;
+        if (entity instanceof MyProxyInterface) {
+            MyProxyInterface e1 = (MyProxyInterface) entity;
             if (e1.getOgmNativeDbId() == null) {
-                return Long.valueOf(-System.identityHashCode(entity));
+                return Long.valueOf(-System.identityHashCode(e1.getProxied()));
             } else {
                 return e1.getOgmNativeDbId();
             }
@@ -81,15 +69,15 @@ public class EntityUtils {
     }
 
     public static Long getEntityId(MetaData metaData, Object entity) {
-        if (entity instanceof EntityWrapper) {
-            return ((EntityWrapper) entity).getOgmNativeDbId();
+        if (metaData.classInfo(entity).identityFieldOrNull() == null && entity instanceof MyProxyInterface) {
+            return ((MyProxyInterface) entity).getOgmNativeDbId();
         }
         return (Long) metaData.classInfo(entity).identityField().readProperty(entity);
     }
 
-    public static void setIdentityId(MetaData metaData, Object entity, Long identity) {
-        if (entity instanceof EntityWrapper) {
-            ((EntityWrapper) entity).setOgmNativeDbId(identity);
+    public static void setIdentity(MetaData metaData, Object entity, Long identity) {
+        if (entity instanceof MyProxyInterface) {
+            ((MyProxyInterface) entity).setOgmNativeDbId(identity);
         } else {
             ClassInfo classInfo = metaData.classInfo(entity);
             Field identityField = classInfo.getField(classInfo.identityField());
@@ -97,106 +85,82 @@ public class EntityUtils {
         }
     }
 
-    public static Object getWrapper(Object entity) {
-        if (entity instanceof EntityWrapper) {
-            return entity;
-        }
-            //        try {
-//            EntityWrapper delegator = (EntityWrapper) buildProxy(entity.getClass(), new Class[]{EntityWrapper.class}).newInstance();
-//            ProxyConfiguration.Interceptor interceptor = new ProxyConfiguration.Interceptor() {
-//                @Override
-//                public Object intercept(Object instance, Method method, Object[] arguments) throws Throwable {
-//                    System.out.println("********************************");
-//                    return method.invoke(instance, arguments);
-//                }
-//            };
-//            ( (ProxyConfiguration) delegator ).$$_hibernate_set_interceptor( interceptor );
-//            entity = delegator;
-//        } catch (InstantiationException | IllegalAccessException e) {
-//            e.printStackTrace();
-//        }
-            Class<?> proxy = new ByteBuddy()
-                    .subclass(entity.getClass())
-                    .implement(EntityWrapper.class)
-                    .defineField("ogmNativeDbId", Long.class, Visibility.PUBLIC)
-                    .method(isDeclaredBy(EntityWrapper.class))
-                    .intercept(FieldAccessor.ofBeanProperty()/*FixedValue.value(1l)*/)
-                    .method(not(isDeclaredBy(EntityWrapper.class)))
-                    .intercept(InvocationHandlerAdapter.of(new ProxyInvocationHandler(entity)))
-                    .make()
-                    .load(entity.getClass().getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
-                    .getLoaded();
-            try {
-                EntityWrapper oi = (EntityWrapper) proxy.newInstance();
-                oi.getOgmNativeDbId();
-                entity = oi;
-            } catch (InstantiationException | IllegalAccessException e) {
-                e.printStackTrace();
-            }
-//        ((EntityWrapper)entity).setOgmNativeDbId(2L);
-//        ((EntityWrapper)entity).getOgmNativeDbId();
+    public static Object getWrapper(Object entity, MetaData metadata) {
+
+        if (entity instanceof MyProxyInterface) {
+            // already a proxy
             return entity;
         }
 
-        public static class ProxyInvocationHandler implements InvocationHandler {
-
-            private Object delegate;
-
-            public ProxyInvocationHandler(Object user) {
-                this.delegate = user;
-            }
-
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(delegate, args);
-            }
+        // needs proxy only if not id field defined
+        if (metadata.classInfo(entity) != null && metadata.classInfo(entity).identityFieldOrNull() != null) {
+            return entity;
         }
 
-
-        private static final TypeCache<TypeCache.SimpleKey> CACHE =
-                new TypeCache.WithInlineExpunction<TypeCache.SimpleKey>(TypeCache.Sort.SOFT);
-
-    public static Class buildProxy(
-            final Class persistentClass,
-            final Class[] interfaces) {
-
-//        Class<?> cls = new ByteBuddy()
-////                .with(new NamingStrategy.SuffixingRandom("OGM"))
-//                .subclass(persistentClass)
-//                .implement(EntityWrapper.class, Delegator.class)
-//                .defineField("ogmNativeDbId", Long.class, Visibility.PUBLIC)
-//                .method(isDeclaredBy(EntityWrapper.class)).intercept(FieldAccessor.ofBeanProperty())
-//                .method(isDeclaredBy(persistentClass)).intercept(InvocationHandlerAdapter.toField("target"))
-//                .make()
-//                .load(persistentClass.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
-//                .getLoaded();
-//        if (true) return cls;
-
-        Set<Class<?>> key = new HashSet<Class<?>>();
-        if ( interfaces.length == 1 ) {
-            key.add( persistentClass );
+        Class<?> wrappedClass = entity.getClass();
+        Class<?> proxyClass = getWrapperClass(wrappedClass);
+        MyProxyInterface proxy = null;
+        try {
+            proxy = (MyProxyInterface) proxyClass.newInstance();
+            proxy.setProxied(entity);
+            proxy.setInvocationHandler(new MyHandler());
+        } catch (InstantiationException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
-        key.addAll( Arrays.<Class<?>>asList( interfaces ) );
+        return proxy;
+    }
 
-        return CACHE.findOrInsert(persistentClass.getClassLoader(), new TypeCache.SimpleKey(key), new Callable<Class<?>>() {
+    private static Class<?> getWrapperClass(Class<?> wrappedClass) {
+        Set<Class<?>> key = new HashSet<>();
+        key.add(wrappedClass);
+
+        return CACHE.findOrInsert(wrappedClass.getClassLoader(), new TypeCache.SimpleKey(key), new Callable<Class<?>>() {
             @Override
             public Class<?> call() throws Exception {
                 return new ByteBuddy()
-                        .with(TypeValidation.DISABLED)
-                        .with(new NamingStrategy.SuffixingRandom("HibernateProxy"))
-                        .subclass(interfaces.length == 1 ? persistentClass : Object.class, ConstructorStrategy.Default.IMITATE_SUPER_CLASS_OPENING)
-                        .implement((Type[]) interfaces)
-                        .method(ElementMatchers.isVirtual().and(not(ElementMatchers.isFinalizer())))
-                        .intercept(MethodDelegation.to(ProxyConfiguration.InterceptorDispatcher.class))
-                        .method(ElementMatchers.nameStartsWith("$$_hibernate_").and(ElementMatchers.isVirtual()))
-                        .intercept(SuperMethodCall.INSTANCE)
-                        .defineField(ProxyConfiguration.INTERCEPTOR_FIELD_NAME, ProxyConfiguration.Interceptor.class, Visibility.PRIVATE)
-                        .implement(ProxyConfiguration.class)
-                        .intercept(FieldAccessor.ofField(ProxyConfiguration.INTERCEPTOR_FIELD_NAME).withAssigner(Assigner.DEFAULT, Assigner.Typing.DYNAMIC))
+                        .subclass(wrappedClass)
+                        .defineField("invocationHandler", MyHandler.class)
+                        .defineField("proxied", Object.class)
+                        .defineField("ogmNativeDbId", Long.class)
+                        .implement(MyProxyInterface.class)
+                        .intercept(FieldAccessor.ofBeanProperty())
+                        .method(not(isDeclaredBy(MyProxyInterface.class)
+//                        not((named("setInvocationHandler"))
+//                        .or(named("setProxied"))
+//                        .or(named("getProxied"))
+//                        .or(named("getOgmNativeDbId"))
+//                        .or(named("setOgmNativeDbId"))
+                                        .or(isEquals())
+                                        .or(isHashCode())
+                                        .or(isClone())
+                        ))
+//                .intercept(MethodDelegation.toField("proxied"))
+                        .intercept(InvocationHandlerAdapter.toField("invocationHandler"))
                         .make()
-                        .load(persistentClass.getClassLoader())
+                        .load(wrappedClass.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
                         .getLoaded();
             }
         }, CACHE);
     }
+
+    public interface MyProxyInterface {
+        void setInvocationHandler(MyHandler handler);
+
+        Object getProxied();
+        void setProxied(Object proxied);
+
+        Long getOgmNativeDbId();
+        void setOgmNativeDbId(Long ogmNativeDbId);
+
+    }
+
+    public static class MyHandler implements InvocationHandler {
+        @Override
+        public Object invoke(final Object o, final Method method, final Object[] objects) throws Throwable {
+            return method.invoke(((MyProxyInterface) o).getProxied(), objects);
+        }
+    }
+
+    private static final TypeCache<TypeCache.SimpleKey> CACHE =
+            new TypeCache.WithInlineExpunction<TypeCache.SimpleKey>(TypeCache.Sort.SOFT);
 }

@@ -349,7 +349,7 @@ public class RequestExecutor {
         Transaction tx = session.getTransaction();
         if (persisted != null) {  // it will be null if the variable represents a simple relationship.
             // set the id field of the newly created domain object
-            EntityUtils.setIdentityId(session.metaData(), persisted, identity);
+            EntityUtils.setIdentity(session.metaData(), persisted, identity);
             ClassInfo classInfo = session.metaData().classInfo(persisted);
 
             if (tx != null) {

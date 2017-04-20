@@ -8,7 +8,7 @@
  * This product may include a number of subcomponents with
  * separate copyright notices and license terms. Your use of the source
  * code for these subcomponents is subject to the terms and
- *  conditions of the subcomponent's license, as noted in the LICENSE file.
+ * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
 package org.neo4j.ogm.metadata;
@@ -26,6 +26,7 @@ import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.typeconversion.AttributeConverter;
 import org.neo4j.ogm.typeconversion.CompositeAttributeConverter;
 import org.neo4j.ogm.utils.ClassUtils;
+import org.neo4j.ogm.utils.EntityUtils;
 import org.neo4j.ogm.utils.RelationshipUtils;
 
 /**
@@ -361,6 +362,7 @@ public class FieldInfo {
 
     public void write(Object instance, Object value) {
 
+        instance = unwrapProxy(instance);
         if (hasPropertyConverter()) {
             value = getPropertyConverter().toEntityAttribute(value);
             write(field, instance, value);
@@ -394,6 +396,7 @@ public class FieldInfo {
     }
 
     public Object read(Object instance) {
+        instance = unwrapProxy(instance);
         return read(containingClassInfo.getField(this), instance);
     }
 
@@ -402,11 +405,20 @@ public class FieldInfo {
             throw new IllegalStateException(
                     "The readComposite method should be used for fields with a CompositeAttributeConverter");
         }
+        instance = unwrapProxy(instance);
         Object value = read(containingClassInfo.getField(this), instance);
         if (hasPropertyConverter()) {
             value = getPropertyConverter().toGraphProperty(value);
         }
         return value;
+    }
+
+    // cannot read field from proxy, must unwrap
+    private Object unwrapProxy(Object instance) {
+        if (instance instanceof EntityUtils.MyProxyInterface) {
+            instance = ((EntityUtils.MyProxyInterface)instance).getProxied();
+        }
+        return instance;
     }
 
     public Map<String, ?> readComposite(Object instance) {

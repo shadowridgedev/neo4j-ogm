@@ -19,37 +19,44 @@ import java.util.Collection;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
-import org.neo4j.ogm.metadata.test.EntityWithoutExplicitId;
+import org.neo4j.ogm.idsupport.EntityWithoutExplicitId;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
+import org.neo4j.ogm.testutil.MultiDriverTestClass;
 
-//@Ignore
-public class EntityWithoutExplicitIdTest {
+public class EntityWithoutExplicitIdTest extends MultiDriverTestClass {
+
+	private static SessionFactory sessionFactory;
 
 	private Session session;
-	private SessionFactory sessionFactory;
+
+	@BeforeClass
+	public static void oneTimeSetUp() {
+		sessionFactory = new SessionFactory(getBaseConfiguration().build(),"org.neo4j.ogm.idsupport");
+	}
 
 	@Before
-	public void setUp() throws Exception {
-		sessionFactory = new SessionFactory("org.neo4j.ogm.metadata.test");
+	public void init() {
 		session = sessionFactory.openSession();
 	}
 
 	@After
-	public void tearDown() throws Exception {
-		sessionFactory.close();
+	public void cleanup() {
+		session.purgeDatabase();
 	}
 
 	@Test
 	public void name() throws Exception {
 
 		EntityWithoutExplicitId entity = new EntityWithoutExplicitId();
-		entity.name = "aa";
+		entity.setSurname("aa");
 		session.save(entity);
 		session.clear();
 		Collection<EntityWithoutExplicitId> entities = session.loadAll(EntityWithoutExplicitId.class);
 		assertEquals(1, entities.size());
+		assertEquals("aa", entities.iterator().next().getSurname());
 
 	}
 

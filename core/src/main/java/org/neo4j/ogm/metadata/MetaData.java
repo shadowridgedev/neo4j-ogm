@@ -18,9 +18,9 @@ import java.util.*;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.RelationshipEntity;
-import org.neo4j.ogm.context.EntityWrapper;
 import org.neo4j.ogm.exception.AmbiguousBaseClassException;
 import org.neo4j.ogm.typeconversion.ConversionCallback;
+import org.neo4j.ogm.utils.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,7 +84,7 @@ public class MetaData {
      */
     public ClassInfo classInfo(Object object) {
         String className;
-        if (object instanceof EntityWrapper) {
+        if (object instanceof EntityUtils.MyProxyInterface) {
             className = object.getClass().getSuperclass().getName();
         } else {
              className = object.getClass().getName();

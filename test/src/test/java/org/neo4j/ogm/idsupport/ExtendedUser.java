@@ -11,14 +11,21 @@
  * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
-package org.neo4j.ogm.context;
+package org.neo4j.ogm.idsupport;
 
-public interface EntityWrapper {
 
-//	Object getTarget();
-//	void setTarget(Object target);
-	Long getOgmNativeDbId();
-	void setOgmNativeDbId(Long ogmNativeDbId);
-	Object getOgmWrappedEntity();
-	void setOgmWrappedEntity(Object wrapped);
+import org.neo4j.ogm.annotation.NodeEntity;
+
+/**
+ * @author Nicolas Mervaillie
+ */
+@NodeEntity
+public class ExtendedUser extends User {
+
+    public ExtendedUser() {
+    }
+
+    public ExtendedUser(String login, String name, String password) {
+        super(login, name, password);
+    }
 }

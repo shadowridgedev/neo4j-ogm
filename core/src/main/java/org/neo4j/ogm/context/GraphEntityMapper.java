@@ -177,7 +177,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
                 try {
                     if (entity == null) {
                         entity = entityFactory.newObject(node);
-                        entity = EntityUtils.getWrapper(entity);
+                        entity = EntityUtils.getWrapper(entity, metadata);
                         setIdentity(entity, node.getId());
                         setProperties(node, entity);
                         setLabels(node, entity);
@@ -206,7 +206,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
 
     // TODO : identity
     private void setIdentity(Object instance, Long id) {
-        EntityUtils.setIdentityId(metadata, instance, id);
+        EntityUtils.setIdentity(metadata, instance, id);
     }
 
     private void setProperties(Node nodeModel, Object instance) {

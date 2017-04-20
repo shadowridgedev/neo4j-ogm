@@ -10,7 +10,7 @@
   ~ This product may include a number of subcomponents with
   ~ separate copyright notices and license terms. Your use of the source
   ~ code for these subcomponents is subject to the terms and
-  ~  conditions of the subcomponent's license, as noted in the LICENSE file.
+  ~ conditions of the subcomponent's license, as noted in the LICENSE file.
   -->
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -50,6 +50,7 @@
         <neo4j>3.1.2</neo4j>
         <bolt>1.1.2</bolt>
         <fast.classpath.scanner>2.0.18</fast.classpath.scanner>
+        <bytebuddy.version>1.6.13</bytebuddy.version>
         <ogm.properties>ogm-bolt.properties</ogm.properties>
     </properties>
 
@@ -176,6 +177,12 @@
                 <artifactId>fast-classpath-scanner</artifactId>
                 <version>${fast.classpath.scanner}</version>
                 <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>${bytebuddy.version}</version>
             </dependency>
 
         </dependencies>

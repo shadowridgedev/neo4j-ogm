@@ -285,7 +285,7 @@ public class MappingContext {
      */
     public void reset(Object entity) {
         removeEntity(entity);
-        EntityUtils.setIdentityId(metaData, entity, null);
+        EntityUtils.setIdentity(metaData, entity, null);
     }
 
 

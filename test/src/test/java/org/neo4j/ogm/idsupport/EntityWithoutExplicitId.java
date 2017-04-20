@@ -11,7 +11,7 @@
  * conditions of the subcomponent's license, as noted in the LICENSE file.
  */
 
-package org.neo4j.ogm.metadata.test;
+package org.neo4j.ogm.idsupport;
 
 import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.NodeEntity;
@@ -20,9 +20,17 @@ import org.neo4j.ogm.annotation.NodeEntity;
 public class EntityWithoutExplicitId {
 
 	@Id
-	public String name;
+	public String surname;
 
-	public String toString() {
-		return name;
+	public String getSurname() {
+		return surname;
 	}
+
+	public void setSurname(String name) {
+		this.surname = name;
+	}
+
+//	public String toString() {
+//		return name;
+//	}
 }

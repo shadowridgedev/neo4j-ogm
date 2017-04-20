@@ -68,7 +68,7 @@ public class EntityGraphMapper implements EntityMapper {
         if (entity == null) {
             throw new NullPointerException("Cannot map null object");
         }
-        entity = EntityUtils.getWrapper(entity);
+        entity = EntityUtils.getWrapper(entity, metaData);
 
         Compiler compiler = new MultiStatementCypherCompiler();
 
@@ -430,6 +430,7 @@ public class EntityGraphMapper implements EntityMapper {
         LOGGER.debug("linking to entity {} in {} direction", relNodes.target, mapBothDirections ? "both" : "one");
 
         if (relNodes.target != null) {
+            relNodes.target = EntityUtils.getWrapper(relNodes.target, metaData);
             CompileContext context = cypherCompiler.context();
 
             RelationshipBuilder relationshipBuilder = getRelationshipBuilder(cypherCompiler, relNodes.target, directedRelationship, mapBothDirections);
@@ -473,7 +474,7 @@ public class EntityGraphMapper implements EntityMapper {
             if (relId == null || relationshipEndsChanged) { //if the RE itself is new, or it exists but has one of it's end nodes changed
                 relationshipBuilder = cypherBuilder.newRelationship(directedRelationship.type());
                 if (relationshipEndsChanged) {
-                    EntityUtils.setIdentityId(metaData, entity, null);
+                    EntityUtils.setIdentity(metaData, entity, null);
                 }
             } else {
                 relationshipBuilder = cypherBuilder.existingRelationship(relId, directedRelationship.type());
@@ -505,8 +506,6 @@ public class EntityGraphMapper implements EntityMapper {
         if (startEntity == null || targetEntity == null) {
             throw new MappingException("Relationship entity " + entity + " cannot have a missing start or end node");
         }
-        ClassInfo targetInfo = metaData.classInfo(targetEntity);
-        ClassInfo startInfo = metaData.classInfo(startEntity);
         Long tgtIdentity = EntityUtils.getEntityId(metaData, targetEntity);
         Long srcIdentity = EntityUtils.getEntityId(metaData, startEntity);
 
@@ -626,7 +625,8 @@ public class EntityGraphMapper implements EntityMapper {
     private Object getStartEntity(ClassInfo relEntityClassInfo, Object relationshipEntity) {
         FieldInfo actualStartNodeReader = relEntityClassInfo.getStartNodeReader();
         if (actualStartNodeReader != null) {
-            return actualStartNodeReader.read(relationshipEntity);
+            Object result = actualStartNodeReader.read(relationshipEntity);
+            return EntityUtils.getWrapper(result, metaData);
         }
         throw new RuntimeException("@StartNode of a relationship entity may not be null");
     }
@@ -634,7 +634,8 @@ public class EntityGraphMapper implements EntityMapper {
     private Object getTargetEntity(ClassInfo relEntityClassInfo, Object relationshipEntity) {
         FieldInfo actualEndNodeReader = relEntityClassInfo.getEndNodeReader();
         if (actualEndNodeReader != null) {
-            return actualEndNodeReader.read(relationshipEntity);
+            Object result = actualEndNodeReader.read(relationshipEntity);
+            return EntityUtils.getWrapper(result, metaData);
         }
         throw new RuntimeException("@EndNode of a relationship entity may not be null");
     }

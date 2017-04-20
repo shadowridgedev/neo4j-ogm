@@ -278,7 +278,8 @@ public class ClassInfo {
     }
 
 
-    private FieldInfo identityFieldOrNull() {
+    // FIXME : method visibility
+    public FieldInfo identityFieldOrNull() {
         try {
             return identityField();
         } catch (MappingException me) {
