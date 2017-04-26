@@ -28,6 +28,7 @@ public class UsernamePasswordCredentials implements Credentials<String> {
         if (userName == null || password == null) {
             throw new IllegalArgumentException("username or password cannot be null");
         }
+        // cr getBytes doesn't specify encoding - problem on windows when username or password contains utf-8 characters
         this.credentials = Base64.encodeBase64String(userName.concat(":").concat(password).getBytes());
         this.username = userName;
         this.password = password;

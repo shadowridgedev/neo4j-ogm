@@ -207,6 +207,7 @@ public class FieldInfo {
         throw new RuntimeException("relationship direction call invalid");
     }
 
+    // CR: duplicate code below (difference only in "descriptor" x "typeParameterDescriptor")
     public boolean isTypeOf(Class<?> type) {
 
         while (type != null) {

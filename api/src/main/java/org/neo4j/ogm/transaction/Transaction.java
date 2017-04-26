@@ -43,6 +43,7 @@ public interface Transaction extends AutoCloseable {
      */
     boolean isReadOnly();
 
+    // cr: what was this supposed to be for?
 //    /**
 //     * Register a new object on the transaction. A new object is
 //     * one that was not previously stored in the graph.

@@ -332,6 +332,7 @@ public class ClassInfo {
             for (FieldInfo fieldInfo : fieldsInfo().fields()) {
                 if (fieldInfo.isLabelField()) {
                     if (!fieldInfo.isIterable()) {
+                        // cr: iterable does not mean a collection
                         throw new MappingException(String.format(
                                 "Field '%s' in class '%s' includes the @Labels annotation, however this field is not a " +
                                         "type of collection.", fieldInfo.getName(), this.name()));

@@ -25,6 +25,8 @@ import org.neo4j.ogm.session.request.RowDataStatement;
  */
 class AutoIndex {
 
+    // CR: why not inline with static import? then you have just emptyMap() without shouting
+
     private static final Map<String, Object> EMPTY_MAP = Collections.emptyMap();
 
     /**

@@ -93,6 +93,7 @@ public class Neo4jSession implements Session {
 
     @Override
     public EventListener register(EventListener eventListener) {
+        // cr: what is the use for Session specific EventListeners?
         registeredEventListeners.add(eventListener);
         return eventListener;
     }
@@ -114,6 +115,7 @@ public class Neo4jSession implements Session {
                     eventListener.onPostDelete(event);
                     break;
                 default:
+                    // cr: just throw exception here? it is a library bug anyway..
                     logger.warn("Event not recognised: {}", event);
             }
         }

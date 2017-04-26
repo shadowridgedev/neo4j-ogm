@@ -55,6 +55,9 @@ public class SaveDelegate {
                     objects.add(arrayElement);
                 }
             } else {
+                // cr: what if object is an iterable AND not a Collection
+                // use case: some domain object that implements Iterable of persistable objects, but not a Collection
+                // either handle it, or forbid, probably in DomainInfo/ClassInfo
                 objects = (Collection<T>) object;
             }
             List<CompileContext> contexts = new ArrayList<>();
@@ -70,6 +73,7 @@ public class SaveDelegate {
             }
         } else {
             ClassInfo classInfo = session.metaData().classInfo(object);
+            // cr: shouldn't same check be in the branch above?
             if (classInfo != null) {
 
                 if (session.eventsEnabled()) {

@@ -16,6 +16,8 @@ package org.neo4j.ogm.exception;
 /**
  * Exception thrown if a connection could not be obtained to the Neo4j database
  *
+ * cr: should there be a parent OgmException that other exception extend?
+ * + create specific exception classes instead of throwing RuntimeException
  * @author Luanne Misquitta
  */
 public class ConnectionException extends RuntimeException {

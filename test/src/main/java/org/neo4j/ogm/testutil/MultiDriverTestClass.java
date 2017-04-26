@@ -35,6 +35,7 @@ public class MultiDriverTestClass {
 
 	private static TestServer testServer;
 	private static File graphStore;
+	// CR: this always executes tests with ogm.properties, ignoring other drivers?
 	private static Configuration.Builder baseConfiguration = new Configuration.Builder(new ClasspathConfigurationSource("ogm.properties"));
 
 	static {

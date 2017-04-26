@@ -18,6 +18,7 @@ package org.neo4j.ogm.exception;
  */
 public class ResultErrorsException extends RuntimeException {
 
+    // cr: no cause provided (even though this is sometimes thrown from catch blocks)
     public ResultErrorsException(String reasonMessage) {
         super(reasonMessage);
     }

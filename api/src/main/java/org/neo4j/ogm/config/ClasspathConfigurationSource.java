@@ -18,6 +18,7 @@ public class ClasspathConfigurationSource implements ConfigurationSource {
         try (InputStream is = Thread.currentThread().getContextClassLoader().getResourceAsStream(propertiesFileName)) {
             properties.load(is);
         } catch (IOException e) {
+            // cr throw specific configuration exception instead?
             throw new RuntimeException("Could not load properties file: " + propertiesFileName, e);
         }
     }

@@ -54,6 +54,7 @@ public class AutoIndexManager {
 
     public AutoIndexManager(MetaData metaData, Driver driver, Configuration configuration) {
 
+        // cr: should AutoIndexManager initialize driver? better to expect initialized driver
         this.driver = initialiseDriver(driver);
         this.configuration = configuration;
         this.indexes = initialiseIndexMetadata(metaData);
@@ -123,6 +124,7 @@ public class AutoIndexManager {
             if (writer != null) try {
                 writer.close();
             } catch (IOException ignore) {
+                // cr: log.trace at the least
             }
         }
     }

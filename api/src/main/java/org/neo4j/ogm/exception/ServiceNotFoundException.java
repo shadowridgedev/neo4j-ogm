@@ -14,6 +14,8 @@
 package org.neo4j.ogm.exception;
 
 /**
+ * cr: not used?
+ *
  * @author Vice Bickers
  * @author Mark Angrish
  */

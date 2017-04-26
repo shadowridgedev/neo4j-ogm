@@ -68,6 +68,9 @@ public class SessionFactory {
     public SessionFactory(Configuration configuration, String... packages) {
         // TODO: This if check is only required because of testing of the embedded driver.
         // TODO: Our tests shouldn't switch driver type halfway through.
+        // cr changing drivers happens in projects - e.g. unit tests with embedded driver and IT with bolt or http
+        // I would love to see DriverManager class removed - why can't we just keep driver here in SessionFactory?
+        // it is only used in openSession below and all other accesses are in tests
         if (DriverManager.getDriver() == null || DriverManager.getDriver().getConfiguration() ==null
                 || !DriverManager.getDriver().getConfiguration().equals(configuration)) {
             // configuration has changed : switch the driver

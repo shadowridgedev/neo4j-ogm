@@ -230,6 +230,7 @@ public class EntityGraphMapper implements EntityMapper {
      * @param nodeBuilder a {@link NodeBuilder} that knows how to compile node create/update cypher phrases
      */
     private void updateNode(Object entity, CompileContext context, NodeBuilder nodeBuilder) {
+        // cr: stale comment, no events fired here
         // fire pre-save event here
         if (mappingContext.isDirty(entity)) {
             LOGGER.debug("{} has changed", entity);

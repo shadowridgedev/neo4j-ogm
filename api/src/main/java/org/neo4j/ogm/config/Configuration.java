@@ -24,10 +24,13 @@ import org.slf4j.LoggerFactory;
  * A generic configuration class that can be set up programmatically
  * or via a properties file.
  *
+ * cr: why this isn't an abstract class with 3 implementations for each driver?
+ *
  * @author Vince Bickers
  * @author Mark Angrish
  */
 public class Configuration {
+
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
@@ -44,6 +47,7 @@ public class Configuration {
 	private Credentials credentials;
 
 
+	// cr: shouldn't this validate the fields?, e.g. poolsize > 0, encryptionLevel
 	Configuration(Builder builder) {
 		this.uri = builder.uri;
 		this.connectionPoolSize = builder.connectionPoolSize != null ? builder.connectionPoolSize : 50;
