@@ -13,6 +13,7 @@
 
 package org.neo4j.ogm.persistence.examples.cineasts.annotated;
 
+import static com.google.common.collect.Sets.newHashSet;
 import static org.junit.Assert.*;
 
 import java.net.MalformedURLException;
@@ -24,6 +25,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
+import org.neo4j.ogm.cypher.query.Pagination;
 import org.neo4j.ogm.cypher.query.SortOrder;
 import org.neo4j.ogm.domain.cineasts.annotated.*;
 import org.neo4j.ogm.session.Session;
@@ -801,6 +803,59 @@ public class CineastsRelationshipEntityTest extends MultiDriverTestClass {
         movie = session.load(Movie.class, movie.getUuid());
         assertEquals(1, movie.getRatings().size());
         assertNull(movie.getRatings().iterator().next().getComment());
+    }
+
+    @Test
+    public void testFilterOnRelationshipEntity() throws Exception {
+        Movie pulpFiction = new Movie("Pulp Fiction", 1994);
+
+        Movie ootf = new Movie("Harry Potter and the Order of the Phoenix", 2009);
+
+        User frantisek = new User();
+        frantisek.setName("Frantisek");
+        frantisek.setLogin("frantisek");
+
+        Rating pulpRating = new Rating();
+        pulpRating.setStars(3);
+        pulpRating.setMovie(pulpFiction);
+        pulpRating.setUser(frantisek);
+        pulpFiction.setRatings(newHashSet(pulpRating));
+
+        Rating ootfRating = new Rating();
+        ootfRating.setStars(3);
+        ootfRating.setMovie(ootf);
+        ootfRating.setUser(frantisek);
+
+        frantisek.setRatings(newHashSet(ootfRating, pulpRating));
+
+        User otto = new User();
+        otto.setName("Otto");
+        otto.setLogin("otto");
+
+        Rating pulpRating2 = new Rating();
+        pulpRating2.setStars(3);
+        pulpRating2.setMovie(pulpFiction);
+        pulpRating2.setUser(otto);
+
+        Rating ootfRating2 = new Rating();
+        ootfRating2.setStars(3);
+        ootfRating2.setMovie(ootf);
+        ootfRating2.setUser(otto);
+
+        pulpFiction.setRatings(newHashSet(pulpRating, pulpRating2));
+        ootf.setRatings(newHashSet(ootfRating, ootfRating2));
+        otto.setRatings(newHashSet(pulpRating2, ootfRating2));
+        session.save(otto);
+
+        session.clear();
+
+        Filter filter = new Filter("stars", ComparisonOperator.EQUALS, 3);
+        filter.setNestedPropertyName("ratings");
+        filter.setNestedPropertyType(Rating.class);
+        filter.setNestedRelationshipEntity(true);
+        Collection<User> users = session.loadAll(User.class, filter, new Pagination(0, 2));
+
+        assertEquals(2, users.size());
     }
 
     private void bootstrap(String cqlFileName) {
