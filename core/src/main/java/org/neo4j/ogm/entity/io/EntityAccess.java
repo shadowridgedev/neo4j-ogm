@@ -37,32 +37,33 @@ public abstract class EntityAccess implements PropertyWriter, RelationalWriter {
 
 
     /**
-     * Merges the contents of <em>collection</em> with <em>hydrated</em> ensuring no duplicates and returns the result as an
-     * instance of the given parameter type.
+     * Merges the contents of <em>newValues</em> with <em>currentValues</em> ensuring no duplicates and returns the
+     * result as an instance of the specified concrete containerType or its default concrete implementation if
+     * containerType is an interface.
      *
-     * @param parameterType The type of Iterable or array to return
-     * @param newValues The objects to merge into a collection of the given parameter type, which may not necessarily be of a
-     *        type assignable from <em>parameterType</em> already
-     * @param currentValues The Iterable to merge into, which may be <code>null</code> if a new collection needs creating
-     * @param elementType   The type of the element in the array or collection
-     * @return The result of the merge, as an instance of the specified parameter type
+     * @param containerType The type of Collection or Array to return, which may be a concrete class or an interface
+     * @param newValues The objects to merge into a Collection of the given containerType, which may not necessarily be
+     *        of a type assignable from <em>containerType</em> already, e.g. merge of Set and List
+     * @param currentValues The Collection to merge into, which may be <code>null</code> if a new container needs
+     *        to be created
+     * @param elementType  The type of the element in the Array or Collection
+     * @return The result of the merge, as an instance of the specified concrete containerType or its default concrete
+     *         implementation if containerType is an interface.
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-    public static Object merge(Class<?> parameterType, Object newValues, Collection currentValues, Class elementType) {
+    public static Object merge(Class<?> containerType, Object newValues, Collection currentValues, Class elementType) {
 
         //While we expect newValues to be an iterable, there are a couple of exceptions
-
         if (newValues != null) {
             //1. A primitive array cannot be cast directly to Iterable
             newValues = boxPrimitiveArray(newValues);
 
             //2. A char[] may come in as a String or an array of String[]
-            newValues = stringToCharacterIterable(newValues, parameterType, elementType);
+            newValues = stringToCharacterIterable(newValues, containerType, elementType);
         }
 
-
-        if (parameterType.isArray()) {
-            Class type = parameterType.getComponentType();
+        if (containerType.isArray()) {
+            Class type = containerType.getComponentType();
             List<Object> objects = new ArrayList<>(union((Collection) newValues, currentValues, elementType));
 
             Object array = Array.newInstance(type, objects.size());
@@ -73,63 +74,55 @@ public abstract class EntityAccess implements PropertyWriter, RelationalWriter {
         }
 
         // create the desired type of collection and use it for the merge
-        Collection newCollection = createCollection(parameterType, (Collection) newValues, currentValues, elementType);
-        if (newCollection != null) {
-            return newCollection;
-        }
+        return createCollection(containerType, (Collection) newValues, currentValues, elementType);
 
-        // hydrated is unusable at this point so we can just set the other collection if it's compatible
-        if (parameterType.isAssignableFrom(newValues.getClass())) {
-            return newValues;
-        }
-
-
-        throw new RuntimeException("Unsupported: " + parameterType.getName());
     }
 
-    private static Collection<?> createCollection(Class<?> parameterType, Collection collection, Collection hydrated, Class elementType) {
-        if (Vector.class.isAssignableFrom(parameterType)) {
+    private static Collection<?> createCollection(Class<?> containerType, Collection collection, Collection hydrated, Class elementType) {
+        if (Vector.class.isAssignableFrom(containerType)) {
             return new Vector<>(union(collection, hydrated, elementType));
         }
-        if (List.class.isAssignableFrom(parameterType)) {
+        if (List.class.isAssignableFrom(containerType)) {
             return new ArrayList<>(union(collection, hydrated, elementType));
         }
-        if (SortedSet.class.isAssignableFrom(parameterType)) {
+        if (SortedSet.class.isAssignableFrom(containerType)) {
             return new TreeSet<>(union(collection, hydrated, elementType));
         }
-        if (Set.class.isAssignableFrom(parameterType)) {
-            return new HashSet<>(union(collection, hydrated, elementType));
+        if (Set.class.isAssignableFrom(containerType)) {
+            return new LinkedHashSet<>(union(collection, hydrated, elementType));
         }
-        return null;
+        /**
+         * @see #385
+         */
+        if (Iterable.class.isAssignableFrom(containerType)) {
+            return new LinkedHashSet<>(union(collection, hydrated, elementType));
+        }
+
+        throw new RuntimeException("Unsupported: " + containerType.getName());
     }
 
-    public static Collection<Object> union(Collection collection, Collection hydrated, Class elementType) {
-        if (collection == null) {
-            return hydrated;
+    public static Collection<Object> union(Collection newValues, Collection existingValues, Class elementType) {
+
+        // no new values - return previously hydrated collection
+        if (newValues == null || newValues.size() == 0) {
+            return existingValues;
         }
-        if (hydrated==null || hydrated.size() == 0) {
-            Collection<Object> result = new ArrayList<>(collection.size());
-            for (Object object : collection) {
+
+        // no existing values - return a new ArrayList containing the new values
+        if (existingValues==null || existingValues.size() == 0) {
+            Collection<Object> result = new ArrayList<>(newValues.size());
+            for (Object object : newValues) {
                 result.add(Utils.coerceTypes(elementType, object));
             }
             return result;
         }
-        int resultSize = collection.size();
-        if (hydrated != null) {
-            resultSize += hydrated.size();
-        }
-        Collection<Object> result = new LinkedHashSet<>(resultSize);
 
-        if (hydrated != null && hydrated.size() > collection.size()) {
-            result.addAll(hydrated);
-            addToCollection(collection, result, elementType);
-        }
-        else {
-            addToCollection(collection, result, elementType);
-            if (hydrated!=null) {
-                addToCollection(hydrated, result, elementType);
-            }
-        }
+        // some new values and some existing values - combine them, preserving insertion order
+        Collection<Object> result = new LinkedHashSet<>(newValues.size() + existingValues.size());
+
+        addToCollection(existingValues, result, elementType);
+        addToCollection(newValues, result, elementType);
+
         return result;
     }
 
@@ -237,5 +230,6 @@ public abstract class EntityAccess implements PropertyWriter, RelationalWriter {
         }
         return value;
     }
+
 
 }

@@ -77,7 +77,12 @@ public class Utils {
      * @return converted value
      */
     public static Object coerceTypes(Class clazz, Object value) {
-        if (clazz.isPrimitive() && value==null) {
+
+        if (value != null && value.getClass().equals(clazz)) {
+            return value;
+        }
+
+        if (clazz.isPrimitive() && value == null) {
             return defaultForPrimitive(clazz,value);
         }
         if (value != null) {
