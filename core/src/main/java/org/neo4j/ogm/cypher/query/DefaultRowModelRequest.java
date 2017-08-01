@@ -22,6 +22,7 @@ import org.neo4j.ogm.request.RowModelRequest;
  */
 public class DefaultRowModelRequest extends CypherQuery implements RowModelRequest {
 
+    @SuppressWarnings("ConstantName")
     private final static String[] resultDataContents = new String[]{"row"};
 
     public DefaultRowModelRequest(String cypher, Map<String, ?> parameters) {

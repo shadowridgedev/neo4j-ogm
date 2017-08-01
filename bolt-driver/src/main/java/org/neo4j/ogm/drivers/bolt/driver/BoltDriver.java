@@ -48,7 +48,7 @@ import static java.util.Objects.requireNonNull;
  */
 public class BoltDriver extends AbstractConfigurableDriver {
 
-    private final Logger LOGGER = LoggerFactory.getLogger(BoltDriver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoltDriver.class);
 
     private volatile Driver boltDriver;
 

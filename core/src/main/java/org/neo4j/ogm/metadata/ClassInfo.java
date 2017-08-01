@@ -773,17 +773,17 @@ public class ClassInfo {
      * @return class of the type parameter descriptor or null if it could not be determined
      */
     Class getTypeParameterDescriptorForRelationship(String relationshipType, String relationshipDirection) {
-        final boolean STRICT_MODE = true; //strict mode for matching methods and fields, will only look for explicit annotations
-        final boolean INFERRED_MODE = false; //inferred mode for matching methods and fields, will infer the relationship type from the getter/setter/property
+        final boolean strictMode = true; //strict mode for matching methods and fields, will only look for explicit annotations
+        final boolean inferredMode = false; //inferred mode for matching methods and fields, will infer the relationship type from the getter/setter/property
 
         try {
-            FieldInfo fieldInfo = relationshipField(relationshipType, relationshipDirection, STRICT_MODE);
+            FieldInfo fieldInfo = relationshipField(relationshipType, relationshipDirection, strictMode);
             if (fieldInfo != null && fieldInfo.getTypeDescriptor() != null) {
                 return ClassUtils.getType(fieldInfo.getTypeDescriptor());
             }
 
             if (!relationshipDirection.equals(Relationship.INCOMING)) { //we always expect an annotation for INCOMING
-                fieldInfo = relationshipField(relationshipType, relationshipDirection, INFERRED_MODE);
+                fieldInfo = relationshipField(relationshipType, relationshipDirection, inferredMode);
                 if (fieldInfo != null && fieldInfo.getTypeDescriptor() != null) {
                     return ClassUtils.getType(fieldInfo.getTypeDescriptor());
                 }

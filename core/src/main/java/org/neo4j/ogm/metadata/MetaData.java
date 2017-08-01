@@ -66,13 +66,13 @@ public class MetaData {
             return classInfos.get(name);
         }
 
-        ClassInfo classInfo = _classInfo(name, NodeEntity.class.getName(), "label");
+        ClassInfo classInfo = classInfo(name, NodeEntity.class.getName(), "label");
         if (classInfo != null) {
             classInfos.put(name, classInfo);
             return classInfo;
         }
 
-        classInfo = _classInfo(name, RelationshipEntity.class.getName(), "type");
+        classInfo = classInfo(name, RelationshipEntity.class.getName(), "type");
         if (classInfo != null) {
             classInfos.put(name, classInfo);
             return classInfo;
@@ -101,7 +101,7 @@ public class MetaData {
         return classInfo(object.getClass().getName());
     }
 
-    private ClassInfo _classInfo(String name, String nodeEntityAnnotation, String annotationPropertyName) {
+    private ClassInfo classInfo(String name, String nodeEntityAnnotation, String annotationPropertyName) {
         List<ClassInfo> labelledClasses = domainInfo.getClassInfosWithAnnotation(nodeEntityAnnotation);
         if (labelledClasses != null) {
             for (ClassInfo labelledClass : labelledClasses) {
@@ -115,7 +115,7 @@ public class MetaData {
         return null;
     }
 
-    private Set<ClassInfo> _classInfos(String name, String nodeEntityAnnotation) {
+    private Set<ClassInfo> classInfos(String name, String nodeEntityAnnotation) {
         Set<ClassInfo> classInfos = new HashSet<>();
         List<ClassInfo> labelledClasses = domainInfo.getClassInfosWithAnnotation(nodeEntityAnnotation);
         if (labelledClasses != null) {
@@ -217,13 +217,13 @@ public class MetaData {
 
         Set<ClassInfo> classInfos = new HashSet<>();
 
-        ClassInfo classInfo = _classInfo(name, NodeEntity.class.getName(), "label");
+        ClassInfo classInfo = classInfo(name, NodeEntity.class.getName(), "label");
         if (classInfo != null) {
             classInfos.add(classInfo);
         }
 
         //Potentially many relationship entities annotated with the same type
-        for (ClassInfo info : _classInfos(name, RelationshipEntity.class.getName())) {
+        for (ClassInfo info : classInfos(name, RelationshipEntity.class.getName())) {
             classInfos.add(info);
         }
 

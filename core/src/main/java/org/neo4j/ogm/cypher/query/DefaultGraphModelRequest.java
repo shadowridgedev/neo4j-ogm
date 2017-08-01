@@ -22,6 +22,7 @@ import org.neo4j.ogm.request.GraphModelRequest;
  */
 public class DefaultGraphModelRequest extends CypherQuery implements GraphModelRequest {
 
+    @SuppressWarnings("ConstantName")
     private final static String[] resultDataContents = new String[]{"graph"};
 
     public DefaultGraphModelRequest(String cypher, Map<String, ?> parameters) {

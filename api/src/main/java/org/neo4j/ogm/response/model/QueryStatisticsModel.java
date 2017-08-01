@@ -21,6 +21,7 @@ import org.neo4j.ogm.model.QueryStatistics;
  *
  * @author Luanne Misquitta
  */
+@SuppressWarnings({"MemberName", "MethodName", "ParameterName"})
 public class QueryStatisticsModel implements QueryStatistics {
 
     private boolean contains_updates;

@@ -54,14 +54,14 @@ import org.neo4j.ogm.transaction.TransactionManager;
  */
 public class BoltRequest implements Request {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoltRequest.class);
+
     private final TransactionManager transactionManager;
 
     private static final ObjectMapper mapper = ObjectMapperFactory.objectMapper();
 
-    private final Logger LOGGER = LoggerFactory.getLogger(BoltRequest.class);
-
-    private TypeReference<HashMap<String, Object>> MAP_TYPE_REF = new TypeReference<HashMap<String, Object>>() {
-    };
+    private static final TypeReference<HashMap<String, Object>> MAP_TYPE_REF =
+            new TypeReference<HashMap<String, Object>>() {};
 
 
     public BoltRequest(TransactionManager transactionManager) {

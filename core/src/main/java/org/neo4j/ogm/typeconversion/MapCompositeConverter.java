@@ -43,8 +43,8 @@ import static java.util.stream.Collectors.toSet;
 public class MapCompositeConverter implements CompositeAttributeConverter<Map<?, ?>> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MapCompositeConverter.class);
-    private static final Set<Class> cypherTypes;
-    private static final Set<Class> castableTypes;
+    private static final Set<Class> CYPHER_TYPES;
+    private static final Set<Class> CASTABLE_TYPES;
 
     static {
         Set<Class> types = new HashSet<>();
@@ -53,13 +53,13 @@ public class MapCompositeConverter implements CompositeAttributeConverter<Map<?,
         types.add(Double.class);
         types.add(String.class);
         types.add(List.class);
-        cypherTypes = Collections.unmodifiableSet(types);
+        CYPHER_TYPES = Collections.unmodifiableSet(types);
 
         Set<Class> castable = new HashSet<>();
         castable.add(Short.class);
         castable.add(Integer.class);
         castable.add(Float.class);
-        castableTypes = unmodifiableSet(castable);
+        CASTABLE_TYPES = unmodifiableSet(castable);
     }
 
     private final String prefix;
@@ -115,11 +115,11 @@ public class MapCompositeConverter implements CompositeAttributeConverter<Map<?,
     }
 
     private boolean canCastType(Object value) {
-        return castableTypes.contains(value.getClass());
+        return CASTABLE_TYPES.contains(value.getClass());
     }
 
     private boolean isCypherType(Object entryValue) {
-        return cypherTypes.contains(entryValue.getClass()) || List.class.isAssignableFrom(entryValue.getClass());
+        return CYPHER_TYPES.contains(entryValue.getClass()) || List.class.isAssignableFrom(entryValue.getClass());
     }
 
     @Override

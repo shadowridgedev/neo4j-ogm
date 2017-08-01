@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  * @author Luanne Misquitta
  */
+@SuppressWarnings("ConstantName")
 public class ObjectMapperFactory {
 
     private static final JsonFactory jsonFactory = new JsonFactory();

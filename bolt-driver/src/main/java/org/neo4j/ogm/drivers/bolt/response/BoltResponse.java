@@ -31,12 +31,10 @@ import org.neo4j.ogm.transaction.TransactionManager;
  */
 public abstract class BoltResponse<T> implements Response {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoltResponse.class);
+
     final StatementResult result;
     private final TransactionManager transactionManager;
-
-
-    private final Logger LOGGER = LoggerFactory.getLogger(BoltResponse.class);
-
 
     BoltResponse(StatementResult result, TransactionManager transactionManager) {
         this.result = result;

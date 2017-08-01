@@ -19,6 +19,9 @@
 
 <module name="Checker">
 
+    <!-- Enable the suppression annotation @SuppressWarnings("checkstyle:lowercasecheckname"} -->
+    <module name="SuppressWarningsFilter"/>
+
     <property name="fileExtensions" value="java, xml"/>
 
     <!-- Checks whether files end with a new line.                        -->
@@ -48,6 +51,33 @@
 
 
     <module name="TreeWalker">
+
+        <!-- Needed for SuppressWarningsFilter to work -->
+        <module name="SuppressWarningsHolder"/>
+
+        <!-- Checks for Naming Conventions.                  -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <module name="ConstantName">
+            <!-- Allow "logger" -->
+            <property name="format" value="^([A-Z][A-Z0-9]*(_[A-Z0-9]+)*|logger|mapper)$"/>
+        </module>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodName">
+            <property name="id" value="MethodNameRegular"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9]*$"/>
+        </module>
+        <module name="MethodName">
+            <property name="id" value="MethodNameTest"/>
+            <property name="format" value="^[a-z][a-zA-Z0-9_]*$"/>
+        </module>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+        <module name="UpperEll"/>
+
 
         <!-- Checks for imports                              -->
         <!-- See http://checkstyle.sf.net/config_import.html -->

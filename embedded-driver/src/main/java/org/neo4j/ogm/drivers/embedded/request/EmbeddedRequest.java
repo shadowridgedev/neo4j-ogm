@@ -61,7 +61,7 @@ public class EmbeddedRequest implements Request {
     private final Logger logger = LoggerFactory.getLogger(EmbeddedRequest.class);
     private final TransactionManager transactionManager;
 
-    private final TypeReference<HashMap<String, Object>> MAP_TYPE_REF = new TypeReference<HashMap<String, Object>>() {
+    private final static TypeReference<HashMap<String, Object>> MAP_TYPE_REF = new TypeReference<HashMap<String, Object>>() {
     };
 
     public EmbeddedRequest(GraphDatabaseService graphDatabaseService, TransactionManager transactionManager) {

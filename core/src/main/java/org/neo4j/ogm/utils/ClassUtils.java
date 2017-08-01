@@ -22,9 +22,6 @@ import java.util.Map;
  */
 public abstract class ClassUtils {
 
-    private static final String primitives = "char,byte,short,int,long,float,double,boolean";
-
-
     private static Map<String, Class<?>> descriptorTypeMappings = new HashMap<>();
 
     /**

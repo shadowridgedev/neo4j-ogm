@@ -29,8 +29,9 @@ import org.neo4j.ogm.transaction.TransactionManager;
  */
 public class EmbeddedTransaction extends AbstractTransaction {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmbeddedTransaction.class);
+
     private final org.neo4j.graphdb.Transaction nativeTransaction;
-    private final Logger LOGGER = LoggerFactory.getLogger(EmbeddedTransaction.class);
     private boolean autoCommit;
 
     /**

@@ -30,10 +30,12 @@ import org.neo4j.ogm.transaction.TransactionManager;
  */
 public class BoltTransaction extends AbstractTransaction {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BoltTransaction.class);
+
     private static final String NEO_CLIENT_ERROR_SECURITY = "Neo.ClientError.Security";
+
     private final Transaction nativeTransaction;
     private final Session nativeSession;
-    private final Logger LOGGER = LoggerFactory.getLogger(BoltTransaction.class);
 
 
     public BoltTransaction(TransactionManager transactionManager, Transaction transaction, Session session, Type type) {
