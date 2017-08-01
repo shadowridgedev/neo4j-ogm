@@ -13,7 +13,6 @@
 
 package org.neo4j.ogm.session.request.strategy;
 
-
 import java.io.Serializable;
 import java.util.Collection;
 
@@ -32,6 +31,7 @@ public interface QueryStatements<ID extends Serializable> {
      *
      * @param id the id of the object to find
      * @param depth the depth to traverse for any related objects
+     *
      * @return a {@link PagingAndSortingQuery}
      */
     PagingAndSortingQuery findOne(ID id, int depth);
@@ -42,6 +42,7 @@ public interface QueryStatements<ID extends Serializable> {
      * @param label the label attached to the object or relationship type
      * @param id the id of the object to find
      * @param depth the depth to traverse for any related objects
+     *
      * @return a {@link PagingAndSortingQuery}
      */
     PagingAndSortingQuery findOneByType(String label, ID id, int depth);
@@ -52,6 +53,7 @@ public interface QueryStatements<ID extends Serializable> {
      * @param type the label attached to the object, or the relationship type
      * @param ids the ids of the objects to find
      * @param depth the depth to traverse for any related objects
+     *
      * @return a {@link PagingAndSortingQuery}
      */
     PagingAndSortingQuery findAllByType(String type, Collection<ID> ids, int depth);
@@ -61,6 +63,7 @@ public interface QueryStatements<ID extends Serializable> {
      *
      * @param type the label attached to the object, or the relationship type
      * @param depth the depth to traverse for related objects
+     *
      * @return a {@link PagingAndSortingQuery}
      */
     PagingAndSortingQuery findByType(String type, int depth);
@@ -71,6 +74,7 @@ public interface QueryStatements<ID extends Serializable> {
      * @param type the label value or relationship type to filter on
      * @param filters parameters to filter on
      * @param depth the depth to traverse for related objects
+     *
      * @return a {@link PagingAndSortingQuery}
      */
 

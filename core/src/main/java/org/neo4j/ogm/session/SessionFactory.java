@@ -13,6 +13,8 @@
 
 package org.neo4j.ogm.session;
 
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.neo4j.ogm.autoindex.AutoIndexManager;
 import org.neo4j.ogm.config.Configuration;
@@ -22,9 +24,6 @@ import org.neo4j.ogm.id.IdStrategy;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.session.event.EventListener;
-
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import static java.util.Objects.requireNonNull;
 
@@ -44,12 +43,15 @@ public class SessionFactory {
     private LoadStrategy loadStrategy = LoadStrategy.SCHEMA_LOAD_STRATEGY;
 
     /**
-     * Constructs a new {@link SessionFactory} by initialising the object-graph mapping meta-data from the given list of domain
-     * object packages and starts up the Neo4j database in embedded mode.  If the embedded driver is not available this method
+     * Constructs a new {@link SessionFactory} by initialising the object-graph mapping meta-data from the given list of
+     * domain
+     * object packages and starts up the Neo4j database in embedded mode.  If the embedded driver is not available this
+     * method
      * will throw a <code>Exception</code>.
      * <p>
      * The package names passed to this constructor should not contain wildcards or trailing full stops, for example,
-     * "org.springframework.data.neo4j.example.domain" would be fine.  The default behaviour is for sub-packages to be scanned
+     * "org.springframework.data.neo4j.example.domain" would be fine.  The default behaviour is for sub-packages to be
+     * scanned
      * and you can also specify fully-qualified class names if you want to cherry pick particular classes.
      * </p>
      * Indexes will also be checked or built if configured.
@@ -61,17 +63,19 @@ public class SessionFactory {
     }
 
     /**
-     * Constructs a new {@link SessionFactory} by initialising the object-graph mapping meta-data from the given list of domain
+     * Constructs a new {@link SessionFactory} by initialising the object-graph mapping meta-data from the given list of
+     * domain
      * object packages, and also sets the baseConfiguration to be used.
      * <p>
      * The package names passed to this constructor should not contain wildcards or trailing full stops, for example,
-     * "org.springframework.data.neo4j.example.domain" would be fine.  The default behaviour is for sub-packages to be scanned
+     * "org.springframework.data.neo4j.example.domain" would be fine.  The default behaviour is for sub-packages to be
+     * scanned
      * and you can also specify fully-qualified class names if you want to cherry pick particular classes.
      * </p>
      * Indexes will also be checked or built if configured.
      *
      * @param configuration The baseConfiguration to use
-     * @param packages      The packages to scan for domain objects
+     * @param packages The packages to scan for domain objects
      */
     public SessionFactory(Configuration configuration, String... packages) {
         this.metaData = new MetaData(packages);
@@ -93,7 +97,7 @@ public class SessionFactory {
 
     /**
      * Create a session factory with given driver
-     *
+     * <p>
      * Use this constructor when you need to provide fully customized driver.
      *
      * @param driver driver to use with new SessionFactory
@@ -126,7 +130,8 @@ public class SessionFactory {
     }
 
     /**
-     * Asynchronously registers the specified listener on all <code>Session</code> events generated from <code>this SessionFactory</code>.
+     * Asynchronously registers the specified listener on all <code>Session</code> events generated from <code>this
+     * SessionFactory</code>.
      *
      * @param eventListener The event listener to register.
      */

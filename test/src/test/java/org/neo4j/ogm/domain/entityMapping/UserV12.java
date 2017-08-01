@@ -16,7 +16,8 @@ package org.neo4j.ogm.domain.entityMapping;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
- * One incoming and one outgoing relationship of the same type. Incoming field and methods annotated. Outgoing methods annotated, field not annotated.
+ * One incoming and one outgoing relationship of the same type. Incoming field and methods annotated. Outgoing methods
+ * annotated, field not annotated.
  *
  * @author Luanne Misquitta
  */

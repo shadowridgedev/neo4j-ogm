@@ -13,13 +13,14 @@
 
 package org.neo4j.ogm.metadata;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.annotations.ids.ValidAnnotations;
 import org.neo4j.ogm.id.UuidStrategy;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdAnnotationTest {
 

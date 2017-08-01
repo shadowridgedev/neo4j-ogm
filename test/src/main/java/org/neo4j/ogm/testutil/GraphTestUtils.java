@@ -13,17 +13,30 @@
 
 package org.neo4j.ogm.testutil;
 
-import static org.neo4j.graphdb.Direction.*;
-import static org.neo4j.helpers.collection.Iterables.*;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Assert;
-import org.neo4j.graphdb.*;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.neo4j.graphdb.Label;
+import org.neo4j.graphdb.Node;
+import org.neo4j.graphdb.PropertyContainer;
+import org.neo4j.graphdb.Relationship;
+import org.neo4j.graphdb.Transaction;
 import org.neo4j.test.TestGraphDatabaseFactory;
 import org.parboiled.common.StringUtils;
+
+import static org.neo4j.graphdb.Direction.OUTGOING;
+import static org.neo4j.helpers.collection.Iterables.count;
 
 /**
  * Utility methods used to facilitate testing against a real Neo4j database.
@@ -40,11 +53,13 @@ public final class GraphTestUtils {
     }
 
     /**
-     * Checks that the graph in the specified {@link GraphDatabaseService} is the same as the graph that the given cypher
+     * Checks that the graph in the specified {@link GraphDatabaseService} is the same as the graph that the given
+     * cypher
      * produces.
      *
      * @param graphDatabase The {@link GraphDatabaseService} to check
      * @param sameGraphCypher The Cypher create statement, which communicates the desired state of the database
+     *
      * @throws AssertionError if the cypher doesn't produce a graph that matches the state of the given database
      */
     public static synchronized void assertSameGraph(GraphDatabaseService graphDatabase, String sameGraphCypher) {

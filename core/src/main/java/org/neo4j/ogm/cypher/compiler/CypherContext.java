@@ -106,7 +106,8 @@ public class CypherContext implements CompileContext {
     }
 
     /**
-     * Invoked when the mapper wishes to mark a set of outgoing relationships to a specific type like (a)-[:T]-&gt;(*) as deleted, prior
+     * Invoked when the mapper wishes to mark a set of outgoing relationships to a specific type like (a)-[:T]-&gt;(*)
+     * as deleted, prior
      * to possibly re-establishing them individually as it traverses the entity graph.
      * There are two reasons why a set of relationships might not be be able to be marked deleted:
      * 1) the request to mark them as deleted has already been made
@@ -119,6 +120,7 @@ public class CypherContext implements CompileContext {
      * @param src the identity of the node at the start of the relationship
      * @param relationshipType the type of the relationship
      * @param endNodeType the class type of the entity at the end of the relationship
+     *
      * @return true if the relationship was deleted or doesn't exist in the graph, false otherwise
      */
     public boolean deregisterOutgoingRelationships(Long src, String relationshipType, Class endNodeType) {
@@ -152,7 +154,8 @@ public class CypherContext implements CompileContext {
     }
 
     /**
-     * Invoked when the mapper wishes to mark a set of incoming relationships to a specific type like (a)&lt;-[:T]-(*) as deleted, prior
+     * Invoked when the mapper wishes to mark a set of incoming relationships to a specific type like (a)&lt;-[:T]-(*)
+     * as deleted, prior
      * to possibly re-establishing them individually as it traverses the entity graph.
      * There are two reasons why a set of relationships might not be be able to be marked deleted:
      * 1) the request to mark them as deleted has already been made
@@ -165,6 +168,7 @@ public class CypherContext implements CompileContext {
      * @param tgt the identity of the node at the pointy end of the relationship
      * @param relationshipType the type of the relationship
      * @param endNodeType the class type of the entity at the other end of the relationship
+     *
      * @return true if the relationship was deleted or doesn't exist in the graph, false otherwise
      */
     public boolean deregisterIncomingRelationships(Long tgt, String relationshipType, Class endNodeType, boolean relationshipEntity) {

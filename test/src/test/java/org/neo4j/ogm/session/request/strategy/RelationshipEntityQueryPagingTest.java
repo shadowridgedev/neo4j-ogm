@@ -12,17 +12,15 @@
  */
 package org.neo4j.ogm.session.request.strategy;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.cypher.query.Pagination;
-import org.neo4j.ogm.session.request.strategy.QueryStatements;
 import org.neo4j.ogm.session.request.strategy.impl.RelationshipQueryStatements;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

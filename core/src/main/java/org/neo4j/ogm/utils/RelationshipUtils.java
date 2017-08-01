@@ -31,6 +31,7 @@ public class RelationshipUtils {
      * type between two nodes.
      *
      * @param memberName The member name from which to infer the relationship type
+     *
      * @return The resolved relationship type
      */
     public static String inferRelationshipType(String memberName) {
@@ -44,6 +45,7 @@ public class RelationshipUtils {
      * Infers the name of the setter method that corresponds to the given relationship type.
      *
      * @param relationshipType The relationship type from which to infer the setter name
+     *
      * @return The inferred setter method name
      */
     public static String inferSetterName(String relationshipType) {
@@ -55,6 +57,7 @@ public class RelationshipUtils {
      * Infers the name of the getter method that corresponds to the given relationship type.
      *
      * @param relationshipType The relationship type from which to infer the getter name
+     *
      * @return The inferred getter method name
      */
     public static String inferGetterName(String relationshipType) {
@@ -66,6 +69,7 @@ public class RelationshipUtils {
      * Infers the name of the instance variable that corresponds to the given relationship type.
      *
      * @param relationshipType The relationship type from which to infer the name of the field
+     *
      * @return The inferred field name
      */
     public static String inferFieldName(String relationshipType) {
@@ -84,6 +88,7 @@ public class RelationshipUtils {
      *
      * @param sb The StringBuilder object which will hold the converted string
      * @param name the string Value to convert.
+     *
      * @return a {@link StringBuilder}
      */
     private static StringBuilder toQuasiCamelCase(StringBuilder sb, String name) {
@@ -112,6 +117,7 @@ public class RelationshipUtils {
      * toUpperSnakeCase(toUpperCamelCase("SNAKE_CASE")) will return "SNAKE_CASE"
      *
      * @param name the string Value to convert.
+     *
      * @return a {@link StringBuilder}
      */
     private static StringBuilder toUpperSnakeCase(String name) {

@@ -14,14 +14,15 @@
 package org.neo4j.ogm.metadata;
 
 
-
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Transient;
 import org.neo4j.ogm.domain.hierarchy.domain.trans.TransientSingleClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * @author Mark Angrish

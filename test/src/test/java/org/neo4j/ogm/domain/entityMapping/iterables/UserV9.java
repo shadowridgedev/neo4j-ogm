@@ -18,7 +18,8 @@ import java.util.Set;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
- * One outgoing and one incoming relationship of the same type. Incoming iterable field and methods annotated. Outgoing iterable field annotated (implied outgoing), methods not annotated.
+ * One outgoing and one incoming relationship of the same type. Incoming iterable field and methods annotated. Outgoing
+ * iterable field annotated (implied outgoing), methods not annotated.
  *
  * @author Luanne Misquitta
  */

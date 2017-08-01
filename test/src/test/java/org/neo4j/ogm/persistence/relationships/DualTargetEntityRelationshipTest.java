@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.persistence.relationships;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -22,6 +20,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.domain.mappings.Category;
@@ -30,6 +29,8 @@ import org.neo4j.ogm.domain.mappings.Tag;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Nils Dr\u00F6ge
@@ -42,7 +43,7 @@ public class DualTargetEntityRelationshipTest extends MultiDriverTestClass {
     @Before
     public void init() throws IOException {
         session = new SessionFactory(driver, "org.neo4j.ogm.domain.mappings").openSession();
-		session.purgeDatabase();
+        session.purgeDatabase();
     }
 
     /**

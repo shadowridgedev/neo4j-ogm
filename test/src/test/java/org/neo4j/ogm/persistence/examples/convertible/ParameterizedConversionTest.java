@@ -13,20 +13,21 @@
 
 package org.neo4j.ogm.persistence.examples.convertible;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.convertible.parametrized.JsonNode;
 import org.neo4j.ogm.domain.convertible.parametrized.StringMapEntity;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author vince
@@ -46,10 +47,10 @@ public class ParameterizedConversionTest extends MultiDriverTestClass {
         session = sessionFactory.openSession();
     }
 
-	@After
-	public void tearDown() {
-		session.purgeDatabase();
-	}
+    @After
+    public void tearDown() {
+        session.purgeDatabase();
+    }
 
     @Test
     public void shouldConvertParametrizedMap() {

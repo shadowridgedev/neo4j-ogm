@@ -12,8 +12,6 @@
  */
 package org.neo4j.ogm.drivers;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -23,6 +21,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.domain.social.User;
@@ -35,11 +34,14 @@ import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 import org.neo4j.ogm.transaction.Transaction;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+
 /**
  * This test class is converted from the AbstractDriverTestSuite to use the test harness in use by toher tests
  *
  * @author vince
- *         Do not rename this class to end with *Test, or certain test packages might try to execute it.
+ * Do not rename this class to end with *Test, or certain test packages might try to execute it.
  */
 public class BasicDriverTest extends MultiDriverTestClass {
 

@@ -13,12 +13,11 @@
 
 package org.neo4j.ogm.persistence.examples.election;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.context.MappedRelationship;
 import org.neo4j.ogm.context.MappingContext;
 import org.neo4j.ogm.domain.election.Candidate;
@@ -27,6 +26,8 @@ import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * These tests assert that we can create loop edges in the graph, to support use cases

@@ -14,11 +14,11 @@ package org.neo4j.ogm.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.concurrent.atomic.AtomicLong;
 
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
-
-import java.lang.reflect.Field;import org.neo4j.ogm.metadata.MetaData;import java.util.concurrent.atomic.AtomicLong;
+import org.neo4j.ogm.metadata.MetaData;
 
 /**
  * The utility methods here will all throw a <code>NullPointerException</code> if invoked with <code>null</code>.

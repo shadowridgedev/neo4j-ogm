@@ -19,6 +19,7 @@ import org.neo4j.ogm.response.Response;
  * Specification for an object-model mapper, which can map a model M onto arbitrary Java objects.
  *
  * @param <M> The Response model
+ *
  * @author Vince Bickers
  */
 

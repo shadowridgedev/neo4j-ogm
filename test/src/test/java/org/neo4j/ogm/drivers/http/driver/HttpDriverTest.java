@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.drivers.http.driver;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;

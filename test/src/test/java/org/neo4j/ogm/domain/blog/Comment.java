@@ -26,10 +26,13 @@ import org.neo4j.ogm.annotation.StartNode;
 @RelationshipEntity(type = "COMMENT_BY")
 public class Comment {
 
-    @GraphId Long id;
+    @GraphId
+    Long id;
 
-    @StartNode Post post;
-    @EndNode Author author;
+    @StartNode
+    Post post;
+    @EndNode
+    Author author;
 
     String comment;
 

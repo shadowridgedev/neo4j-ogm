@@ -13,8 +13,16 @@
 
 package org.neo4j.ogm.metadata;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-import java.util.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.RelationshipEntity;
@@ -22,8 +30,6 @@ import org.neo4j.ogm.exception.AmbiguousBaseClassException;
 import org.neo4j.ogm.metadata.schema.DomainInfoSchemaBuilder;
 import org.neo4j.ogm.metadata.schema.Schema;
 import org.neo4j.ogm.typeconversion.ConversionCallback;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**
@@ -52,6 +58,7 @@ public class MetaData {
      * The supplied ClassInfo, if found can represent either a Class or an Interface
      *
      * @param name the simple class name or label for a class we want to find
+     *
      * @return A ClassInfo matching the supplied name, or null if it doesn't exist
      */
     public ClassInfo classInfo(String name) {
@@ -87,6 +94,7 @@ public class MetaData {
      * Finds the ClassInfo for the supplied object by looking up its class name
      *
      * @param object the class name whose classInfo we want to find
+     *
      * @return A ClassInfo matching the supplied object's class, or null if it doesn't exist
      */
     public ClassInfo classInfo(Object object) {
@@ -123,10 +131,12 @@ public class MetaData {
     }
 
     /**
-     * Given an set of names (simple or fully-qualified) that are possibly within a type hierarchy, this function returns the
+     * Given an set of names (simple or fully-qualified) that are possibly within a type hierarchy, this function
+     * returns the
      * base class from among them.
      *
      * @param taxa the taxa (simple class names or labels)
+     *
      * @return The ClassInfo representing the base class among the taxa or <code>null</code> if it cannot be found
      */
     public ClassInfo resolve(String... taxa) {
@@ -200,6 +210,7 @@ public class MetaData {
      * Finds ClassInfos for the supplied partial class name or label.
      *
      * @param name the simple class name or label for a class we want to find
+     *
      * @return A Set of ClassInfo matching the supplied name, or empty if it doesn't exist
      */
     public Set<ClassInfo> classInfoByLabelOrType(String name) {

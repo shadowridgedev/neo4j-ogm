@@ -13,16 +13,27 @@
 
 package org.neo4j.ogm.metadata;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import org.neo4j.ogm.annotation.typeconversion.Convert;
-import org.neo4j.ogm.exception.MappingException;
-import org.neo4j.ogm.typeconversion.*;
-import org.neo4j.ogm.utils.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import org.neo4j.ogm.annotation.typeconversion.Convert;
+import org.neo4j.ogm.exception.MappingException;
+import org.neo4j.ogm.typeconversion.AttributeConverter;
+import org.neo4j.ogm.typeconversion.ConversionCallback;
+import org.neo4j.ogm.typeconversion.ConversionCallbackRegistry;
+import org.neo4j.ogm.typeconversion.ConvertibleTypes;
+import org.neo4j.ogm.typeconversion.ProxyAttributeConverter;
+import org.neo4j.ogm.utils.ClassUtils;
 
 /**
  * @author Vince Bickers

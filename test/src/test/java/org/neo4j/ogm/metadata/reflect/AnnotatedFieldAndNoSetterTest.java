@@ -13,13 +13,12 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.annotation.RelationshipEntity;
@@ -27,6 +26,8 @@ import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 /**

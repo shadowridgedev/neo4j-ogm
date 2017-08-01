@@ -21,7 +21,8 @@ import org.neo4j.ogm.model.RowModel;
 import org.neo4j.ogm.response.model.DefaultRowModel;
 
 /**
- * This adapter will transform a Map&lt;String,Object&gt; typically representing an Embedded or Bolt response into a {@link RowModel} response
+ * This adapter will transform a Map&lt;String,Object&gt; typically representing an Embedded or Bolt response into a
+ * {@link RowModel} response
  *
  * @author vince
  * @author Luanne Misquitta

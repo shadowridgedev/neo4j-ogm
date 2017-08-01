@@ -14,7 +14,21 @@
 package org.neo4j.ogm.metadata.reflect;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
+import java.util.Vector;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.context.DirectedRelationship;
@@ -24,8 +38,6 @@ import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.utils.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Determines how entities should be accessed in both reading and writing scenarios by looking up information from
@@ -34,8 +46,10 @@ import org.slf4j.LoggerFactory;
  * <li>Annotated Field</li>
  * <li>Plain Field</li>
  * </ol>
- * The rationale is simply that we want annotations, whether on fields or on methods, to always take precedence, and we want to
- * use methods in preference to field access, because in many cases hydrating an object means more than just assigning values to
+ * The rationale is simply that we want annotations, whether on fields or on methods, to always take precedence, and we
+ * want to
+ * use methods in preference to field access, because in many cases hydrating an object means more than just assigning
+ * values to
  * fields.
  *
  * @author Adam George
@@ -57,14 +71,18 @@ public class EntityAccessManager {
 
 
     /**
-     * Merges the contents of <em>collection</em> with <em>hydrated</em> ensuring no duplicates and returns the result as an
+     * Merges the contents of <em>collection</em> with <em>hydrated</em> ensuring no duplicates and returns the result
+     * as an
      * instance of the given parameter type.
      *
      * @param parameterType The type of Iterable or array to return
-     * @param newValues The objects to merge into a collection of the given parameter type, which may not necessarily be of a
+     * @param newValues The objects to merge into a collection of the given parameter type, which may not necessarily be
+     * of a
      * type assignable from <em>parameterType</em> already
-     * @param currentValues The Iterable to merge into, which may be <code>null</code> if a new collection needs creating
+     * @param currentValues The Iterable to merge into, which may be <code>null</code> if a new collection needs
+     * creating
      * @param elementType The type of the element in the array or collection
+     *
      * @return The result of the merge, as an instance of the specified parameter type
      */
     @SuppressWarnings({"rawtypes", "unchecked"})
@@ -158,6 +176,7 @@ public class EntityAccessManager {
      * Convert to an Iterable of Character if the value is a String
      *
      * @param value the object, which may be a String, String[], Collection of String
+     *
      * @return List of Character if the value is a String, or the value unchanged
      */
     private static Object stringToCharacterIterable(Object value, Class parameterType, Class elementType) {
@@ -261,12 +280,14 @@ public class EntityAccessManager {
 
 
     /**
-     * Returns a FieldWriter for a scalar value represented as a relationship in the graph (i.e. not a primitive property)
+     * Returns a FieldWriter for a scalar value represented as a relationship in the graph (i.e. not a primitive
+     * property)
      *
      * @param classInfo the ClassInfo (or a superclass thereof) declaring the relationship
      * @param relationshipType the name of the relationship as it is in the graph
      * @param relationshipDirection the direction of the relationship as it is in the graph
      * @param scalarValue an Object whose class the relationship is defined for
+     *
      * @return a valid FieldWriter or null if none is found
      */
     public static FieldInfo getRelationalWriter(ClassInfo classInfo, String relationshipType, String relationshipDirection, Object scalarValue) {
@@ -280,6 +301,7 @@ public class EntityAccessManager {
      * @param relationshipType the name of the relationship as it is in the graph
      * @param relationshipDirection the direction of the relationship as it is in the graph
      * @param objectType the class the relationship is defined for
+     *
      * @return a valid FieldWriter or null if none is found
      */
     public static FieldInfo getRelationalWriter(ClassInfo classInfo, String relationshipType, String relationshipDirection, Class<?> objectType) {
@@ -361,6 +383,7 @@ public class EntityAccessManager {
      * @param classInfo A ClassInfo declaring the type definition
      * @param relationshipType The name of the relationship in the graph
      * @param relationshipDirection The direction of the relationship in the graph
+     *
      * @return A FieldInfo or null if none exists
      */
     public static FieldInfo getRelationalReader(ClassInfo classInfo, String relationshipType, String relationshipDirection) {
@@ -414,6 +437,7 @@ public class EntityAccessManager {
      * @param relationshipType the name of the relationship as it is in the graph
      * @param relationshipDirection the direction of the relationship as it is in the graph
      * @param parameterType the type that will be iterated over
+     *
      * @return a valid FieldWriter or null if none is found
      */
     public static FieldInfo getIterableField(ClassInfo classInfo, Class<?> parameterType, String relationshipType, String relationshipDirection) {

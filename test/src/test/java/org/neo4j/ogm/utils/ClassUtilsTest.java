@@ -13,13 +13,14 @@
 
 package org.neo4j.ogm.utils;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Date;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.convertible.enums.Education;
 import org.neo4j.ogm.domain.education.School;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam George

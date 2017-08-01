@@ -12,19 +12,20 @@
  */
 package org.neo4j.ogm.metadata;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.math.RoundingMode;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.food.entities.notScanned.Pizza;
 import org.neo4j.ogm.domain.food.entities.scanned.Risk;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests behaviour of enums that have not been scanned when creating a SessionFactory
@@ -39,7 +40,7 @@ public class EnumsNotScannedTest extends MultiDriverTestClass {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        sessionFactory = new SessionFactory(driver,"org.neo4j.ogm.domain.food.entities.notScanned");
+        sessionFactory = new SessionFactory(driver, "org.neo4j.ogm.domain.food.entities.notScanned");
     }
 
     @Before

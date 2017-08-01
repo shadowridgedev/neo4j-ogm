@@ -12,16 +12,20 @@
  */
 package org.neo4j.ogm.session.delegates;
 
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.StartNode;
-import org.neo4j.ogm.context.*;
+import org.neo4j.ogm.context.EntityRowModelMapper;
+import org.neo4j.ogm.context.GraphEntityMapper;
+import org.neo4j.ogm.context.ResponseMapper;
+import org.neo4j.ogm.context.RestModelMapper;
+import org.neo4j.ogm.context.RestStatisticsModel;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.query.CypherQuery;
 import org.neo4j.ogm.cypher.query.DefaultGraphModelRequest;
@@ -185,6 +189,7 @@ public class ExecuteQueriesDelegate {
      *
      * @param query the CypherQuery that will count objects according to some filter criteria
      * @param isRelationshipEntity whether the objects being counted are relationship entities
+     *
      * @return a count of objects that matched the query
      */
     private Long count(CypherQuery query, boolean isRelationshipEntity) {

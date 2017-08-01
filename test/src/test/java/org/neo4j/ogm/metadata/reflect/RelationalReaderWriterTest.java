@@ -13,15 +13,38 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.Relationship;
-import org.neo4j.ogm.domain.entityMapping.*;
+import org.neo4j.ogm.domain.entityMapping.PlainUser;
+import org.neo4j.ogm.domain.entityMapping.UserV1;
+import org.neo4j.ogm.domain.entityMapping.UserV10;
+import org.neo4j.ogm.domain.entityMapping.UserV11;
+import org.neo4j.ogm.domain.entityMapping.UserV12;
+import org.neo4j.ogm.domain.entityMapping.UserV13;
+import org.neo4j.ogm.domain.entityMapping.UserV14;
+import org.neo4j.ogm.domain.entityMapping.UserV15;
+import org.neo4j.ogm.domain.entityMapping.UserV16;
+import org.neo4j.ogm.domain.entityMapping.UserV17;
+import org.neo4j.ogm.domain.entityMapping.UserV18;
+import org.neo4j.ogm.domain.entityMapping.UserV19;
+import org.neo4j.ogm.domain.entityMapping.UserV2;
+import org.neo4j.ogm.domain.entityMapping.UserV20;
+import org.neo4j.ogm.domain.entityMapping.UserV21;
+import org.neo4j.ogm.domain.entityMapping.UserV22;
+import org.neo4j.ogm.domain.entityMapping.UserV3;
+import org.neo4j.ogm.domain.entityMapping.UserV4;
+import org.neo4j.ogm.domain.entityMapping.UserV5;
+import org.neo4j.ogm.domain.entityMapping.UserV6;
+import org.neo4j.ogm.domain.entityMapping.UserV7;
+import org.neo4j.ogm.domain.entityMapping.UserV8;
+import org.neo4j.ogm.domain.entityMapping.UserV9;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta

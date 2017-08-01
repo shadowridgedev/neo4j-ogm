@@ -27,6 +27,7 @@ import org.neo4j.ogm.domain.simpleNetwork.interfaces.InterfaceTimeRelation;
 /**
  * @param <S> a class implementing InterfaceIdentityNode
  * @param <T> a class implementing InterfaceStateNode
+ *
  * @see issue #42
  * <p/>
  * This class posed problems for the OGM because S and T are defined as classes that extend interfaces, rather

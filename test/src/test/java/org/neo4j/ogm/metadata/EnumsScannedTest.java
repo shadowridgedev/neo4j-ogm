@@ -12,17 +12,18 @@
  */
 package org.neo4j.ogm.metadata;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.food.entities.scanned.Pizza;
 import org.neo4j.ogm.domain.food.entities.scanned.Risk;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Tests behaviour of enums that have been scanned when creating a SessionFactory
@@ -37,7 +38,7 @@ public class EnumsScannedTest extends MultiDriverTestClass {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        sessionFactory = new SessionFactory(driver,"org.neo4j.ogm.domain.food.entities.scanned");
+        sessionFactory = new SessionFactory(driver, "org.neo4j.ogm.domain.food.entities.scanned");
     }
 
     @Before

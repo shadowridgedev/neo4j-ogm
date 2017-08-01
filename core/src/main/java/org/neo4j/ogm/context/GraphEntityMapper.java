@@ -13,13 +13,20 @@
 
 package org.neo4j.ogm.context;
 
-
-import static org.neo4j.ogm.annotation.Relationship.*;
-import static org.neo4j.ogm.metadata.reflect.EntityAccessManager.*;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.StartNode;
@@ -40,8 +47,10 @@ import org.neo4j.ogm.response.model.PropertyModel;
 import org.neo4j.ogm.typeconversion.CompositeAttributeConverter;
 import org.neo4j.ogm.utils.ClassUtils;
 import org.neo4j.ogm.utils.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
+import static org.neo4j.ogm.metadata.reflect.EntityAccessManager.getRelationalWriter;
 
 /**
  * @author Vince Bickers
@@ -432,12 +441,14 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
     }
 
     /**
-     * Return an iterable writer to map a relationship onto an entity for the given relationshipType and relationshipDirection
+     * Return an iterable writer to map a relationship onto an entity for the given relationshipType and
+     * relationshipDirection
      *
      * @param instance the instance onto which the relationship is to be mapped
      * @param parameter the value to be mapped
      * @param relationshipType the relationship type
      * @param relationshipDirection the relationship direction
+     *
      * @return FieldWriter or null if none exists
      */
     private FieldInfo findIterableWriter(Object instance, Object parameter, String relationshipType, String relationshipDirection) {
@@ -553,6 +564,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
      * @param by a Class the named relationship is declared by
      * @param relationshipName the name of the relationship
      * @param relationshipDirection the direction of the relationship
+     *
      * @return true if 'by' declares the specified relationship on 'to', false otherwise
      */
     private boolean declaresRelationshipTo(Class to, Class by, String relationshipName, String relationshipDirection) {
@@ -565,6 +577,7 @@ public class GraphEntityMapper implements ResponseMapper<GraphModel> {
      * @param classInfo the ClassInfo
      * @param node the node object
      * @param annotationClass the annotation to match
+     *
      * @return true if the class of the node matches field annotated
      */
     private boolean nodeTypeMatches(ClassInfo classInfo, Object node, Class<?> annotationClass) {

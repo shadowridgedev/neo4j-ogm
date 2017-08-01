@@ -13,14 +13,13 @@
 
 package org.neo4j.ogm.persistence;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.bike.Bike;
 import org.neo4j.ogm.domain.bike.Frame;
 import org.neo4j.ogm.domain.bike.Saddle;
@@ -28,6 +27,8 @@ import org.neo4j.ogm.domain.bike.Wheel;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Michal Bachman
@@ -88,7 +89,7 @@ public class EndToEndTest extends MultiDriverTestClass {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("material", "Leather");
 
-        long actual = session.queryForObject(Long.class, "MATCH (saddle:Saddle{material: {material}}) RETURN COUNT(saddle)", parameters);
+        long actual = session.queryForObject(Long.class, "MATCH (saddle:Saddle{material: {material}}) RETURN count(saddle)", parameters);
 
         assertThat(actual).isEqualTo(1);
     }
@@ -110,7 +111,7 @@ public class EndToEndTest extends MultiDriverTestClass {
         HashMap<String, Object> parameters = new HashMap<>();
         parameters.put("brand", "Huffy");
 
-        Bike actual = session.queryForObject(Bike.class, "MATCH (bike:Bike{brand:{brand}})-[rels]-() RETURN bike, COLLECT(DISTINCT rels) as rels", parameters);
+        Bike actual = session.queryForObject(Bike.class, "MATCH (bike:Bike{brand:{brand}})-[rels]-() RETURN bike, collect(DISTINCT rels) AS rels", parameters);
 
         assertThat(actual.getId()).isEqualTo(bike.getId());
         assertThat(actual.getBrand()).isEqualTo(bike.getBrand());
@@ -147,7 +148,7 @@ public class EndToEndTest extends MultiDriverTestClass {
 
         HashMap<String, Object> parameters2 = new HashMap<>();
         parameters2.put("brand", "Huffy");
-        Bike actual = session.queryForObject(Bike.class, "MATCH (bike:Bike{brand:{brand}})-[rels]-() RETURN bike, COLLECT(DISTINCT rels) as rels", parameters2);
+        Bike actual = session.queryForObject(Bike.class, "MATCH (bike:Bike{brand:{brand}})-[rels]-() RETURN bike, collect(DISTINCT rels) AS rels", parameters2);
 
         assertThat(actual.getId()).isEqualTo(bike.getId());
         assertThat(actual.getBrand()).isEqualTo(bike.getBrand());

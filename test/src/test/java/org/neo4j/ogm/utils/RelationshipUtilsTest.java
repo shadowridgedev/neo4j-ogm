@@ -13,9 +13,9 @@
 
 package org.neo4j.ogm.utils;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Mark Angrish

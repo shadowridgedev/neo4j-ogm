@@ -14,7 +14,8 @@
 package org.neo4j.ogm.exception;
 
 /**
- * Specialised {@link RuntimeException} thrown when an unrecoverable issue occurs when mapping between objects and graphs.
+ * Specialised {@link RuntimeException} thrown when an unrecoverable issue occurs when mapping between objects and
+ * graphs.
  *
  * @author Adam George
  */

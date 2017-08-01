@@ -14,6 +14,7 @@
 package org.neo4j.ogm.config;
 
 import org.junit.Before;
+
 import org.neo4j.ogm.testutil.TestUtils;
 
 /**

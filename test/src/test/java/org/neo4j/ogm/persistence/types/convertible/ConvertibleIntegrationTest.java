@@ -13,22 +13,33 @@
 package org.neo4j.ogm.persistence.types.convertible;
 
 
-import static com.google.common.collect.Lists.newArrayList;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TimeZone;
 
 import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.typeconversion.DateString;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
@@ -42,6 +53,10 @@ import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 /**
  * @author Luanne Misquitta
@@ -99,7 +114,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(person);
         session.clear();
 
-        Result res = session.query("MATCH (p:Person{name:'luanne'}) return p", Collections.EMPTY_MAP);
+        Result res = session.query("MATCH (p:Person{name:'luanne'}) RETURN p", Collections.EMPTY_MAP);
         Person luanne = (Person) res.queryResults().iterator().next().get("p");
         assertThat(luanne.getGender()).isEqualTo(Gender.FEMALE);
         assertThat(luanne.getCompletedEducation().contains(Education.HIGHSCHOOL)).isTrue();
@@ -183,7 +198,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(java8DatesMemo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.recorded, m.closed, m.approved", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.recorded, m.closed, m.approved", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         assertThat(record.get("m.recorded")).isEqualTo("2007-12-03T09:15:30.001Z");
         assertThat(record.get("m.closed")).isEqualTo(1196673330001L);
@@ -208,7 +223,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(memo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.dateList", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.dateList", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         String[] dateArray = (String[]) record.get("m.dateList");
         assertThat(dateArray).isEqualTo(new String[] {"2017-07-23", "2017-07-24"});
@@ -228,7 +243,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(memo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.dateTime", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.dateTime", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         assertThat(record.get("m.dateTime")).isEqualTo("2017-07-23T01:02:03");
 
@@ -249,7 +264,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(memo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.dateTimeList", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.dateTimeList", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         String[] dateArray = (String[]) record.get("m.dateTimeList");
         assertThat(dateArray).isEqualTo(new String[] {"2017-07-23T01:02:03", "2017-07-24T01:02:03"});
@@ -270,7 +285,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(memo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.offsetDateTime", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.offsetDateTime", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         assertThat(record.get("m.offsetDateTime")).isEqualTo("2017-07-23T01:02:03+01:00");
 
@@ -291,7 +306,7 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
         session.save(memo);
         session.clear();
 
-        Result result = session.query("MATCH (m:Java8DatesMemo) return m.offsetDateTimeList", Collections.emptyMap());
+        Result result = session.query("MATCH (m:Java8DatesMemo) RETURN m.offsetDateTimeList", Collections.emptyMap());
         Map<String, Object> record = result.queryResults().iterator().next();
         String[] dateArray = (String[]) record.get("m.offsetDateTimeList");
         assertThat(dateArray).isEqualTo(new String[] {"2017-07-23T01:02:03+01:00", "2017-07-24T01:02:03+01:00"});
@@ -301,8 +316,8 @@ public class ConvertibleIntegrationTest extends MultiDriverTestClass {
     }
 
     /**
-		 * @see DATAGRAPH-550
-		 */
+     * @see DATAGRAPH-550
+     */
     @Test
     public void shouldSaveAndRetrieveNumbers() {
 

@@ -45,6 +45,7 @@ public class AnnotationsInfo {
 
     /**
      * @param annotationName The fully-qualified class name of the annotation type
+     *
      * @return The {@link AnnotationInfo} that matches the given name or <code>null</code> if it's not present
      */
     public AnnotationInfo get(String annotationName) {

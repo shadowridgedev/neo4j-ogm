@@ -12,7 +12,12 @@
  */
 package org.neo4j.ogm.typeconversion;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.Vector;
 
 /**
  * The NumberStringConverter can be used to convert any java object collection containing values that extend

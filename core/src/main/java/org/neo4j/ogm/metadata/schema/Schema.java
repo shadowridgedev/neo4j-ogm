@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.metadata.schema;
 
-import java.util.Map;
-
 /**
  * @author Frantisek Hartman
  */

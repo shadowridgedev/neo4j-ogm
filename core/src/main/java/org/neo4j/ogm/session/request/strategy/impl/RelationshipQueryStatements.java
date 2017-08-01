@@ -17,8 +17,6 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import org.neo4j.ogm.cypher.Filters;
-import org.neo4j.ogm.cypher.query.DefaultGraphModelRequest;
-import org.neo4j.ogm.cypher.query.DefaultGraphRowListModelRequest;
 import org.neo4j.ogm.cypher.query.PagingAndSortingQuery;
 import org.neo4j.ogm.exception.InvalidDepthException;
 import org.neo4j.ogm.session.Utils;

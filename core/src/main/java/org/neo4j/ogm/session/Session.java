@@ -13,6 +13,10 @@
 
 package org.neo4j.ogm.session;
 
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Map;
+
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
@@ -24,12 +28,9 @@ import org.neo4j.ogm.session.event.Event;
 import org.neo4j.ogm.session.event.EventListener;
 import org.neo4j.ogm.transaction.Transaction;
 
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Map;
-
 /**
- * A {@link Session} serves as the main point of integration for the Neo4j OGM.  All the publicly-available capabilities of the
+ * A {@link Session} serves as the main point of integration for the Neo4j OGM.  All the publicly-available capabilities
+ * of the
  * framework are defined by this interface.
  * TODO: Add documentation for all methods.
  *
@@ -163,6 +164,7 @@ public interface Session {
      * to the thread must be handled by client code.
      *
      * @param type the {@link Transaction.Type} required for this transaction
+     *
      * @return a new active Transaction
      */
     Transaction beginTransaction(Transaction.Type type);
@@ -188,6 +190,7 @@ public interface Session {
      *
      * @param <T> The type of object returned from applying this callback
      * @param graphCallback The {@link GraphCallback} to execute
+     *
      * @return The result of calling the given {@link GraphCallback}
      * @throws NullPointerException if invoked with <code>null</code>
      */
@@ -202,6 +205,7 @@ public interface Session {
      * @param cypher The parametrizable cypher to execute.
      * @param parameters Any scalar parameters to attach to the cypher.
      * @param <T> A domain object or scalar.
+     *
      * @return An instance of the objectType that matches the given cypher and parameters. Null if no object
      * is matched
      * @throws java.lang.RuntimeException If more than one object is found.
@@ -216,24 +220,29 @@ public interface Session {
      * @param cypher The parametrizable cypher to execute.
      * @param parameters Any parameters to attach to the cypher.
      * @param <T> A domain object or scalar.
+     *
      * @return A collection of domain objects or scalars as prescribed by the parametrized type.
      */
     <T> Iterable<T> query(Class<T> objectType, String cypher, Map<String, ?> parameters);
 
     /**
-     * Given a cypher statement this method will return a Result object containing a collection of Map's which represent Neo4j
+     * Given a cypher statement this method will return a Result object containing a collection of Map's which represent
+     * Neo4j
      * objects as properties, along with query statistics if applicable.
      * Each element of the query result is a map which you can access by the name of the returned field
      * TODO: Are we going to use the neo4jOperations conversion method to cast the value object to its proper class?
      *
      * @param cypher The parametrisable cypher to execute.
      * @param parameters Any parameters to attach to the cypher.
-     * @return A {@link Result} containing an {@link Iterable} map representing query results and {@link QueryStatistics} if applicable.
+     *
+     * @return A {@link Result} containing an {@link Iterable} map representing query results and
+     * {@link QueryStatistics} if applicable.
      */
     Result query(String cypher, Map<String, ?> parameters);
 
     /**
-     * Given a cypher statement this method will return a Result object containing a collection of Map's which represent Neo4j
+     * Given a cypher statement this method will return a Result object containing a collection of Map's which represent
+     * Neo4j
      * objects as properties, along with query statistics if applicable.
      * Each element of the query result is a map which you can access by the name of the returned field
      * TODO: Are we going to use the neo4jOperations conversion method to cast the value object to its proper class?
@@ -241,6 +250,7 @@ public interface Session {
      * @param cypher The parametrisable cypher to execute.
      * @param parameters Any parameters to attach to the cypher.
      * @param readOnly true if the query is readOnly, false otherwise
+     *
      * @return A {@link Result} of {@link Iterable}s with each entry representing a neo4j object's properties.
      */
     Result query(String cypher, Map<String, ?> parameters, boolean readOnly);
@@ -249,6 +259,7 @@ public interface Session {
      * Counts all the <em>node</em> entities of the specified type.
      *
      * @param entity The {@link Class} denoting the type of entity to count
+     *
      * @return The number of entities in the database of the given type
      */
     long countEntitiesOfType(Class<?> entity);
@@ -258,6 +269,7 @@ public interface Session {
      *
      * @param clazz The {@link Class} denoting the type of entity to count
      * @param filters a collection of {@link Filter} objects used as additional parameters to the query
+     *
      * @return The number of entities in the database of the given type matched by the given filters
      */
     long count(Class<?> clazz, Iterable<Filter> filters);
@@ -266,6 +278,7 @@ public interface Session {
      * Resolve the graph id for a possible entity.
      *
      * @param possibleEntity the possible entity
+     *
      * @return the value of the {@link GraphId} or null if either the object is not an entity or the id is null.
      */
     Long resolveGraphIdFor(Object possibleEntity);
@@ -274,6 +287,7 @@ public interface Session {
      * Detach this node entity represented by the supplied Graph ID from the session.
      *
      * @param id the node id to detach.
+     *
      * @return <code>true</code> if detached successfully.
      */
     boolean detachNodeEntity(Long id);
@@ -282,6 +296,7 @@ public interface Session {
      * Detach this relationship entity represented by the supplied Graph ID from the session.
      *
      * @param id the relationship id to detach.
+     *
      * @return <code>true</code> if detached successfully.
      */
     boolean detachRelationshipEntity(Long id);
@@ -290,6 +305,7 @@ public interface Session {
      * Register an event listener with this session.
      *
      * @param eventListener The listener to register.
+     *
      * @return the registered event listener.
      */
     EventListener register(EventListener eventListener);
@@ -298,6 +314,7 @@ public interface Session {
      * Remove an event listener from this session.
      *
      * @param eventListener The listener to deregister
+     *
      * @return <code>true</code> if successfully regisistered.
      */
     boolean dispose(EventListener eventListener);

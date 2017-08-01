@@ -13,9 +13,6 @@
 
 package org.neo4j.ogm.session;
 
-import org.neo4j.ogm.session.request.strategy.LoadClauseBuilder;
-import org.neo4j.ogm.session.request.strategy.impl.PathLoadClauseBuilder;
-
 /**
  * @author Frantisek Hartman
  */

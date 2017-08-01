@@ -12,14 +12,17 @@
  */
 package org.neo4j.ogm.session.delegates;
 
-import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.query.CypherQuery;
 import org.neo4j.ogm.cypher.query.DefaultRowModelRequest;
 import org.neo4j.ogm.metadata.ClassInfo;
-import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.model.RowModel;
 import org.neo4j.ogm.request.RowModelRequest;
@@ -178,10 +181,12 @@ public class DeleteDelegate {
 
     /**
      * Executes a delete query in which objects of a specific type will be deleted according to some filter criteria,
-     * invoking post-delete housekeeping after the query completes, and returning a list of deleted objects to the caller.
+     * invoking post-delete housekeeping after the query completes, and returning a list of deleted objects to the
+     * caller.
      *
      * @param query the CypherQuery that will delete objects according to some filter criteria
      * @param isRelationshipEntity whether the objects being deleted are relationship entities
+     *
      * @return a {@link List} of object ids that were deleted
      */
     private List<Long> list(CypherQuery query, boolean isRelationshipEntity) {
@@ -198,10 +203,12 @@ public class DeleteDelegate {
 
     /**
      * Executes a delete query in which objects of a specific type will be deleted according to some filter criteria,
-     * invoking post-delete housekeeping after the query completes, and returning a count of deleted objects to the caller.
+     * invoking post-delete housekeeping after the query completes, and returning a count of deleted objects to the
+     * caller.
      *
      * @param query the CypherQuery that will delete objects according to some filter criteria
      * @param isRelationshipEntity whether the objects being deleted are relationship entities
+     *
      * @return a count of objects that were deleted
      */
     private Long count(CypherQuery query, boolean isRelationshipEntity) {

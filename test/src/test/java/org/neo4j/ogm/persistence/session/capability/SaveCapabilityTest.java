@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.persistence.session.capability;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -24,6 +22,7 @@ import java.util.Set;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.context.EntityGraphMapper;
 import org.neo4j.ogm.cypher.compiler.CompileContext;
 import org.neo4j.ogm.domain.music.Album;
@@ -34,6 +33,8 @@ import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta

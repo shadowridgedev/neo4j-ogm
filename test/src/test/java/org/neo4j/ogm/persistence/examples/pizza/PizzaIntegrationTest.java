@@ -13,13 +13,28 @@
 
 package org.neo4j.ogm.persistence.examples.pizza;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import org.junit.*;
-import org.neo4j.ogm.domain.pizza.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import org.neo4j.ogm.domain.pizza.Cheese;
+import org.neo4j.ogm.domain.pizza.Crust;
+import org.neo4j.ogm.domain.pizza.Pizza;
+import org.neo4j.ogm.domain.pizza.PizzaCheese;
+import org.neo4j.ogm.domain.pizza.PizzaSauce;
+import org.neo4j.ogm.domain.pizza.PizzaSeasoning;
+import org.neo4j.ogm.domain.pizza.Quantity;
+import org.neo4j.ogm.domain.pizza.Sauce;
+import org.neo4j.ogm.domain.pizza.Seasoning;
+import org.neo4j.ogm.domain.pizza.Topping;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Neo4jSession;
@@ -27,6 +42,8 @@ import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.GraphTestUtils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta
@@ -503,7 +520,7 @@ public class PizzaIntegrationTest extends MultiDriverTestClass {
     }
 
     private void assertOneRelationshipInDb() {
-        Result result = session.query("MATCH (p:Pizza)-[r]-() return count(r) as c", new HashMap<String, Object>());
+        Result result = session.query("MATCH (p:Pizza)-[r]-() RETURN count(r) AS c", new HashMap<String, Object>());
         Map<String, Object> row = result.iterator().next();
         Number count = (Number) row.get("c");
         assertThat(count.longValue()).isEqualTo(1L);

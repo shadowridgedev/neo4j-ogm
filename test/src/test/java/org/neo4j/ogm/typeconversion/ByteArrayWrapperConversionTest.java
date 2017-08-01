@@ -13,12 +13,13 @@
 
 package org.neo4j.ogm.typeconversion;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.convertible.bytes.PhotoWrapper;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.MetaData;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

@@ -13,19 +13,21 @@
 
 package org.neo4j.ogm.persistence.examples.canonical;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.canonical.Mappable;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.within;
 
 /**
  * @author Luanne Misquitta
@@ -36,13 +38,13 @@ public class CanonicalTest extends MultiDriverTestClass {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        sessionFactory = new SessionFactory(driver,"org.neo4j.ogm.domain.canonical");
+        sessionFactory = new SessionFactory(driver, "org.neo4j.ogm.domain.canonical");
     }
 
     @Before
     public void init() {
         session = sessionFactory.openSession();
-		session.purgeDatabase();
+        session.purgeDatabase();
     }
 
     /**

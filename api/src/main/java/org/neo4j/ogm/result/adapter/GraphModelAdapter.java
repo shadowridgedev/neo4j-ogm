@@ -13,7 +13,11 @@
 
 package org.neo4j.ogm.result.adapter;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.ogm.model.GraphModel;
 import org.neo4j.ogm.response.model.DefaultGraphModel;
@@ -32,6 +36,7 @@ public abstract class GraphModelAdapter extends BaseAdapter implements ResultAda
      * Parses a row from the result object and transforms it into a GraphModel
      *
      * @param data the data to transform, given as a map
+     *
      * @return the data transformed to an {@link GraphModel}
      */
     public GraphModel adapt(Map<String, Object> data) {

@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.context.MappedRelationship;
 import org.neo4j.ogm.context.MappingContext;
@@ -34,8 +37,6 @@ import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.transaction.AbstractTransaction;
 import org.neo4j.ogm.transaction.Transaction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Plans request execution and processes the response.
@@ -103,7 +104,8 @@ public class RequestExecutor {
      *
      * @param context the compile context
      * @param response query response
-     * @param entityRefMappings mapping of entity reference used in the compile context and the entity id from the database
+     * @param entityRefMappings mapping of entity reference used in the compile context and the entity id from the
+     * database
      */
     private void registerEntityIds(CompileContext context, Response<RowModel> response, List<ReferenceMapping> entityRefMappings, List<ReferenceMapping> relEntityRefMappings) {
 
@@ -151,11 +153,13 @@ public class RequestExecutor {
     }
 
     /**
-     * Maintain a mapping of relationship references used in the compile context and the relationship id created in the graph.
+     * Maintain a mapping of relationship references used in the compile context and the relationship id created in the
+     * graph.
      * Note that the mapping context is not updated at this point
      *
      * @param response query response
-     * @param relRefMappings mapping of relationship reference used in the compile context and the relationship id from the database
+     * @param relRefMappings mapping of relationship reference used in the compile context and the relationship id from
+     * the database
      */
     private void registerNewRelIds(Response<RowModel> response, List<ReferenceMapping> relRefMappings) {
         RowModel rowModel;
@@ -174,7 +178,8 @@ public class RequestExecutor {
      *
      * @param context the compile context
      * @param session the Session
-     * @param entityRefMappings mapping of entity reference used in the compile context and the entity id from the database
+     * @param entityRefMappings mapping of entity reference used in the compile context and the entity id from the
+     * database
      */
     private void updateNodeEntities(CompileContext context, Neo4jSession session, List<ReferenceMapping> entityRefMappings) {
 
@@ -212,7 +217,8 @@ public class RequestExecutor {
      *
      * @param context the compile context
      * @param session the Session
-     * @param relationshipEntityRefMappings mapping of relationship entity reference used in the compile context and the entity id from the database
+     * @param relationshipEntityRefMappings mapping of relationship entity reference used in the compile context and the
+     * entity id from the database
      */
     private void updateRelationshipEntities(CompileContext context, Neo4jSession session, List<ReferenceMapping> relationshipEntityRefMappings) {
         for (ReferenceMapping referenceMapping : relationshipEntityRefMappings) {
@@ -305,7 +311,8 @@ public class RequestExecutor {
      *
      * @param context the compile context
      * @param session the Session
-     * @param relRefMappings mapping of relationship reference used in the compile context and the relationship id from the database
+     * @param relRefMappings mapping of relationship reference used in the compile context and the relationship id from
+     * the database
      */
     private void updateRelationships(CompileContext context, Neo4jSession session, List<ReferenceMapping> relRefMappings) {
         final Map<Long, TransientRelationship> registeredTransientRelationshipIndex = buildRegisteredTransientRelationshipIndex(context);
@@ -325,6 +332,7 @@ public class RequestExecutor {
      * Append {@link TransientRelationship} of {@link CompileContext} to an index.
      *
      * @param context the compile context
+     *
      * @return an index of {@link TransientRelationship}
      */
     private Map<Long, TransientRelationship> buildRegisteredTransientRelationshipIndex(CompileContext context) {

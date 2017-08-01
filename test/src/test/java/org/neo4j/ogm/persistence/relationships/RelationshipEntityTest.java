@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.persistence.relationships;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,12 +20,19 @@ import java.util.Set;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.neo4j.ogm.annotation.*;
+
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers
@@ -197,9 +202,9 @@ public class RelationshipEntityTest extends MultiDriverTestClass {
 
         session.clear();
 
-        M qryM = session.queryForObject(M.class, "MATCH (n:M) return n", Utils.map());
-        M findM = session.queryForObject(M.class, "MATCH (n:M) WHERE ID(n) = { id } RETURN n", Utils.map("id", m.id));
-        M findM2 = session.queryForObject(M.class, "MATCH (n:M) WHERE ID(n) = { id } WITH n MATCH p=(n)-[*0..1]-(m) RETURN nodes(p)", Utils.map("id", m.id));
+        M qryM = session.queryForObject(M.class, "MATCH (n:M) RETURN n", Utils.map());
+        M findM = session.queryForObject(M.class, "MATCH (n:M) WHERE id(n) = { id } RETURN n", Utils.map("id", m.id));
+        M findM2 = session.queryForObject(M.class, "MATCH (n:M) WHERE id(n) = { id } WITH n MATCH p=(n)-[*0..1]-(m) RETURN nodes(p)", Utils.map("id", m.id));
 
         assertThat(qryM).isNotNull();
         assertThat(findM).isNotNull();

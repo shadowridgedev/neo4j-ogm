@@ -14,7 +14,10 @@
 package org.neo4j.ogm.metadata.schema;
 
 import static java.util.Objects.requireNonNull;
-import static org.neo4j.ogm.annotation.Relationship.*;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
+import static org.neo4j.ogm.annotation.Relationship.UNDIRECTED;
 
 /**
  * @author Frantisek Hartman

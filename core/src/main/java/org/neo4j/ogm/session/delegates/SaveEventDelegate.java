@@ -13,7 +13,16 @@
 
 package org.neo4j.ogm.session.delegates;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.context.MappedRelationship;
@@ -24,8 +33,6 @@ import org.neo4j.ogm.session.event.Event;
 import org.neo4j.ogm.session.event.PersistenceEvent;
 import org.neo4j.ogm.utils.ClassUtils;
 import org.neo4j.ogm.utils.EntityUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author vince
@@ -67,14 +74,14 @@ final class SaveEventDelegate {
 
         // now fire events for any objects whose relationships have been deleted from reachable ones
         // and which therefore have been possibly rendered unreachable from the object graph traversal
-        for(Object other : unreachable()) {
+        for (Object other : unreachable()) {
             if (visit(other) && !preSaveFired(other)) { // only if not yet visited and not yet fired
                 firePreSave(other);
             }
         }
 
         // fire events for existing nodes that are not dirty, but which have had an edge added:
-        for (Object other: touched()) {
+        for (Object other : touched()) {
             if (!preSaveFired(other)) { // only if not yet already fired
                 firePreSave(other);
             }
@@ -157,7 +164,7 @@ final class SaveEventDelegate {
             unreachable.add(entity);
         } else {
             logger.warn("Relationship to/from entity id={} deleted, but entity is not " +
-                        "in context - no events will be fired.", nodeId);
+                    "in context - no events will be fired.", nodeId);
         }
     }
 

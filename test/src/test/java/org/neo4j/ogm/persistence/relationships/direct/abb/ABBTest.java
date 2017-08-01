@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.persistence.relationships.direct.abb;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.UUID;
 
@@ -22,11 +20,14 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.NodeEntity;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

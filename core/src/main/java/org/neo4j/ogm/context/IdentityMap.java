@@ -15,7 +15,11 @@ package org.neo4j.ogm.context;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
@@ -67,6 +71,7 @@ class IdentityMap {
      * @param entityId the id of the entity
      * @param object the object whose persistable properties we want to check
      * @param classInfo metadata about the object
+     *
      * @return true if the object hasn't changed since it was remembered, false otherwise
      */
     boolean remembered(Long entityId, Object object, ClassInfo classInfo) {
@@ -134,6 +139,7 @@ class IdentityMap {
      * Convert an array or objects or primitives to an array of objects
      *
      * @param array array of unknown type
+     *
      * @return array of objects
      */
     private static Object[] convertToObjectArray(Object array) {

@@ -13,13 +13,18 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.domain.forum.ForumTopicLink;
@@ -32,6 +37,8 @@ import org.neo4j.ogm.domain.satellites.Satellite;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam George

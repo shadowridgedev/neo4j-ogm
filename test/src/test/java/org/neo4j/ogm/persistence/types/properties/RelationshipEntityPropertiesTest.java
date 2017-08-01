@@ -13,9 +13,12 @@
 
 package org.neo4j.ogm.persistence.types.properties;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.properties.Place;
 import org.neo4j.ogm.domain.properties.User;
 import org.neo4j.ogm.domain.properties.Visit;
@@ -23,12 +26,9 @@ import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 
-import java.io.IOException;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- *
  * Test for @{@link org.neo4j.ogm.annotation.Properties} annotation on @RelationshipEntity class
  *
  * @author Frantisek Hartman

@@ -14,15 +14,16 @@
 package org.neo4j.ogm.metadata.reflect;
 
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.List;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

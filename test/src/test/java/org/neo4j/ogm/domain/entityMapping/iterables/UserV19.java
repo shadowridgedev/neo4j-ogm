@@ -18,7 +18,8 @@ import java.util.Set;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
- * Getter/Setter annotated with incoming direction only. Relationship type is implied. Iterable Field annotated with direction.
+ * Getter/Setter annotated with incoming direction only. Relationship type is implied. Iterable Field annotated with
+ * direction.
  *
  * @author Luanne Misquitta
  */

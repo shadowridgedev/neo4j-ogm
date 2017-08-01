@@ -13,7 +13,6 @@
 
 package org.neo4j.ogm.metadata;
 
-
 import java.lang.reflect.Method;
 
 

@@ -14,7 +14,11 @@
 package org.neo4j.ogm.domain.convertible.date;
 
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.neo4j.ogm.annotation.typeconversion.DateLong;

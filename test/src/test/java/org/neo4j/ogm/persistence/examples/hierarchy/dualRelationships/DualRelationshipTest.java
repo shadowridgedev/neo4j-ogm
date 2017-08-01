@@ -13,14 +13,13 @@
 
 package org.neo4j.ogm.persistence.examples.hierarchy.dualRelationships;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.hierarchy.dualRelation.DataView;
 import org.neo4j.ogm.domain.hierarchy.dualRelation.DataViewOwned;
 import org.neo4j.ogm.domain.hierarchy.dualRelation.Thing;
@@ -29,6 +28,8 @@ import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test passes because DataView and DataViewOwned have their setSharedWith annotated with @Relationship.

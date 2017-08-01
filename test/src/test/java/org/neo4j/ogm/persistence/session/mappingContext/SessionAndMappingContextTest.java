@@ -6,10 +6,15 @@ import java.util.Collections;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.context.MappingContext;
 import org.neo4j.ogm.domain.cineasts.annotated.Actor;
 import org.neo4j.ogm.domain.cineasts.annotated.Knows;
-import org.neo4j.ogm.domain.music.*;
+import org.neo4j.ogm.domain.music.Album;
+import org.neo4j.ogm.domain.music.Artist;
+import org.neo4j.ogm.domain.music.Recording;
+import org.neo4j.ogm.domain.music.ReleaseFormat;
+import org.neo4j.ogm.domain.music.Studio;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.SessionFactory;

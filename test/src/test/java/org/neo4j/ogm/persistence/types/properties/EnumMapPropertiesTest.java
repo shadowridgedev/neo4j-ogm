@@ -13,23 +13,25 @@
 
 package org.neo4j.ogm.persistence.types.properties;
 
+import java.io.IOException;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.Node;
 import org.neo4j.graphdb.Transaction;
+
 import org.neo4j.ogm.domain.properties.UserWithEnumMap;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 
-import java.io.IOException;
-
 import static java.util.Collections.emptyMap;
+
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.neo4j.ogm.domain.properties.UserWithEnumMap.UserProperties.CITY;
 import static org.neo4j.ogm.domain.properties.UserWithEnumMap.UserProperties.ZIP_CODE;
-import static org.neo4j.ogm.testutil.GraphTestUtils.assertSameGraph;
 
 /**
  * @author Frantisek Hartman

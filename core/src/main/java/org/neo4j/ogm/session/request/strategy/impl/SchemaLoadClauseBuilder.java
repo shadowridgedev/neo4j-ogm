@@ -13,12 +13,12 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
+import java.util.Map;
+
 import org.neo4j.ogm.metadata.schema.Node;
 import org.neo4j.ogm.metadata.schema.Relationship;
 import org.neo4j.ogm.metadata.schema.Schema;
 import org.neo4j.ogm.session.request.strategy.LoadClauseBuilder;
-
-import java.util.Map;
 
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
@@ -82,7 +82,7 @@ public class SchemaLoadClauseBuilder implements LoadClauseBuilder {
     }
 
     private boolean needsSeparator(StringBuilder sb) {
-        for (int i = sb.length() -1; i >= 0; i--) {
+        for (int i = sb.length() - 1; i >= 0; i--) {
             char ch = sb.charAt(i);
             if (!Character.isWhitespace(ch)) {
                 return ch != '[' && ch != ',';

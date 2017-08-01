@@ -17,7 +17,8 @@ import java.util.Date;
 
 /**
  * Converter to convert {@link java.util.Date} to {@link java.lang.Long}.
- * Since the value as represented in JSON loses type information and is just numeric, the converted type used is {@link java.lang.Number}
+ * Since the value as represented in JSON loses type information and is just numeric, the converted type used is {@link
+ * java.lang.Number}
  *
  * @author Vince Bickers
  * @author Luanne Misquitta

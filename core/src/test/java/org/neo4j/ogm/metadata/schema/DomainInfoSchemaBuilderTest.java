@@ -13,17 +13,18 @@
 
 package org.neo4j.ogm.metadata.schema;
 
+import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.schema.inheritance.Associated;
 import org.neo4j.ogm.metadata.schema.simple.Mortal;
-import org.neo4j.ogm.metadata.schema.simple.Organisation;
 import org.neo4j.ogm.metadata.schema.simple.Vertex;
 
-import java.util.Map;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
 import static org.neo4j.ogm.annotation.Relationship.INCOMING;
 import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
 

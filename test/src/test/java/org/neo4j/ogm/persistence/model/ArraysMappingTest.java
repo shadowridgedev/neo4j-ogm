@@ -1,8 +1,5 @@
 package org.neo4j.ogm.persistence.model;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.neo4j.ogm.testutil.GraphTestUtils.*;
-
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Vector;
@@ -11,11 +8,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.neo4j.graphdb.Result;
+
 import org.neo4j.ogm.domain.social.Individual;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.GraphTestUtils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.neo4j.ogm.testutil.GraphTestUtils.assertSameGraph;
 
 public class ArraysMappingTest extends MultiDriverTestClass {
 	private Session session;

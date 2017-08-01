@@ -13,7 +13,8 @@
 package org.neo4j.ogm.typeconversion;
 
 /**
- * Defines a method to be called by the underlying OGM when it needs to perform a type conversion at runtime but no explicit
+ * Defines a method to be called by the underlying OGM when it needs to perform a type conversion at runtime but no
+ * explicit
  * {@link org.neo4j.ogm.typeconversion.AttributeConverter} has been found.
  *
  * @author Adam George
@@ -26,6 +27,7 @@ public interface ConversionCallback {
      * @param <T> the type of object returned by this conversion
      * @param targetType The target type to convert into
      * @param value The value to be converted
+     *
      * @return The converted object, which should be an instance of the specified target type or <code>null</code> if the given
      * value to convert is <code>null</code>
      */

@@ -14,6 +14,7 @@
 package org.neo4j.ogm.drivers.http.response;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+
 import org.neo4j.ogm.model.RowModel;
 import org.neo4j.ogm.response.Response;
 import org.neo4j.ogm.response.model.DefaultRowModel;

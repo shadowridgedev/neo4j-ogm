@@ -12,8 +12,6 @@
  */
 package org.neo4j.ogm.cypher;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.context.EntityGraphMapper;
 import org.neo4j.ogm.context.EntityMapper;
 import org.neo4j.ogm.context.MappedRelationship;
@@ -31,6 +30,8 @@ import org.neo4j.ogm.domain.filesystem.Folder;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.request.Statement;
 import org.neo4j.ogm.session.request.RowStatementFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * This test suite contains tests of the cypher compiler output regarding

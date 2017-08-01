@@ -13,16 +13,17 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.canonical.ArbitraryRelationshipEntity;
 import org.neo4j.ogm.domain.social.Individual;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.response.model.NodeModel;
 import org.neo4j.ogm.response.model.RelationshipModel;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Adam George

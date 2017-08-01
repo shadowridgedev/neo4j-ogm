@@ -21,8 +21,6 @@ import org.neo4j.ogm.transaction.AbstractTransaction;
 import org.neo4j.ogm.transaction.Transaction;
 import org.neo4j.ogm.transaction.TransactionManager;
 
-import java.util.Collections;
-
 import static java.util.Collections.emptySet;
 
 /**

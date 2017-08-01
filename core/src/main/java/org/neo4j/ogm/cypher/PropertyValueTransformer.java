@@ -25,6 +25,7 @@ public interface PropertyValueTransformer {
      * of the current query being built.
      *
      * @param propertyValue The property value to transform, which may be <code>null</code>
+     *
      * @return The transformed property value or <code>null</code> if invoked with <code>null</code>
      */
     Object transformPropertyValue(Object propertyValue);

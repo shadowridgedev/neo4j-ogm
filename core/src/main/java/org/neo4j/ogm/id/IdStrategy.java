@@ -31,6 +31,7 @@ public interface IdStrategy {
      * Generates new id for given entity
      *
      * @param entity saved entity
+     *
      * @return identifier of the entity
      */
     Object generateId(Object entity);

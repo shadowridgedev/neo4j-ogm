@@ -13,13 +13,14 @@
 
 package org.neo4j.ogm.drivers;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Test;
+
 import org.neo4j.ogm.config.ClasspathConfigurationSource;
 import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.config.Credentials;
 import org.neo4j.ogm.config.UsernamePasswordCredentials;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author vince

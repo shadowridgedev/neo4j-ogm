@@ -19,6 +19,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.Property;
 import org.neo4j.ogm.annotation.Relationship;
@@ -36,7 +39,14 @@ import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.request.Request;
-import org.neo4j.ogm.session.delegates.*;
+import org.neo4j.ogm.session.delegates.DeleteDelegate;
+import org.neo4j.ogm.session.delegates.ExecuteQueriesDelegate;
+import org.neo4j.ogm.session.delegates.GraphIdDelegate;
+import org.neo4j.ogm.session.delegates.LoadByIdsDelegate;
+import org.neo4j.ogm.session.delegates.LoadByInstancesDelegate;
+import org.neo4j.ogm.session.delegates.LoadByTypeDelegate;
+import org.neo4j.ogm.session.delegates.LoadOneDelegate;
+import org.neo4j.ogm.session.delegates.SaveDelegate;
 import org.neo4j.ogm.session.event.Event;
 import org.neo4j.ogm.session.event.EventListener;
 import org.neo4j.ogm.session.request.strategy.LoadClauseBuilder;
@@ -48,8 +58,6 @@ import org.neo4j.ogm.session.request.strategy.impl.SchemaLoadClauseBuilder;
 import org.neo4j.ogm.session.transaction.DefaultTransactionManager;
 import org.neo4j.ogm.transaction.Transaction;
 import org.neo4j.ogm.utils.RelationshipUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static java.util.Collections.emptySet;
 

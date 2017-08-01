@@ -13,16 +13,17 @@
 
 package org.neo4j.ogm.persistence.examples.cineasts.partial;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.cineasts.minimum.Actor;
 import org.neo4j.ogm.domain.cineasts.minimum.Movie;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * The purpose of these tests is to describe the behaviour of the
@@ -39,7 +40,7 @@ public class RelationshipEntityPartialMappingTest extends MultiDriverTestClass {
 
     @BeforeClass
     public static void oneTimeSetUp() {
-        sessionFactory = new SessionFactory(driver,"org.neo4j.ogm.domain.cineasts.minimum");
+        sessionFactory = new SessionFactory(driver, "org.neo4j.ogm.domain.cineasts.minimum");
     }
 
     @Before

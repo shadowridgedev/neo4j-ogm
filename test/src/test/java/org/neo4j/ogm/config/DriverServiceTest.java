@@ -13,21 +13,26 @@
 
 package org.neo4j.ogm.config;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.net.URI;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.junit.*;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import org.neo4j.ogm.driver.Driver;
 import org.neo4j.ogm.drivers.http.driver.HttpDriver;
 import org.neo4j.ogm.session.SessionFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author vince
@@ -74,7 +79,7 @@ public class DriverServiceTest {
         sf.close();
     }
 
-    private static void deleteDirectory(File dir)  {
+    private static void deleteDirectory(File dir) {
         if (dir.isDirectory()) {
             for (File file : dir.listFiles()) {
                 deleteDirectory(file);

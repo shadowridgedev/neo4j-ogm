@@ -13,16 +13,23 @@
 
 package org.neo4j.ogm.persistence.examples.education;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.education.Course;
 import org.neo4j.ogm.domain.education.Student;
 import org.neo4j.ogm.domain.education.Teacher;
 import org.neo4j.ogm.metadata.MetaData;
 import org.neo4j.ogm.session.Neo4jSession;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers
@@ -175,7 +182,7 @@ public class EducationTest {
         return teachers;
     }
 
-    private void hydrateCourses(Collection<Teacher> teachers)  {
+    private void hydrateCourses(Collection<Teacher> teachers) {
 
         session.setDriver(new TeacherRequest());
         session.setDriver(new CoursesRequest());

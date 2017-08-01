@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.neo4j.ogm.typeconversion.AttributeConverter;
 
 /**

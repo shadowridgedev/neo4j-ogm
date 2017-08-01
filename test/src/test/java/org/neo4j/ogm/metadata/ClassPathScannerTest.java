@@ -14,13 +14,13 @@
 package org.neo4j.ogm.metadata;
 
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.Set;
 
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta

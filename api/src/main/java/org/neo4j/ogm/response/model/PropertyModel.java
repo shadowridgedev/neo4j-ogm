@@ -28,6 +28,7 @@ public class PropertyModel<K, V> implements Property<K, V> {
      *
      * @param key The property key or name
      * @param value The property value
+     *
      * @return A new {@link PropertyModel} based on the given arguments
      */
     public static <K, V> PropertyModel<K, V> with(K key, V value) {

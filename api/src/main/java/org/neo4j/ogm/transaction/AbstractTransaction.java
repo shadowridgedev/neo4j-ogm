@@ -13,14 +13,14 @@
 
 package org.neo4j.ogm.transaction;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
-import org.neo4j.ogm.exception.TransactionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import org.neo4j.ogm.exception.TransactionException;
 
 /**
  * @author vince

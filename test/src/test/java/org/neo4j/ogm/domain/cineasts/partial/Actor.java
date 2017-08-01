@@ -13,7 +13,11 @@
 
 package org.neo4j.ogm.domain.cineasts.partial;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 import org.neo4j.ogm.annotation.Relationship;
 

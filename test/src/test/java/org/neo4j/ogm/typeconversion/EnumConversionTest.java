@@ -13,16 +13,21 @@
 
 package org.neo4j.ogm.typeconversion;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.neo4j.ogm.domain.convertible.enums.*;
+
+import org.neo4j.ogm.domain.convertible.enums.Algebra;
+import org.neo4j.ogm.domain.convertible.enums.Education;
+import org.neo4j.ogm.domain.convertible.enums.Gender;
+import org.neo4j.ogm.domain.convertible.enums.NumberSystem;
+import org.neo4j.ogm.domain.convertible.enums.Person;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
 import org.neo4j.ogm.metadata.MetaData;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

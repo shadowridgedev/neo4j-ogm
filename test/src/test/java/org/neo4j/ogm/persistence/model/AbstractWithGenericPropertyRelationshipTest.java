@@ -4,8 +4,16 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-import org.junit.*;
-import org.neo4j.ogm.annotation.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.persistence.examples.stage.edges.LastDrama;
 import org.neo4j.ogm.persistence.examples.stage.edges.PlayedInDrama;
 import org.neo4j.ogm.persistence.examples.stage.nodes.Drama;

@@ -17,6 +17,7 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.filesystem.Document;
 import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.SessionFactory;

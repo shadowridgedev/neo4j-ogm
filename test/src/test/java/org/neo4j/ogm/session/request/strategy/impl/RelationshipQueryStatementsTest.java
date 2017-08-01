@@ -13,6 +13,7 @@
 package org.neo4j.ogm.session.request.strategy.impl;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.BooleanOperator;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;

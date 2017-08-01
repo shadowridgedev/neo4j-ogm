@@ -37,6 +37,7 @@ public class FilteredQueryBuilder {
      *
      * @param nodeLabel the label of the node to match
      * @param filterList a list of {@link Filter} objects defining the property filter expressions
+     *
      * @return a {@link FilteredQuery} whose statement() method contains the appropriate Cypher
      */
     public static FilteredQuery buildNodeQuery(String nodeLabel, Iterable<Filter> filterList) {
@@ -48,6 +49,7 @@ public class FilteredQueryBuilder {
      *
      * @param relationshipType the type of the edge to match
      * @param filterList a list of {@link Filter} objects defining the property filter expressions
+     *
      * @return a {@link FilteredQuery} whose statement() method contains the appropriate Cypher
      */
     public static FilteredQuery buildRelationshipQuery(String relationshipType, Iterable<Filter> filterList) {

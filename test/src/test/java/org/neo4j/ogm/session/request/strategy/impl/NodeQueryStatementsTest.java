@@ -13,7 +13,11 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.BooleanOperator;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
@@ -23,9 +27,6 @@ import org.neo4j.ogm.cypher.function.DistanceFromPoint;
 import org.neo4j.ogm.cypher.query.PagingAndSortingQuery;
 import org.neo4j.ogm.exception.MissingOperatorException;
 import org.neo4j.ogm.session.request.strategy.QueryStatements;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static java.util.Arrays.asList;
 
@@ -67,7 +68,7 @@ public class NodeQueryStatementsTest {
     public void testFindOneByType() throws Exception {
         PagingAndSortingQuery query = queryStatements.findOneByType("Orbit", 0L, 2);
         assertThat(query.getStatement())
-            .isEqualTo("MATCH (n:`Orbit`) WHERE ID(n) = { id } WITH n MATCH p=(n)-[*0..2]-(m) RETURN p");
+                .isEqualTo("MATCH (n:`Orbit`) WHERE ID(n) = { id } WITH n MATCH p=(n)-[*0..2]-(m) RETURN p");
         assertThat(query.getParameters()).containsEntry("id", 0L);
 
         // Also assert that an empty label is the same as using the typeless variant

@@ -25,12 +25,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.TokenBuffer;
 import org.apache.http.client.methods.CloseableHttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.neo4j.ogm.config.ObjectMapperFactory;
 import org.neo4j.ogm.exception.CypherException;
 import org.neo4j.ogm.model.QueryStatistics;
 import org.neo4j.ogm.response.model.QueryStatisticsModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author vince
@@ -103,7 +104,8 @@ public abstract class AbstractHttpResponse<T> {
 
     /**
      * Returns the first set of columns from the JSON response.
-     * Note that the current implementation expects that columns be standard across all statements in a Cypher transaction.
+     * Note that the current implementation expects that columns be standard across all statements in a Cypher
+     * transaction.
      *
      * @return the first set of columns from a JSON response
      */

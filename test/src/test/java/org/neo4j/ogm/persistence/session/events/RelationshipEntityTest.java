@@ -13,14 +13,15 @@
 
 package org.neo4j.ogm.persistence.session.events;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Date;
 import java.util.Random;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.cineasts.annotated.Knows;
 import org.neo4j.ogm.session.event.Event;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author vince

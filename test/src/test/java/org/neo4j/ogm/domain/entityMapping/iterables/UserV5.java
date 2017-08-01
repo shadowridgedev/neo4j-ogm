@@ -18,7 +18,8 @@ import java.util.Set;
 import org.neo4j.ogm.annotation.Relationship;
 
 /**
- * Annotated getter and setter (implied outgoing), non annotated iterable field. Relationship type different from property name
+ * Annotated getter and setter (implied outgoing), non annotated iterable field. Relationship type different from
+ * property name
  *
  * @author Luanne Misquitta
  */

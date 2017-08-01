@@ -13,7 +13,6 @@
 
 package org.neo4j.ogm.cypher.function;
 
-
 import java.util.HashMap;
 import java.util.Map;
 

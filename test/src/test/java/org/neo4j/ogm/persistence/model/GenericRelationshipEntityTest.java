@@ -13,16 +13,21 @@
 
 package org.neo4j.ogm.persistence.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.neo4j.ogm.annotation.*;
+
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -83,7 +88,7 @@ public class GenericRelationshipEntityTest extends MultiDriverTestClass {
     }
 
     @RelationshipEntity(type = "R")
-    public static class RelationEntity<O,T> {
+    public static class RelationEntity<O, T> {
         @GraphId
         public Long id;
 
@@ -96,7 +101,7 @@ public class GenericRelationshipEntityTest extends MultiDriverTestClass {
     }
 
     @RelationshipEntity(type = "OWNS")
-    public static class Owns extends RelationEntity<User,User> {
+    public static class Owns extends RelationEntity<User, User> {
         public Boolean isProfile;
 
         public Owns() {

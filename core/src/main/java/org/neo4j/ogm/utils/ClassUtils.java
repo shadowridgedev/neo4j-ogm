@@ -32,6 +32,7 @@ public abstract class ClassUtils {
      * Return null if the class could not be determined
      *
      * @param descriptor parameter descriptor
+     *
      * @return reified class for the parameter or null
      */
     public static Class<?> getType(String descriptor) {

@@ -13,15 +13,21 @@
 
 package org.neo4j.ogm.typeconversion;
 
-import org.neo4j.ogm.exception.MappingException;
-import org.neo4j.ogm.session.Utils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.neo4j.ogm.exception.MappingException;
+import org.neo4j.ogm.session.Utils;
 
 import static java.util.Collections.emptyMap;
 import static java.util.Collections.unmodifiableSet;
@@ -66,9 +72,9 @@ public class MapCompositeConverter implements CompositeAttributeConverter<Map<?,
     /**
      * Create MapCompositeConverter
      *
-     * @param prefix       prefix that is used for all properties
-     * @param delimiter    delimiter that is used between prefix, properties and nested properties
-     * @param allowCast    if casting from non Cypher types should be allowed
+     * @param prefix prefix that is used for all properties
+     * @param delimiter delimiter that is used between prefix, properties and nested properties
+     * @param allowCast if casting from non Cypher types should be allowed
      * @param mapFieldType type information for the field
      */
     public MapCompositeConverter(String prefix, String delimiter, boolean allowCast, ParameterizedType mapFieldType) {

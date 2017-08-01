@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
@@ -27,8 +30,6 @@ import org.neo4j.ogm.metadata.reflect.EntityAccessManager;
 import org.neo4j.ogm.metadata.reflect.EntityFactory;
 import org.neo4j.ogm.model.RowModel;
 import org.neo4j.ogm.utils.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Simple graph-to-entity mapper suitable for ad-hoc, one-off mappings.  This doesn't interact with a
@@ -62,6 +63,7 @@ public class SingleUseEntityMapper {
      * @param type The {@link Class} denoting the type of object to create
      * @param columnNames The names of the columns in each row of the result
      * @param rowModel The {@link org.neo4j.ogm.model.RowModel} containing the data to map
+     *
      * @return A new instance of <tt>T</tt> populated with the data in the specified row model
      */
     public <T> T map(Class<T> type, String[] columnNames, RowModel rowModel) {

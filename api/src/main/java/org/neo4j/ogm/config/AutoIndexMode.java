@@ -34,7 +34,8 @@ public enum AutoIndexMode {
     VALIDATE("validate"),
 
     /**
-     * Runs validate then creates a file (in same dir where launched) with the cypher used to build indexes and constraints.
+     * Runs validate then creates a file (in same dir where launched) with the cypher used to build indexes and
+     * constraints.
      */
     DUMP("dump");
 
@@ -42,6 +43,7 @@ public enum AutoIndexMode {
      * Parses an option name into the Enumeration type it represents.
      *
      * @param name The lowercase name to parse.
+     *
      * @return The <code>AutoIndexMode</code> this name represents.
      */
     public static AutoIndexMode fromString(String name) {

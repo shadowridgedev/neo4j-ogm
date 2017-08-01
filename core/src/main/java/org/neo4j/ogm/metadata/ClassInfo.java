@@ -16,21 +16,40 @@ package org.neo4j.ogm.metadata;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-import org.neo4j.ogm.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import org.neo4j.ogm.annotation.EndNode;
+import org.neo4j.ogm.annotation.GeneratedValue;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.Index;
+import org.neo4j.ogm.annotation.Labels;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.PostLoad;
+import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.Relationship;
+import org.neo4j.ogm.annotation.RelationshipEntity;
+import org.neo4j.ogm.annotation.StartNode;
+import org.neo4j.ogm.annotation.Transient;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.exception.MetadataException;
 import org.neo4j.ogm.id.IdStrategy;
 import org.neo4j.ogm.id.InternalIdStrategy;
 import org.neo4j.ogm.id.UuidStrategy;
-import org.neo4j.ogm.session.Neo4jException;
 import org.neo4j.ogm.utils.ClassUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Maintains object to graph mapping details at the class (type) level
@@ -414,6 +433,7 @@ public class ClassInfo {
      * Note that this method does not allow for property names with differing case. //TODO
      *
      * @param propertyName the propertyName of the field to find
+     *
      * @return A FieldInfo object describing the required property field, or null if it doesn't exist.
      */
     public FieldInfo propertyField(String propertyName) {
@@ -436,6 +456,7 @@ public class ClassInfo {
      * Finds the property field with a specific field name from the ClassInfo's property fields
      *
      * @param propertyName the propertyName of the field to find
+     *
      * @return A FieldInfo object describing the required property field, or null if it doesn't exist.
      */
     public FieldInfo propertyFieldByName(String propertyName) {
@@ -475,6 +496,7 @@ public class ClassInfo {
      * Finds the relationship field with a specific name from the ClassInfo's relationship fields
      *
      * @param relationshipName the relationshipName of the field to find
+     *
      * @return A FieldInfo object describing the required relationship field, or null if it doesn't exist.
      */
     public FieldInfo relationshipField(String relationshipName) {
@@ -491,7 +513,9 @@ public class ClassInfo {
      *
      * @param relationshipName the relationshipName of the field to find
      * @param relationshipDirection the direction of the relationship
-     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if missing. If false, infers relationship type from FieldInfo
+     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if
+     * missing. If false, infers relationship type from FieldInfo
+     *
      * @return A FieldInfo object describing the required relationship field, or null if it doesn't exist.
      */
     public FieldInfo relationshipField(String relationshipName, String relationshipDirection, boolean strict) {
@@ -512,7 +536,9 @@ public class ClassInfo {
      *
      * @param relationshipName the relationshipName of the field to find
      * @param relationshipDirection the direction of the relationship
-     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if missing. If false, infers relationship type from FieldInfo
+     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if
+     * missing. If false, infers relationship type from FieldInfo
+     *
      * @return Set of  FieldInfo objects describing the required relationship field, or empty set if it doesn't exist.
      */
     public Set<FieldInfo> candidateRelationshipFields(String relationshipName, String relationshipDirection, boolean strict) {
@@ -533,6 +559,7 @@ public class ClassInfo {
      * Finds the relationship field with a specific property name from the ClassInfo's relationship fields
      *
      * @param fieldName the name of the field
+     *
      * @return A FieldInfo object describing the required relationship field, or null if it doesn't exist.
      */
     public FieldInfo relationshipFieldByName(String fieldName) {
@@ -565,9 +592,11 @@ public class ClassInfo {
     }
 
     /**
-     * Returns the Method corresponding to the supplied MethodInfo as declared by the class represented by this ClassInfo
+     * Returns the Method corresponding to the supplied MethodInfo as declared by the class represented by this
+     * ClassInfo
      *
      * @param methodInfo the MethodInfo used to obtain the Method
+     *
      * @return a Method
      */
     public Method getMethod(MethodInfo methodInfo) {
@@ -578,6 +607,7 @@ public class ClassInfo {
      * Find all FieldInfos for the specified ClassInfo whose type matches the supplied fieldType
      *
      * @param fieldType The field type to look for
+     *
      * @return A {@link List} of {@link FieldInfo} objects that are of the given type, never <code>null</code>
      */
     public List<FieldInfo> findFields(Class<?> fieldType) {
@@ -595,6 +625,7 @@ public class ClassInfo {
      * Find all FieldInfos for the specified ClassInfo which have the specified annotation
      *
      * @param annotation The annotation
+     *
      * @return A {@link List} of {@link FieldInfo} objects that are of the given type, never <code>null</code>
      */
     public List<FieldInfo> findFields(String annotation) {
@@ -633,6 +664,7 @@ public class ClassInfo {
      * where X is the generic parameter type of the Array or Iterable
      *
      * @param iteratedType the type of iterable
+     *
      * @return {@link List} of {@link MethodInfo}, never <code>null</code>
      */
     public List<FieldInfo> findIterableFields(Class iteratedType) {
@@ -661,12 +693,15 @@ public class ClassInfo {
 
     /**
      * Finds all fields whose type is equivalent to Array&lt;X&gt; or assignable from Iterable&lt;X&gt;
-     * where X is the generic parameter type of the Array or Iterable and the relationship type backing this iterable is "relationshipType"
+     * where X is the generic parameter type of the Array or Iterable and the relationship type backing this iterable is
+     * "relationshipType"
      *
      * @param iteratedType the type of iterable
      * @param relationshipType the relationship type
      * @param relationshipDirection the relationship direction
-     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if missing. If false, infers relationship type from FieldInfo
+     * @param strict if true, does not infer relationship type but looks for it in the @Relationship annotation. Null if
+     * missing. If false, infers relationship type from FieldInfo
+     *
      * @return {@link List} of {@link MethodInfo}, never <code>null</code>
      */
     public List<FieldInfo> findIterableFields(Class iteratedType, String relationshipType, String relationshipDirection, boolean strict) {
@@ -692,9 +727,11 @@ public class ClassInfo {
     }
 
     /**
-     * Returns true if this classInfo is in the subclass hierarchy of b, or if this classInfo is the same as b, false otherwise
+     * Returns true if this classInfo is in the subclass hierarchy of b, or if this classInfo is the same as b, false
+     * otherwise
      *
      * @param classInfo the classInfo at the toplevel of a type hierarchy to search through
+     *
      * @return true if this classInfo is in the subclass hierarchy of classInfo, false otherwise
      */
     boolean isSubclassOf(ClassInfo classInfo) {
@@ -732,6 +769,7 @@ public class ClassInfo {
      *
      * @param relationshipType the relationship type
      * @param relationshipDirection the relationship direction
+     *
      * @return class of the type parameter descriptor or null if it could not be determined
      */
     Class getTypeParameterDescriptorForRelationship(String relationshipType, String relationshipDirection) {

@@ -11,7 +11,6 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -51,6 +50,7 @@ public class EntityFactory {
      *
      * @param <T> The class of object to return
      * @param nodeModel The {@link Node} from which to determine the type
+     *
      * @return A new instance of the class that corresponds to the node label, never <code>null</code>
      * @throws MappingException if it's not possible to resolve or instantiate a class from the given argument
      */
@@ -63,6 +63,7 @@ public class EntityFactory {
      *
      * @param <T> The class of object to return
      * @param edgeModel The {@link org.neo4j.ogm.model.Edge} from which to determine the type
+     *
      * @return A new instance of the class that corresponds to the relationship type, never <code>null</code>
      * @throws MappingException if it's not possible to resolve or instantiate a class from the given argument
      */
@@ -75,6 +76,7 @@ public class EntityFactory {
      *
      * @param <T> The class of object to return
      * @param classInfo The {@link ClassInfo} from which to determine the type
+     *
      * @return A new instance of the class that corresponds to the classinfo type, never <code>null</code>
      * @throws MappingException if it's not possible to resolve or instantiate a class from the given argument
      */
@@ -87,6 +89,7 @@ public class EntityFactory {
      *
      * @param <T> The class of object to return
      * @param clarse The class to instantiate
+     *
      * @return A new instance of the specified {@link Class}
      * @throws MappingException if it's not possible to instantiate the given class for any reason
      */

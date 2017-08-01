@@ -14,6 +14,7 @@
 package org.neo4j.ogm.drivers.http.request;
 
 import org.apache.http.client.methods.HttpRequestBase;
+
 import org.neo4j.ogm.exception.ConnectionException;
 
 /**

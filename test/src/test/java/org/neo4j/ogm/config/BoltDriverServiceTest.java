@@ -15,6 +15,7 @@ package org.neo4j.ogm.config;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.driver.Driver;
 import org.neo4j.ogm.drivers.bolt.driver.BoltDriver;
 import org.neo4j.ogm.session.SessionFactory;

@@ -25,6 +25,7 @@ public interface AggregateStatements {
      * construct queries to count all nodes with the specified label
      *
      * @param labels the labels attached to the object
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery countNodes(Iterable<String> labels);
@@ -34,6 +35,7 @@ public interface AggregateStatements {
      *
      * @param label the label value to filter on
      * @param filters additional parameters to filter on
+     *
      * @return a {@link CypherQuery}
      */
 
@@ -44,16 +46,19 @@ public interface AggregateStatements {
      *
      * @param type the relationship type to filter on
      * @param filters additional parameters to filter on
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery countEdges(String type, Iterable<Filter> filters);
 
     /**
-     * construct queries to count all single-length paths with the specified start label, relationship type and end label that match the specified filters
+     * construct queries to count all single-length paths with the specified start label, relationship type and end
+     * label that match the specified filters
      *
      * @param startLabel the start node label to filter on
      * @param relationshipType the type of relationship to filter on
      * @param endLabel the end node label to filter on
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery countEdges(String startLabel, String relationshipType, String endLabel);

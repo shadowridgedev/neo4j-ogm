@@ -25,13 +25,18 @@ public class InvalidAnnotations {
     public static class TwoIdsOnSameClass {
         Long id;
 
-        @Id public String identifier;
-        @Id public String identifier2;
+        @Id
+        public String identifier;
+        @Id
+        public String identifier2;
     }
 
     public static class GraphIdAndIdWithInternalStrategy {
-        @GraphId public Long graphId;
-        @Id @GeneratedValue Long id;
+        @GraphId
+        public Long graphId;
+        @Id
+        @GeneratedValue
+        Long id;
     }
 
     public static class NeitherGraphIdOrId {
@@ -39,18 +44,22 @@ public class InvalidAnnotations {
     }
 
     public static class BothIdAndPrimaryIndexOnDifferentProperty {
-        @Id public String identifier;
-        @Index(primary = true, unique = true) public String other;
+        @Id
+        public String identifier;
+        @Index(primary = true, unique = true)
+        public String other;
     }
 
     public static class ChildHasPrimaryIndexExtendsAndParentHasId extends ValidAnnotations.Basic {
-        @Index(primary = true, unique = true) public String other;
+        @Index(primary = true, unique = true)
+        public String other;
     }
 
     public static class GeneratedValueWithoutID {
         Long id;
 
-        @GeneratedValue public String identifier;
+        @GeneratedValue
+        public String identifier;
     }
 
     public static class UuidGenerationStrategyWithIdTypeNotUuid {

@@ -55,6 +55,7 @@ public class Utils {
      *
      * @param clazz the entity field type
      * @param value the property value
+     *
      * @return converted value
      */
     public static Object coerceTypes(Class clazz, Object value) {

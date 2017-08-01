@@ -16,7 +16,8 @@ package org.neo4j.ogm.cypher;
 import java.util.regex.Pattern;
 
 /**
- * Implementation of {@link PropertyValueTransformer} that transforms a traditional "LIKE" expression with asterisk wildcards
+ * Implementation of {@link PropertyValueTransformer} that transforms a traditional "LIKE" expression with asterisk
+ * wildcards
  * into a case-insensitive regular expression compatible with Cypher.
  *
  * @author Adam George

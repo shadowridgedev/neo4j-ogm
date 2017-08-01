@@ -13,17 +13,22 @@
 
 package org.neo4j.ogm.persistence.transaction;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
 import org.neo4j.ogm.exception.TransactionManagerException;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.transaction.DefaultTransactionManager;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 import org.neo4j.ogm.transaction.Transaction;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * Transactions in the OGM

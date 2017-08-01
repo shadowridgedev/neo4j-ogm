@@ -14,12 +14,14 @@
 
 package org.neo4j.ogm.cypher.function;
 
-import static org.neo4j.ogm.cypher.ComparisonOperator.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import org.neo4j.ogm.cypher.Filter;
+
+import static org.neo4j.ogm.cypher.ComparisonOperator.EXISTS;
+import static org.neo4j.ogm.cypher.ComparisonOperator.IS_NULL;
+import static org.neo4j.ogm.cypher.ComparisonOperator.IS_TRUE;
 
 /**
  * @author Jasper Blues

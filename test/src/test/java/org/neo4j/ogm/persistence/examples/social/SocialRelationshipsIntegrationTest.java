@@ -13,9 +13,6 @@
 
 package org.neo4j.ogm.persistence.examples.social;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.neo4j.ogm.testutil.GraphTestUtils.*;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -25,11 +22,20 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.neo4j.ogm.domain.social.*;
+
+import org.neo4j.ogm.domain.social.Individual;
+import org.neo4j.ogm.domain.social.Mortal;
+import org.neo4j.ogm.domain.social.Person;
+import org.neo4j.ogm.domain.social.SocialUser;
+import org.neo4j.ogm.domain.social.User;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.event.EventListenerAdapter;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.neo4j.ogm.testutil.GraphTestUtils.assertSameGraph;
 
 /**
  * @author Luanne Misquitta

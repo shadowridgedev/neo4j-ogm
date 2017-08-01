@@ -13,6 +13,9 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
+import java.io.Serializable;
+import java.util.Collection;
+
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.cypher.query.PagingAndSortingQuery;
 import org.neo4j.ogm.session.Utils;
@@ -21,9 +24,6 @@ import org.neo4j.ogm.session.request.FilteredQueryBuilder;
 import org.neo4j.ogm.session.request.strategy.LoadClauseBuilder;
 import org.neo4j.ogm.session.request.strategy.MatchClauseBuilder;
 import org.neo4j.ogm.session.request.strategy.QueryStatements;
-
-import java.io.Serializable;
-import java.util.Collection;
 
 import static java.util.Objects.requireNonNull;
 
@@ -55,7 +55,7 @@ public class NodeQueryStatements<ID extends Serializable> implements QueryStatem
 
     @Override
     public PagingAndSortingQuery findOne(ID id, int depth) {
-       return findOneByType("", id, depth);
+        return findOneByType("", id, depth);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class NodeQueryStatements<ID extends Serializable> implements QueryStatem
 
     @Override
     public PagingAndSortingQuery findAllByType(String label, Collection<ID> ids, int depth) {
-            String matchClause;
+        String matchClause;
         if (primaryIndex != null) {
             matchClause = idCollectionMatchClauseBuilder.build(label, primaryIndex);
         } else {
@@ -92,7 +92,7 @@ public class NodeQueryStatements<ID extends Serializable> implements QueryStatem
     @Override
     public PagingAndSortingQuery findByType(String label, Filters parameters, int depth) {
         FilteredQuery filteredQuery = FilteredQueryBuilder.buildNodeQuery(label, parameters);
-        String matchClause = filteredQuery.statement()+ "WITH n";
+        String matchClause = filteredQuery.statement() + "WITH n";
         String returnClause = loadClauseBuilder.build(label, depth);
         return new PagingAndSortingQuery(matchClause, returnClause, filteredQuery.parameters(), depth != 0, true);
     }

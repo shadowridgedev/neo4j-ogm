@@ -13,8 +13,6 @@
 
 package org.neo4j.ogm.persistence.examples.social;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -24,6 +22,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.domain.social.Individual;
@@ -33,6 +32,8 @@ import org.neo4j.ogm.domain.social.User;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta
@@ -63,8 +64,8 @@ public class SocialIntegrationTest extends MultiDriverTestClass {
      */
     @Test
     public void shouldFetchOnlyPeopleILike() {
-        session.query("create (p1:Person {name:'A'}) create (p2:Person {name:'B'}) create (p3:Person {name:'C'})" +
-                " create (p4:Person {name:'D'}) create (p1)-[:LIKES]->(p2) create (p1)-[:LIKES]->(p3) create (p4)-[:LIKES]->(p1)", Collections.EMPTY_MAP);
+        session.query("CREATE (p1:Person {name:'A'}) CREATE (p2:Person {name:'B'}) CREATE (p3:Person {name:'C'})" +
+                " CREATE (p4:Person {name:'D'}) CREATE (p1)-[:LIKES]->(p2) CREATE (p1)-[:LIKES]->(p3) CREATE (p4)-[:LIKES]->(p1)", Collections.EMPTY_MAP);
 
         Person personA = session.loadAll(Person.class, new Filter("name", ComparisonOperator.EQUALS, "A")).iterator().next();
         assertThat(personA).isNotNull();
@@ -81,8 +82,8 @@ public class SocialIntegrationTest extends MultiDriverTestClass {
      */
     @Test
     public void shouldFetchFriendsInBothDirections() {
-        session.query("create (p1:Individual {name:'A'}) create (p2:Individual {name:'B'}) create (p3:Individual {name:'C'})" +
-                " create (p4:Individual {name:'D'}) create (p1)-[:FRIENDS]->(p2) create (p1)-[:FRIENDS]->(p3) create (p4)-[:FRIENDS]->(p1)", Collections.EMPTY_MAP);
+        session.query("CREATE (p1:Individual {name:'A'}) CREATE (p2:Individual {name:'B'}) CREATE (p3:Individual {name:'C'})" +
+                " CREATE (p4:Individual {name:'D'}) CREATE (p1)-[:FRIENDS]->(p2) CREATE (p1)-[:FRIENDS]->(p3) CREATE (p4)-[:FRIENDS]->(p1)", Collections.EMPTY_MAP);
 
         Individual individualA = session.loadAll(Individual.class, new Filter("name", ComparisonOperator.EQUALS, "A")).iterator().next();
         assertThat(individualA).isNotNull();
@@ -94,8 +95,8 @@ public class SocialIntegrationTest extends MultiDriverTestClass {
      */
     @Test
     public void shouldFetchFriendsForUndirectedRelationship() {
-        session.query("create (p1:User {name:'A'}) create (p2:User {name:'B'}) create (p3:User {name:'C'})" +
-                " create (p4:User {name:'D'}) create (p1)-[:FRIEND]->(p2) create (p1)-[:FRIEND]->(p3) create (p4)-[:FRIEND]->(p1)", Collections.EMPTY_MAP);
+        session.query("CREATE (p1:User {name:'A'}) CREATE (p2:User {name:'B'}) CREATE (p3:User {name:'C'})" +
+                " CREATE (p4:User {name:'D'}) CREATE (p1)-[:FRIEND]->(p2) CREATE (p1)-[:FRIEND]->(p3) CREATE (p4)-[:FRIEND]->(p1)", Collections.EMPTY_MAP);
 
         User userA = session.loadAll(User.class, new Filter("name", ComparisonOperator.EQUALS, "A")).iterator().next();
         assertThat(userA).isNotNull();
@@ -215,8 +216,8 @@ public class SocialIntegrationTest extends MultiDriverTestClass {
      */
     @Test
     public void shouldFetchIncomingKnownMortals() {
-        session.query("create (m1:Mortal {name:'A'}) create (m2:Mortal {name:'B'}) create (m3:Mortal {name:'C'})" +
-                " create (m4:Mortal {name:'D'}) create (m1)<-[:KNOWN_BY]-(m2) create (m1)<-[:KNOWN_BY]-(m3) create (m4)<-[:KNOWN_BY]-(m1)", Collections.EMPTY_MAP);
+        session.query("CREATE (m1:Mortal {name:'A'}) CREATE (m2:Mortal {name:'B'}) CREATE (m3:Mortal {name:'C'})" +
+                " CREATE (m4:Mortal {name:'D'}) CREATE (m1)<-[:KNOWN_BY]-(m2) CREATE (m1)<-[:KNOWN_BY]-(m3) CREATE (m4)<-[:KNOWN_BY]-(m1)", Collections.EMPTY_MAP);
 
         Mortal mortalA = session.loadAll(Mortal.class, new Filter("name", ComparisonOperator.EQUALS, "A")).iterator().next();
         assertThat(mortalA).isNotNull();

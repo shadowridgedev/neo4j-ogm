@@ -13,13 +13,16 @@
 
 package org.neo4j.ogm.metadata.schema;
 
+import java.util.Collections;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Collections;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.neo4j.ogm.annotation.Relationship.*;
+
+import static org.neo4j.ogm.annotation.Relationship.INCOMING;
+import static org.neo4j.ogm.annotation.Relationship.OUTGOING;
+import static org.neo4j.ogm.annotation.Relationship.UNDIRECTED;
 
 /**
  * @author Frantisek Hartman

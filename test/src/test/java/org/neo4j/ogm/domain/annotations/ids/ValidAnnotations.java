@@ -35,24 +35,29 @@ public class ValidAnnotations {
     }
 
     public static class InternalIdWithAnnotation {
-        @Id @GeneratedValue public Long identifier;
+        @Id
+        @GeneratedValue
+        public Long identifier;
     }
 
     public static class Basic {
         public Long id;
-        @Id public String identifier;
+        @Id
+        public String identifier;
     }
 
 
     public static class IdAndGenerationType {
         public Long id;
-        @Id @GeneratedValue(strategy = UuidStrategy.class)
+        @Id
+        @GeneratedValue(strategy = UuidStrategy.class)
         public String identifier;
     }
 
     public static class UuidIdAndGenerationType {
         public Long id;
-        @Id @GeneratedValue(strategy = UuidStrategy.class)
+        @Id
+        @GeneratedValue(strategy = UuidStrategy.class)
         @Convert(UuidStringConverter.class)
         public UUID identifier;
     }
@@ -64,7 +69,8 @@ public class ValidAnnotations {
 
         public Long id;
 
-        @Id @GeneratedValue(strategy = CustomIdStrategy.class)
+        @Id
+        @GeneratedValue(strategy = CustomIdStrategy.class)
         public String idetifier;
     }
 
@@ -72,7 +78,8 @@ public class ValidAnnotations {
 
         public Long id;
 
-        @Id @GeneratedValue(strategy = IdGenerationTest.CustomInstanceIdStrategy.class)
+        @Id
+        @GeneratedValue(strategy = IdGenerationTest.CustomInstanceIdStrategy.class)
         public String idetifier;
     }
 }

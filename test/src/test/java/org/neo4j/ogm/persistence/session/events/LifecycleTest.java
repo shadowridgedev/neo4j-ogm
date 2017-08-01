@@ -16,6 +16,7 @@ package org.neo4j.ogm.persistence.session.events;
 import java.util.UUID;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.filesystem.Document;
 import org.neo4j.ogm.domain.filesystem.FileSystemEntity;
 import org.neo4j.ogm.domain.filesystem.Folder;

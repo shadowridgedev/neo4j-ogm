@@ -18,13 +18,12 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+
 import org.neo4j.ogm.config.ObjectMapperFactory;
-import org.neo4j.ogm.cypher.query.CypherQuery;
 import org.neo4j.ogm.cypher.query.DefaultGraphModelRequest;
 import org.neo4j.ogm.cypher.query.PagingAndSortingQuery;
 import org.neo4j.ogm.request.Statement;
 import org.neo4j.ogm.request.Statements;
-import org.neo4j.ogm.session.request.strategy.impl.NodeQueryStatements;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

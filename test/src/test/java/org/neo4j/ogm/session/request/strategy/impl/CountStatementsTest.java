@@ -13,18 +13,18 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
-import static com.google.common.collect.Lists.newArrayList;
-import static java.util.Collections.singleton;
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.cypher.query.CypherQuery;
 import org.neo4j.ogm.session.request.strategy.AggregateStatements;
+
+import static java.util.Collections.singleton;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Vince Bickers

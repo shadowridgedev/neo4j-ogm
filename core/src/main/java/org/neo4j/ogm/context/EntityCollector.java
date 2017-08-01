@@ -23,9 +23,12 @@ import static java.util.Objects.requireNonNull;
 import static java.util.stream.Collectors.toList;
 
 /**
- * Utility to help group elements of a common type into a single collection (by relationship type and direction) to be set on an owning object.
- * The ability to set a collection of instances on an owning entity based on the type of instance is insufficient as described in DATAGRAPH-637, DATAGRAPH-636 and Issue 161.
- * The relationship type and direction as well as the type of entity to be mapped are required to be able to correctly determine which instances are to be set for which property of the node entity.
+ * Utility to help group elements of a common type into a single collection (by relationship type and direction) to be
+ * set on an owning object.
+ * The ability to set a collection of instances on an owning entity based on the type of instance is insufficient as
+ * described in DATAGRAPH-637, DATAGRAPH-636 and Issue 161.
+ * The relationship type and direction as well as the type of entity to be mapped are required to be able to correctly
+ * determine which instances are to be set for which property of the node entity.
  *
  * @author Adam George
  * @author Luanne Misquitta

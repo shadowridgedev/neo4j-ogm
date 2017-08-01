@@ -14,6 +14,7 @@
 package org.neo4j.ogm.cypher;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.function.DistanceComparison;
 import org.neo4j.ogm.cypher.function.DistanceFromPoint;
 

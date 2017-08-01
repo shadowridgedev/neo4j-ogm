@@ -21,6 +21,7 @@ import java.util.List;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
+
 import org.neo4j.ogm.domain.cineasts.annotated.Actor;
 import org.neo4j.ogm.domain.cineasts.annotated.Knows;
 import org.neo4j.ogm.domain.filesystem.Document;
@@ -55,11 +56,10 @@ public abstract class EventTestBaseClass extends MultiDriverTestClass {
     Knows knowsJL;
 
 
-
     @BeforeClass
     public static void oneTimeSetUp() {
         sessionFactory = new SessionFactory(driver, "org.neo4j.ogm.domain.filesystem", "org.neo4j.ogm.domain.cineasts.annotated");
-        eventListener  = new TestEventListener();
+        eventListener = new TestEventListener();
         sessionFactory.register(eventListener);
     }
 

@@ -13,13 +13,11 @@
 
 package org.neo4j.ogm.metadata.schema;
 
-import org.neo4j.ogm.metadata.schema.*;
-import org.neo4j.ogm.metadata.schema.Relationship;
-import org.neo4j.ogm.utils.RelationshipUtils;
-
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.neo4j.ogm.utils.RelationshipUtils;
 
 /**
  * Node represents nodes in the schema

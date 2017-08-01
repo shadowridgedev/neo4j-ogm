@@ -29,6 +29,7 @@ public interface DeleteStatements {
      * construct a query to delete a single object with the specified id
      *
      * @param id the id of the object to find
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery delete(Long id);
@@ -44,6 +45,7 @@ public interface DeleteStatements {
      * construct a query to delete all objects with the specified ids
      *
      * @param ids the ids of the objects to find
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery delete(Collection<Long> ids);
@@ -52,6 +54,7 @@ public interface DeleteStatements {
      * construct queries to delete all objects with the specified label or relationship type
      *
      * @param type the label attached to the object, or the relationship type
+     *
      * @return a {@link CypherQuery}
      */
     CypherQuery delete(String type);
@@ -61,16 +64,19 @@ public interface DeleteStatements {
      *
      * @param type the label value or relationship type to filter on
      * @param filters parameters to filter on
+     *
      * @return a {@link CypherQuery}
      */
 
     CypherQuery delete(String type, Iterable<Filter> filters);
 
     /**
-     * construct queries to delete all objects with the specified label that match the specified filters and return a list of deleted object ids
+     * construct queries to delete all objects with the specified label that match the specified filters and return a
+     * list of deleted object ids
      *
      * @param type the label value or relationship type to filter on
      * @param filters parameters to filter on
+     *
      * @return a {@link CypherQuery}
      */
 

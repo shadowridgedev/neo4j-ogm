@@ -13,11 +13,22 @@
 
 package org.neo4j.ogm.cypher.compiler;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.ogm.cypher.compiler.builders.node.DefaultNodeBuilder;
 import org.neo4j.ogm.cypher.compiler.builders.node.DefaultRelationshipBuilder;
-import org.neo4j.ogm.cypher.compiler.builders.statement.*;
+import org.neo4j.ogm.cypher.compiler.builders.statement.DeletedRelationshipEntityStatementBuilder;
+import org.neo4j.ogm.cypher.compiler.builders.statement.DeletedRelationshipStatementBuilder;
+import org.neo4j.ogm.cypher.compiler.builders.statement.ExistingNodeStatementBuilder;
+import org.neo4j.ogm.cypher.compiler.builders.statement.ExistingRelationshipStatementBuilder;
+import org.neo4j.ogm.cypher.compiler.builders.statement.NewNodeStatementBuilder;
+import org.neo4j.ogm.cypher.compiler.builders.statement.NewRelationshipStatementBuilder;
 import org.neo4j.ogm.exception.UnknownStatementTypeException;
 import org.neo4j.ogm.model.Edge;
 import org.neo4j.ogm.model.Node;

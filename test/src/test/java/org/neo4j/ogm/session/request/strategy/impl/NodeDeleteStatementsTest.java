@@ -13,16 +13,17 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Arrays;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.cypher.Filters;
 import org.neo4j.ogm.cypher.query.CypherQuery;
 import org.neo4j.ogm.session.request.strategy.DeleteStatements;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author vince

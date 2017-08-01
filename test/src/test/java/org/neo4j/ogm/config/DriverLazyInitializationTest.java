@@ -15,6 +15,7 @@ package org.neo4j.ogm.config;
 
 import org.junit.Ignore;
 import org.junit.Test;
+
 import org.neo4j.ogm.domain.simple.User;
 import org.neo4j.ogm.exception.ConnectionException;
 import org.neo4j.ogm.session.Session;

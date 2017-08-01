@@ -13,11 +13,12 @@
 
 package org.neo4j.ogm.drivers.embedded;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assume.assumeTrue;
-
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 
 import org.junit.BeforeClass;
@@ -25,9 +26,14 @@ import org.junit.Test;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.neo4j.graphdb.Result;
 import org.neo4j.graphdb.Transaction;
+import org.neo4j.test.TestGraphDatabaseFactory;
+
 import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.drivers.embedded.driver.EmbeddedDriver;
-import org.neo4j.test.TestGraphDatabaseFactory;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * @author vince
@@ -36,14 +42,14 @@ import org.neo4j.test.TestGraphDatabaseFactory;
 public class EmbeddedDatabaseTest {
 
 
-	@BeforeClass
-	public static void setUp() {
-		assumeTrue("ogm-embedded.properties".equals(System.getProperty("ogm.properties")));
-	}
+    @BeforeClass
+    public static void setUp() {
+        assumeTrue("ogm-embedded.properties".equals(System.getProperty("ogm.properties")));
+    }
 
-	@Test
-	public void shouldCreateImpermanentInstanceWhenNoURI() {
-		Configuration configuration = new Configuration.Builder().build();
+    @Test
+    public void shouldCreateImpermanentInstanceWhenNoURI() {
+        Configuration configuration = new Configuration.Builder().build();
 
 		try (EmbeddedDriver driver = new EmbeddedDriver()) {
 			driver.configure(configuration);
@@ -52,13 +58,13 @@ public class EmbeddedDatabaseTest {
 		}
 	}
 
-	@Test
-	public void shouldWriteAndRead() {
+    @Test
+    public void shouldWriteAndRead() {
 
-		try (EmbeddedDriver driver = new EmbeddedDriver()) {
-			driver.configure(new Configuration.Builder().build());
+        try (EmbeddedDriver driver = new EmbeddedDriver()) {
+            driver.configure(new Configuration.Builder().build());
 
-			GraphDatabaseService databaseService = driver.getGraphDatabaseService();
+            GraphDatabaseService databaseService = driver.getGraphDatabaseService();
 
 			try (Transaction tx = databaseService.beginTx()) {
 				databaseService.execute("CREATE (n: Node {name: 'node'})");
@@ -69,8 +75,8 @@ public class EmbeddedDatabaseTest {
 		}
 	}
 
-	@Test
-	public void shouldWriteAndReadFromProvidedDatabase() throws Exception {
+    @Test
+    public void shouldWriteAndReadFromProvidedDatabase() throws Exception {
 
 		GraphDatabaseService impermanentDatabase = new TestGraphDatabaseFactory().newImpermanentDatabase();
 

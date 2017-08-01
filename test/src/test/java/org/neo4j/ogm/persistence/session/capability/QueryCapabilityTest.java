@@ -13,15 +13,18 @@
 
 package org.neo4j.ogm.persistence.session.capability;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.neo4j.helpers.collection.MapUtil;
+
 import org.neo4j.ogm.domain.cineasts.annotated.Actor;
 import org.neo4j.ogm.domain.cineasts.annotated.Movie;
 import org.neo4j.ogm.domain.cineasts.annotated.Rating;
@@ -33,6 +36,8 @@ import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 import org.neo4j.ogm.testutil.TestUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta
@@ -68,13 +73,13 @@ public class QueryCapabilityTest extends MultiDriverTestClass {
         session.save(alec);
         session.save(new Actor("Matt Damon"));
 
-        Iterable<Map<String, Object>> resultsIterable = session.query("MATCH (a:Actor) WHERE ID(a)={param} RETURN a.name as name",
+        Iterable<Map<String, Object>> resultsIterable = session.query("MATCH (a:Actor) WHERE id(a)={param} RETURN a.name AS name",
                 Collections.<String, Object>singletonMap("param", alec.getId())); //make sure the change is backward compatible
         assertThat(resultsIterable).as("Results are empty").isNotNull();
         Map<String, Object> row = resultsIterable.iterator().next();
         assertThat(row.get("name")).isEqualTo("Alec Baldwin");
 
-        Result results = session.query("MATCH (a:Actor) WHERE ID(a)={param} RETURN a.name as name",
+        Result results = session.query("MATCH (a:Actor) WHERE id(a)={param} RETURN a.name AS name",
                 Collections.<String, Object>singletonMap("param", alec.getId()));
         assertThat(results).as("Results are empty").isNotNull();
         assertThat(results.iterator().next().get("name")).isEqualTo("Alec Baldwin");
@@ -218,7 +223,7 @@ public class QueryCapabilityTest extends MultiDriverTestClass {
     @Test
     public void shouldBeAbleToHandleNullValuesInQueryResults() {
         session.save(new Actor("Jeff"));
-        Iterable<Map<String, Object>> results = session.query("MATCH (a:Actor) return a.nonExistent as nonExistent", Collections.EMPTY_MAP);
+        Iterable<Map<String, Object>> results = session.query("MATCH (a:Actor) RETURN a.nonExistent AS nonExistent", Collections.EMPTY_MAP);
         Map<String, Object> result = results.iterator().next();
         assertThat(result.get("nonExistent")).isNull();
     }
@@ -583,7 +588,7 @@ public class QueryCapabilityTest extends MultiDriverTestClass {
      */
     @Test
     public void modifyingQueryShouldBeAbleToMapEntitiesAndReturnStatistics() {
-        Result result = session.query("MATCH (u:User {name:{name}})-[:RATED]->(m) WITH u,m SET u.age={age} RETURN u as user, m as movie", MapUtil.map("name", "Vince", "age", 20));
+        Result result = session.query("MATCH (u:User {name:{name}})-[:RATED]->(m) WITH u,m SET u.age={age} RETURN u AS user, m AS movie", MapUtil.map("name", "Vince", "age", 20));
         Iterator<Map<String, Object>> results = result.queryResults().iterator();
         assertThat(results).isNotNull();
         Map<String, Object> row = results.next();
@@ -606,7 +611,7 @@ public class QueryCapabilityTest extends MultiDriverTestClass {
         long start = Integer.MAX_VALUE;
         session.query("CREATE (n:Sequence {id:{id}, next:{start}})", MapUtil.map("id", "test", "start", start));
 
-        String incrementStmt = "MATCH (n:Sequence) WHERE n.id = {id} REMOVE n.lock SET n.next = n.next + {increment} RETURN n.next - {increment} as current";
+        String incrementStmt = "MATCH (n:Sequence) WHERE n.id = {id} REMOVE n.lock SET n.next = n.next + {increment} RETURN n.next - {increment} AS current";
 
         Result result = session.query(incrementStmt, MapUtil.map("id", "test", "increment", 1));
         assertThat(((Number) result.iterator().next().get("current")).longValue()).isEqualTo(start);

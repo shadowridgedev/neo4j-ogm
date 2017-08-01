@@ -14,6 +14,7 @@
 package org.neo4j.ogm.drivers.http.response;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
+
 import org.neo4j.ogm.model.GraphRowListModel;
 import org.neo4j.ogm.model.GraphRowModel;
 import org.neo4j.ogm.response.Response;

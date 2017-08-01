@@ -13,19 +13,43 @@
 
 package org.neo4j.ogm.metadata.reflect;
 
-import static org.assertj.core.api.Assertions.*;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import org.neo4j.ogm.annotation.Relationship;
-import org.neo4j.ogm.domain.entityMapping.iterables.*;
+import org.neo4j.ogm.domain.entityMapping.iterables.PlainUser;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV1;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV10;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV11;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV12;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV13;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV14;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV15;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV16;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV17;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV18;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV19;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV2;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV20;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV21;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV22;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV23;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV3;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV4;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV5;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV6;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV7;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV8;
+import org.neo4j.ogm.domain.entityMapping.iterables.UserV9;
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.DomainInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Luanne Misquitta

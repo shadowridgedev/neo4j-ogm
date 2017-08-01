@@ -14,6 +14,7 @@
 package org.neo4j.ogm.drivers;
 
 import org.junit.Test;
+
 import org.neo4j.ogm.config.ClasspathConfigurationSource;
 import org.neo4j.ogm.config.Configuration;
 import org.neo4j.ogm.session.Session;
@@ -38,7 +39,7 @@ public class DriverExceptionTest {
     @Test(expected = Exception.class)
     public void shouldThrowExceptionWhenEmbeddedDriverCannotConnect() {
         Configuration configuration = new Configuration.Builder(new ClasspathConfigurationSource("ogm-embedded-invalid.properties")).build();
-        SessionFactory sessionFactory = new SessionFactory(configuration,"org.neo4j.ogm.domain.social");
+        SessionFactory sessionFactory = new SessionFactory(configuration, "org.neo4j.ogm.domain.social");
         Session session = sessionFactory.openSession();
         session.purgeDatabase();
     }

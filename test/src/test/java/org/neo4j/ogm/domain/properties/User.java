@@ -13,14 +13,14 @@
 
 package org.neo4j.ogm.domain.properties;
 
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.neo4j.ogm.annotation.Properties;
-import org.neo4j.ogm.annotation.Relationship;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Properties;
+import org.neo4j.ogm.annotation.Relationship;
 
 /**
  * @author Frantisek Hartman
@@ -148,6 +148,7 @@ public class User {
         }
         allowCastProperties.put(key, value);
     }
+
     public Set<Visit> getVisits() {
         return visits;
     }

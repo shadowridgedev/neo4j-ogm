@@ -14,20 +14,19 @@
 package org.neo4j.ogm.persistence.authentication;
 
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.Assume.*;
-
 import org.apache.http.client.HttpResponseException;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.neo4j.ogm.config.Configuration;
-import org.neo4j.ogm.driver.Driver;
+
 import org.neo4j.ogm.drivers.http.driver.HttpDriver;
 import org.neo4j.ogm.session.Session;
 import org.neo4j.ogm.session.SessionFactory;
 import org.neo4j.ogm.testutil.MultiDriverTestClass;
 import org.neo4j.ogm.transaction.Transaction;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeTrue;
 
 /**
  * @author Vince Bickers

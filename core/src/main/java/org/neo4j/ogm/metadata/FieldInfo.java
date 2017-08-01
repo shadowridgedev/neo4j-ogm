@@ -13,11 +13,18 @@
 
 package org.neo4j.ogm.metadata;
 
-
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 
-import org.neo4j.ogm.annotation.*;
+import org.neo4j.ogm.annotation.Id;
+import org.neo4j.ogm.annotation.Index;
+import org.neo4j.ogm.annotation.Labels;
+import org.neo4j.ogm.annotation.Properties;
+import org.neo4j.ogm.annotation.Property;
+import org.neo4j.ogm.annotation.Relationship;
 import org.neo4j.ogm.exception.MappingException;
 import org.neo4j.ogm.session.Utils;
 import org.neo4j.ogm.typeconversion.AttributeConverter;
@@ -79,7 +86,8 @@ public class FieldInfo {
     /**
      * Constructs a new {@link FieldInfo} based on the given arguments.
      *
-     * @param typeParameterDescriptor The descriptor that expresses the generic type parameter, which may be <code>null</code>
+     * @param typeParameterDescriptor The descriptor that expresses the generic type parameter, which may be
+     * <code>null</code>
      * if that's not appropriate
      * @param annotations The {@link ObjectAnnotations} applied to the field
      */

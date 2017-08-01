@@ -13,7 +13,6 @@
 
 package org.neo4j.ogm.session.request.strategy.impl;
 
-
 import java.util.Collections;
 
 import org.neo4j.ogm.cypher.Filter;

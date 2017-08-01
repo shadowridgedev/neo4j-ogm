@@ -14,7 +14,13 @@
 package org.neo4j.ogm.context;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.neo4j.ogm.metadata.ClassInfo;
 import org.neo4j.ogm.metadata.FieldInfo;
@@ -117,7 +123,8 @@ public class MappingContext {
      * De-registers an object from the mapping context
      * - removes the object instance from the typeRegister(s)
      * - removes the object id from the nodeEntityRegister
-     * - removes any relationship entities from relationshipEntityRegister if they have this object either as start or end node
+     * - removes any relationship entities from relationshipEntityRegister if they have this object either as start or
+     * end node
      *
      * @param entity the object to deregister
      * @param id the id of the object in Neo4j

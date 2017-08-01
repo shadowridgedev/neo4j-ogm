@@ -20,7 +20,8 @@ import java.util.Map;
 import org.neo4j.ogm.metadata.MetaData;
 
 /**
- * The TypeRegister maintains the list of active objects ids in the session, mapping each object id to its type hierarchy.
+ * The TypeRegister maintains the list of active objects ids in the session, mapping each object id to its type
+ * hierarchy.
  * Thus a domain object with id 5 of type Person extends Entity will have 2 entries in the type register, one
  * in the Person map, and one in the Entity map.
  *
@@ -54,6 +55,7 @@ public class TypeRegister {
      * Returns an immutable map of the objects associated with the given type
      *
      * @param type the class whose map entries we want to return
+     *
      * @return the map's entries
      */
     public Map<Object, Object> get(Class<?> type) {

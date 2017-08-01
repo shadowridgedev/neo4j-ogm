@@ -14,13 +14,13 @@
 
 package org.neo4j.ogm.domain.convertible.parametrized;
 
-import static org.neo4j.driver.internal.util.Iterables.*;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 import org.neo4j.ogm.typeconversion.AttributeConverter;
+
+import static org.neo4j.driver.internal.util.Iterables.map;
 
 /**
  * @author Luanne Misquitta
