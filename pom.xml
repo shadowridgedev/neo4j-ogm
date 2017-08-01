@@ -277,7 +277,7 @@
                     <configLocation>config/checkstyle-minimal.xml</configLocation>
                     <encoding>UTF-8</encoding>
                     <consoleOutput>true</consoleOutput>
-                    <failsOnError>false</failsOnError>
+                    <failsOnError>true</failsOnError>
                     <logViolationsToConsole>true</logViolationsToConsole>
                     <enableRulesSummary>true</enableRulesSummary>
                 </configuration>

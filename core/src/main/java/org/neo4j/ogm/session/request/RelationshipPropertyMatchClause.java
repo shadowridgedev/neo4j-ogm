@@ -38,7 +38,7 @@ public class RelationshipPropertyMatchClause implements MatchClause {
             if (filter.getRelationshipDirection().equals(Relationship.INCOMING)) {
                 clause.append("<");
             }
-//			String relationshipIdentifier = filter.isNestedRelationshipEntity() ? relationshipIdentifier() : "";
+//            String relationshipIdentifier = filter.isNestedRelationshipEntity() ? relationshipIdentifier() : "";
             clause.append(String.format("-[%s:`%s`]-", relationshipIdentifier(), this.relationshipType));
             if (filter.getRelationshipDirection().equals(Relationship.OUTGOING)) {
                 clause.append(">");
