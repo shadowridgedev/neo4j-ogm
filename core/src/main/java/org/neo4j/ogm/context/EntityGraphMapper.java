@@ -911,8 +911,12 @@ public class EntityGraphMapper implements EntityMapper {
         }
         for (FieldInfo tgtRelReader : tgtInfo.relationshipFields()) {
             String tgtRelationshipDirection = tgtRelReader.relationshipDirection();
-            if ((tgtRelationshipDirection.equals(Relationship.OUTGOING) || tgtRelationshipDirection.equals(Relationship.INCOMING)) //The relationship direction must be explicitly incoming or outgoing
-                    && tgtRelReader.relationshipType().equals(relationshipType)) { //The source must have the same relationship type to the target as the target to the source
+            if ((tgtRelationshipDirection.equals(Relationship.OUTGOING)
+                    // The relationship direction must be explicitly incoming or outgoing
+                    || tgtRelationshipDirection.equals(Relationship.INCOMING))
+                    // The source must have the same relationship type to the target as the target to the source
+                    && tgtRelReader.relationshipType().equals(relationshipType)) {
+
                 //Moreover, the source must be related to the target and vice versa in the SAME direction
                 if (relationshipDirection.equals(tgtRelationshipDirection)) {
 
