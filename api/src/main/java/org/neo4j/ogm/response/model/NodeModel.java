@@ -77,8 +77,8 @@ public class NodeModel implements Node {
         this.labels = labels;
     }
 
-    public void removeLabels(String[] labels) {
-        this.removedLabels = labels;
+    public void removeLabels(String[] labelsToRemove) {
+        this.removedLabels = labelsToRemove;
     }
 
     public Object property(String key) {

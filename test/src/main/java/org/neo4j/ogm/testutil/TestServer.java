@@ -37,6 +37,8 @@ public class TestServer {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TestServer.class);
 
+    private static final int TIMEOUT = 1000;
+
     private final Integer port;
     private final Integer transactionTimeoutSeconds;
     private final Boolean enableAuthentication;
@@ -141,7 +143,7 @@ public class TestServer {
      */
     public void shutdown() {
 
-        if (database != null && database.isAvailable(100)) {
+        if (database != null && database.isAvailable(TIMEOUT)) {
             LOGGER.info("Stopping {} server on: {}", enableBolt ? "BOLT" : "HTTP", port);
             database.shutdown();
             database = null;
@@ -155,7 +157,7 @@ public class TestServer {
      * @return true if the database is available, false otherwise
      */
     boolean isRunning() {
-        return database.isAvailable((long) 1000);
+        return database.isAvailable(TIMEOUT);
     }
 
     /**

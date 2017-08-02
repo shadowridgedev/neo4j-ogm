@@ -100,7 +100,7 @@ class IdentityMap {
         relEntityHash.clear();
     }
 
-
+    @SuppressWarnings("MagicNumber")
     private static long hash(Object object, ClassInfo classInfo) {
         long hash = SEED;
 
@@ -125,6 +125,7 @@ class IdentityMap {
         return hash;
     }
 
+    @SuppressWarnings("MagicNumber")
     private static long hash(String string) {
         long h = 1125899906842597L; // prime
         int len = string.length();

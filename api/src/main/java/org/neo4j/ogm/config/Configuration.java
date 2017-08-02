@@ -27,9 +27,12 @@ import org.slf4j.LoggerFactory;
  * @author Vince Bickers
  * @author Mark Angrish
  */
+@SuppressWarnings("AvoidInlineConditionals")
 public class Configuration {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
+
+    private static final int DEFAULT_POOL_SIZE = 50;
 
     private String uri;
     private int connectionPoolSize;
@@ -48,7 +51,7 @@ public class Configuration {
 
     Configuration(Builder builder) {
         this.uri = builder.uri;
-        this.connectionPoolSize = builder.connectionPoolSize != null ? builder.connectionPoolSize : 50;
+        this.connectionPoolSize = builder.connectionPoolSize != null ? builder.connectionPoolSize : DEFAULT_POOL_SIZE;
         this.encryptionLevel = builder.encryptionLevel;
         this.trustStrategy = builder.trustStrategy;
         this.trustCertFile = builder.trustCertFile;

@@ -104,8 +104,8 @@ public abstract class AbstractTransaction implements Transaction {
      *
      * @param type type of the transaction
      */
-    public void extend(Type type) {
-        if (this.type == type) {
+    public void extend(Type newType) {
+        if (this.type == newType) {
             long extensions = extendsCount.incrementAndGet();
             logger.debug("Thread {}: Transaction extended: {}", Thread.currentThread().getId(), extensions);
         } else {

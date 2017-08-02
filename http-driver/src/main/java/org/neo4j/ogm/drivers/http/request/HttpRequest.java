@@ -68,6 +68,7 @@ public class HttpRequest implements Request {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpRequest.class);
     private static final ObjectMapper OBJECT_MAPPER = ObjectMapperFactory.objectMapper();
+    private static final int STATUS_300 = 300;
 
     private final String url;
     private final CloseableHttpClient httpClient;
@@ -163,11 +164,19 @@ public class HttpRequest implements Request {
         HttpPost request = new HttpPost(url);
 
         request.setEntity(new StringEntity(cypher, "UTF-8"));
-        request.setHeader("X-WRITE", readOnly ? "0" : "1");
+        request.setHeader("X-WRITE", xWriteHeader(readOnly));
 
         LOGGER.info("Thread: {}, url: {}, request: {}", Thread.currentThread().getId(), url, cypher);
 
         return execute(httpClient, request, credentials);
+    }
+
+    private String xWriteHeader(boolean readOnly) {
+        if (readOnly) {
+            return "0";
+        } else {
+            return "1";
+        }
     }
 
     public static CloseableHttpResponse execute(CloseableHttpClient httpClient, HttpRequestBase request, Credentials credentials) throws HttpRequestException {
@@ -194,7 +203,7 @@ public class HttpRequest implements Request {
                 StatusLine statusLine = response.getStatusLine();
                 HttpEntity responseEntity = response.getEntity();
 
-                if (statusLine.getStatusCode() >= 300) {
+                if (statusLine.getStatusCode() >= STATUS_300) {
                     String responseText = statusLine.getReasonPhrase();
                     if (responseEntity != null) {
                         responseText = parseError(EntityUtils.toString(responseEntity));

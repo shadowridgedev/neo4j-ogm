@@ -49,7 +49,7 @@ public class HttpTransaction extends AbstractTransaction {
         try {
             if (transactionManager.canRollback()) {
                 HttpDelete request = new HttpDelete(url);
-                request.setHeader(new BasicHeader("X-WRITE", driver.readOnly() ? "0" : "1"));
+                request.setHeader(new BasicHeader("X-WRITE", xWriteHeader()));
                 driver.executeHttpRequest(request);
             }
         } catch (Exception e) {
@@ -66,13 +66,21 @@ public class HttpTransaction extends AbstractTransaction {
             if (transactionManager.canCommit()) {
                 HttpPost request = new HttpPost(url + "/commit");
                 request.setHeader(new BasicHeader(HTTP.CONTENT_TYPE, "application/json;charset=UTF-8"));
-                request.setHeader(new BasicHeader("X-WRITE", driver.readOnly() ? "0" : "1"));
+                request.setHeader(new BasicHeader("X-WRITE", xWriteHeader()));
                 driver.executeHttpRequest(request);
             }
         } catch (Exception e) {
             throw new TransactionException(e.getLocalizedMessage(), e);
         } finally {
             super.commit(); // must always be done to keep extension depth correct
+        }
+    }
+
+    private String xWriteHeader() {
+        if (driver.readOnly()) {
+            return "0";
+        } else {
+            return "1";
         }
     }
 

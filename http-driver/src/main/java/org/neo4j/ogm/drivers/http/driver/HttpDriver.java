@@ -137,13 +137,21 @@ public final class HttpDriver extends AbstractConfigurableDriver {
         LOGGER.debug("Thread: {}, POST {}", Thread.currentThread().getId(), url);
 
         HttpPost request = new HttpPost(url);
-        request.setHeader("X-WRITE", type == Transaction.Type.READ_ONLY ? "0" : "1");
+        request.setHeader("X-WRITE", xWriteHeader(type));
 
         try (CloseableHttpResponse response = executeHttpRequest(request)) {
             Header location = response.getHeaders("Location")[0];
             return location.getValue();
         } catch (IOException ioe) {
             throw new HttpRequestException(request, ioe);
+        }
+    }
+
+    private String xWriteHeader(Transaction.Type type) {
+        if (type == Transaction.Type.READ_ONLY) {
+            return "0";
+        } else {
+            return "1";
         }
     }
 

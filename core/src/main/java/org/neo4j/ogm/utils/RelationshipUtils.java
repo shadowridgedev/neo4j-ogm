@@ -25,6 +25,8 @@ package org.neo4j.ogm.utils;
  */
 public class RelationshipUtils {
 
+    private static final int PREFIX_LENGTH = 3;
+
     /**
      * Infers the relationship type that corresponds to the given field or access method name.
      * This method is called when no annotation exists by which to determine the relationship
@@ -36,7 +38,7 @@ public class RelationshipUtils {
      */
     public static String inferRelationshipType(String memberName) {
         if (memberName.startsWith("get") || memberName.startsWith("set")) {
-            return toUpperSnakeCase(memberName.substring(3)).toString();
+            return toUpperSnakeCase(memberName.substring(PREFIX_LENGTH)).toString();
         }
         return toUpperSnakeCase(memberName).toString();
     }

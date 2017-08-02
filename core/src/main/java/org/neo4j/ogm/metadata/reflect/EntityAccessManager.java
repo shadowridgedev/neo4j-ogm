@@ -266,6 +266,9 @@ public class EntityAccessManager {
                         boxedCharList.add(c);
                     }
                     return boxedCharList;
+
+                default:
+                    // just return value
             }
         }
         return value;

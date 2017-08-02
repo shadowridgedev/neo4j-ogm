@@ -120,7 +120,8 @@ public class EntityFactory {
         if (fqn == null) {
             ClassInfo classInfo = metadata.resolve(taxa);
             if (classInfo != null) {
-                taxaLeafClass.put(Arrays.toString(taxa), fqn = classInfo.name());
+                fqn = classInfo.name();
+                taxaLeafClass.put(Arrays.toString(taxa), fqn);
             } else {
                 throw new BaseClassNotFoundException(Arrays.toString(taxa));
             }

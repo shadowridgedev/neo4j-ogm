@@ -44,6 +44,8 @@ public class AutoIndexManager {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ClassInfo.class);
 
+    private static final int EXPECTED_LENGTH = 3;
+
     private static final Map<String, Object> EMPTY_MAP = Collections.emptyMap();
 
     private final List<AutoIndex> indexes;
@@ -140,7 +142,7 @@ public class AutoIndexManager {
         try (Response<RowModel> response = driver.request().execute(indexRequests)) {
             RowModel rowModel;
             while ((rowModel = response.next()) != null) {
-                if (rowModel.getValues().length == 3 && rowModel.getValues()[2].equals("node_unique_property")) {
+                if (rowModel.getValues().length == EXPECTED_LENGTH && rowModel.getValues()[2].equals("node_unique_property")) {
                     continue;
                 }
                 for (AutoIndex index : indexes) {
@@ -173,7 +175,7 @@ public class AutoIndexManager {
         try (Response<RowModel> response = driver.request().execute(indexRequests)) {
             RowModel rowModel;
             while ((rowModel = response.next()) != null) {
-                if (rowModel.getValues().length == 3 && rowModel.getValues()[2].equals("node_unique_property")) {
+                if (rowModel.getValues().length == EXPECTED_LENGTH && rowModel.getValues()[2].equals("node_unique_property")) {
                     continue;
                 }
                 // can replace this with a lookup of the Index by description but attaching DROP here is faster.

@@ -42,6 +42,8 @@ public class MultiDriverTestClass {
     protected static SessionFactory sessionFactory;
     protected static Driver driver;
 
+    private static final int TRANSACTION_TIMEOUT = 5;
+
     static {
 
         String configFileName = System.getenv("ogm.properties");
@@ -54,9 +56,9 @@ public class MultiDriverTestClass {
         baseConfiguration = new Configuration.Builder(new ClasspathConfigurationSource(configFileName));
 
         if (baseConfiguration.build().getDriverClassName().equals(HttpDriver.class.getCanonicalName())) {
-            testServer = new TestServer(true, false, 5);
+            testServer = new TestServer(true, false, TRANSACTION_TIMEOUT);
         } else if (baseConfiguration.build().getDriverClassName().equals(BoltDriver.class.getCanonicalName())) {
-            testServer = new TestServer(true, true, 5);
+            testServer = new TestServer(true, true, TRANSACTION_TIMEOUT);
         } else {
             graphStore = createTemporaryGraphStore();
         }
