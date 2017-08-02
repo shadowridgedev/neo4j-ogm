@@ -151,7 +151,9 @@ public class DomainInfo {
 
         for (ClassInfo classInfo : classNameToClassInfo.values()) {
 
-            if (classInfo.name() == null || classInfo.name().equals("java.lang.Object")) continue;
+            if (classInfo.name() == null || classInfo.name().equals("java.lang.Object")) {
+                continue;
+            }
 
             LOGGER.debug("Post-processing: {}", classInfo.name());
 

@@ -120,9 +120,12 @@ public class AutoIndexManager {
         } catch (IOException e) {
             throw new RuntimeException("Could not write file to " + file.getAbsolutePath(), e);
         } finally {
-            if (writer != null) try {
-                writer.close();
-            } catch (IOException ignore) {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ignore) {
+
+                }
             }
         }
     }
@@ -185,6 +188,7 @@ public class AutoIndexManager {
         LOGGER.debug("Dropping all indexes and constraints");
 
         try (Response<RowModel> response = driver.request().execute(dropIndexesRequest)) {
+            LOGGER.debug("Indexes dropped");
         }
 
         create();
@@ -215,6 +219,7 @@ public class AutoIndexManager {
 
         try (Response<RowModel> response = driver.request().execute(request)) {
             // Success
+            LOGGER.debug("Indexes created");
         }
     }
 }

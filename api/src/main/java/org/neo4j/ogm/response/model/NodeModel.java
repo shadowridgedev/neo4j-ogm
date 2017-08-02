@@ -83,15 +83,22 @@ public class NodeModel implements Node {
 
     public Object property(String key) {
         for (Property property : properties) {
-            if (property.getKey().equals(key)) return property.getValue();
+            if (property.getKey().equals(key)) {
+                return property.getValue();
+            }
         }
         return null;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         NodeModel nodeModel = (NodeModel) o;
 

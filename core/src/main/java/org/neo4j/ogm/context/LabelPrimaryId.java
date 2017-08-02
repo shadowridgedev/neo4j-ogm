@@ -51,13 +51,16 @@ class LabelPrimaryId {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         LabelPrimaryId that = (LabelPrimaryId) o;
 
-        if (!label.equals(that.label)) return false;
-        return id.equals(that.id);
+        return label.equals(that.label) && id.equals(that.id);
     }
 
     @Override

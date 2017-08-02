@@ -143,13 +143,17 @@ class EntityCollector {
 
         @Override
         public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
+            if (this == o) {
+                return true;
+            }
+
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
 
             TargetTriple that = (TargetTriple) o;
 
-            if (relationshipId != that.relationshipId) return false;
-            return targetGraphId == that.targetGraphId;
+            return relationshipId == that.relationshipId && targetGraphId == that.targetGraphId;
         }
 
         @Override

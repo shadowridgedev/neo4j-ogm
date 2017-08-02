@@ -207,10 +207,8 @@ public class HttpRequest implements Request {
                 }
 
                 return response; // don't close response yet, it is not consumed!
-            }
-
-            // if we didn't get a response at all, try again
-            catch (NoHttpResponseException nhre) {
+            } catch (NoHttpResponseException nhre) {
+                // if we didn't get a response at all, try again
                 LOGGER.warn("Thread: {}, No response from server:  Retrying in {} milliseconds, retries left: {}", Thread.currentThread().getId(), retryStrategy.getTimeToWait(), retryStrategy.numberOfTriesLeft);
                 retryStrategy.errorOccured();
             } catch (RetryException re) {
@@ -219,12 +217,11 @@ public class HttpRequest implements Request {
                 throw new ConnectionException(request.getURI().toString(), uhe);
             } catch (IOException ioe) {
                 throw new HttpRequestException(request, ioe);
-            }
+            } catch (Exception exception) {
+                // here we catch any exception we throw above (plus any we didn't throw ouselves),
+                // log the problem, close any connection held by the request
+                // and then rethrow the exception to the caller.
 
-            // here we catch any exception we throw above (plus any we didn't throw ouselves),
-            // log the problem, close any connection held by the request
-            // and then rethrow the exception to the caller.
-            catch (Exception exception) {
                 LOGGER.warn("Thread: {}, exception: {}", Thread.currentThread().getId(), exception.getCause().getLocalizedMessage());
                 request.releaseConnection();
                 throw exception;
